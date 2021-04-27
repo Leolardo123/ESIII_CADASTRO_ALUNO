@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Alunos_Cursos_FK" directorySegmentName="seg_0" id="457A8C36-D408-9698-26C0-150CF00179CA">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>A1FA3A0B-7FBF-679F-8C3C-4DF555A0C223</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<sourcePk>5D2AB377-0CA5-A336-2B48-723F3613893B</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>45E90BC3-C4A5-2507-1266-8022048E9C29</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>8247F759-A169-21E8-C3C0-9B1E29F92306</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="diagramaDataModeler" id="70339043-0F1E-2051-6C64-1FABC4EB23FC" version="3.5">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-23 00:20:30 UTC</createdTime>
+<ownerDesignName>alternativoSimples</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>70339043-0F1E-2051-6C64-1FABC4EB23FC</designId>
+</OSDM_Design>

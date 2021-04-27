@@ -1,0 +1,210 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1B263D1D-65CA-C7F2-3F58-1D2FDB9099DE" name="Pessoa">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>86BC4454-6CCB-BBD6-8C22-075077E93580</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="pes id" id="96EF7D65-5110-9BD0-FE69-484F358A0DB2">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>4AAF7A74-1BBD-50F4-B9E8-4BEC057A4A3F</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes matricula" id="D1BC5540-E076-1B25-3C78-C6D51A516046">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>77A8978B-B252-0B4E-AEEB-107D1AE00CC8</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes cpf" id="1EF8A649-BF44-C57E-25AD-89BDC940CD71">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>E12C34A5-102B-C00A-2E0F-95EB2826077A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>11 CHAR</dataTypeSize>
+<ownDataTypeParameters>11 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes rg" id="F2C91486-02DE-A454-2808-5CE40794B8C6">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>552AD4ED-D633-612B-E047-A6BB7431229A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>9 CHAR</dataTypeSize>
+<ownDataTypeParameters>9 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes pnome" id="9909BDB7-C943-E361-10A4-DC145D6A5B40">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>FEF0C5B5-08F9-9E00-5CAB-32C6FFB7CB91</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 CHAR</dataTypeSize>
+<ownDataTypeParameters>15 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes unome" id="CC5AF17B-BA01-0C5A-7935-27E989C99D1A">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>07EA5E8F-7EE3-54BB-88A4-166246364A0E</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes email" id="25ECF78E-E82D-4F48-7701-DBCA0C82DEAA">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>44A18F35-886E-1B9A-AC7C-8954D0C1D1EE</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes data nascimento" id="20BF4742-A8FF-9CD7-82B1-9DA9BA70D426">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>777FAC3A-1AB3-1DBA-9698-5231D0D4AE77</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Endereco end id" id="9477AC90-4864-8A40-2BD2-34AADD594222">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>B7566ED5-A0DD-B1E1-B97B-FD9D4D15315A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<referedAttribute>D2391AF7-5C2B-86AD-40E8-64C88A677371</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes dtcadastro" id="CAD111F8-D347-E806-D4FA-FBA01AB34E35">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>4B417222-6186-2FC9-EFC5-10DCC1BE2F20</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="C90A7C8F-1F87-23D6-DBBF-BDC34B52BE88" name="Pessoa PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>B5544406-E96A-08BA-81A6-3D3AD8C8009D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>96EF7D65-5110-9BD0-FE69-484F358A0DB2</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="7155EC0A-9998-27B1-2A7D-A66B126F22A4" name="Pessoa pes matricula UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>876A1690-3992-4AC1-4483-19D455FF80A1</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>D1BC5540-E076-1B25-3C78-C6D51A516046</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="13131284-438F-776C-C87D-E74D69E6D8A3" name="Pessoa pes cpf UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>865FB135-15A4-3D77-8DF9-2A1832F0FE40</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>1EF8A649-BF44-C57E-25AD-89BDC940CD71</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="2AB13B97-A971-C636-57FE-0212081CF783" name="Pessoa pes rg UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>32BF4DE5-4A00-D0D8-0E8F-E54476BE8B86</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>F2C91486-02DE-A454-2808-5CE40794B8C6</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

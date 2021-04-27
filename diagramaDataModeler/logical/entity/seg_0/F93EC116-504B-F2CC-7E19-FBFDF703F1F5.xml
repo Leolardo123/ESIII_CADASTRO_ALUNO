@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F93EC116-504B-F2CC-7E19-FBFDF703F1F5" name="Historico_Aluno">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>D40F27AD-670C-ECB9-C1AE-C5BBD804D933</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="hal status" id="DB9B65C7-90B8-225C-1708-74A9E2E3BD36">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>B8E325AA-D32B-3328-433E-30F4B91414D1</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 CHAR</dataTypeSize>
+<ownDataTypeParameters>15 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hal semestre" id="D0A9EA4D-DC3E-6440-DFBA-F3DE25146719">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>B5F18610-7AB2-491E-BB0B-FD1B9681E024</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hal notaFinal" id="A1C0E43B-7E3A-B350-92E2-B91FCD24886F">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>5A57AD63-1378-CD0F-741E-0906AEE3E664</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,2,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hal dtcadastro" id="239C39B2-C57B-7C60-6E0F-EECA596F24C1">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>CC5553B8-B3FC-1E88-27A6-9579A1BE3F3A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes id" id="0F3BA331-CC9C-B463-8DE4-7636D0F62165">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:54:01 UTC</createdTime>
+<generatorID>8A702582-B099-2AA0-F68E-22A2FA72C555</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<referedAttribute>96EF7D65-5110-9BD0-FE69-484F358A0DB2</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="gur cur id" id="2785976A-47FF-311A-BF61-DC559542F7BC">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:57:29 UTC</createdTime>
+<generatorID>C3CF0ED0-3D81-EC3D-3376-AA28811CA092</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>1E7A2197-04E0-BBBE-94FF-5EAE03BD5E49</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="gur mat id" id="6A242C76-288E-DE71-3B80-8C920857A58D">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:57:29 UTC</createdTime>
+<generatorID>C3CF0ED0-3D81-EC3D-3376-AA28811CA092</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>7C434856-4D0B-7413-173B-1E5EC68E233F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="pes id1" id="F1E2AA05-685B-25F7-01AB-FD543A528428">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:57:29 UTC</createdTime>
+<generatorID>C3CF0ED0-3D81-EC3D-3376-AA28811CA092</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>ED4EE4C7-56C0-0071-8B5E-E1B0C235BE5D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+</Entity>

@@ -1,0 +1,115 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D8FCCE1C-24A0-4F69-3CB7-952E9380610D" name="Historico_Aluno">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>F93EC116-504B-F2CC-7E19-FBFDF703F1F5</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="hal_status" id="0C1D10AA-929F-ACFD-27BF-64EA04176FEC">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>DB9B65C7-90B8-225C-1708-74A9E2E3BD36</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 CHAR</dataTypeSize>
+<ownDataTypeParameters>15 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hal_semestre" id="053B8B5E-935B-575C-D2B1-AA7CB5CACAE4">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>D0A9EA4D-DC3E-6440-DFBA-F3DE25146719</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hal_notaFinal" id="8FEC0F0C-C1BB-94BA-52AF-B269432618F0">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>A1C0E43B-7E3A-B350-92E2-B91FCD24886F</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,2,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hal_dtcadastro" id="9C710979-1EC6-29F9-7FE4-0B366B50E979">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>239C39B2-C57B-7C60-6E0F-EECA596F24C1</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hal_alu_id" id="38D54F63-2FC1-8BA3-7D4A-D4DA6F3B7F9B">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>0F3BA331-CC9C-B463-8DE4-7636D0F62165</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7C6B323F-AAC9-6807-7E35-C98A265E5292" referredColumn="74775090-0AC7-6633-00FC-50295D9FF9E5"/>
+</associations>
+</Column>
+<Column name="hal_gur_id" id="BF388E18-49A5-9CE5-0532-DB677B4B4127">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:14:23 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6E13917B-4B78-DA19-B23A-B564A5269E6C" referredColumn="712B0DD3-F7EF-EC4A-54D9-BC3A8C43DA34"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AD15B3BF-2459-387C-5159-0801E5A4ABE0" name="Historico_Aluno_Alunos_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>8A702582-B099-2AA0-F68E-22A2FA72C555</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="38D54F63-2FC1-8BA3-7D4A-D4DA6F3B7F9B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DAF51996-3CA1-0C33-AB14-6328387EA8C1" name="Historico_Aluno_Grade_Curso_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>C3CF0ED0-3D81-EC3D-3376-AA28811CA092</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BF388E18-49A5-9CE5-0532-DB677B4B4127"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

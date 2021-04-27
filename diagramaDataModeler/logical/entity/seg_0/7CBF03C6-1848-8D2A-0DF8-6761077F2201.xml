@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="7CBF03C6-1848-8D2A-0DF8-6761077F2201" name="Professores">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>B65892D2-3BAF-C260-ACB6-49802D3299F6</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<hierarchicalParent>1B263D1D-65CA-C7F2-3F58-1D2FDB9099DE</hierarchicalParent>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="pro salario" id="8EB07F56-CE03-3770-9BE4-FD5AFCC6693B">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>76D18029-F4E0-DBE0-EAE6-0FC292B6FA36</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,6,2</ownDataTypeParameters>
+</Attribute>
+</attributes>
+</Entity>

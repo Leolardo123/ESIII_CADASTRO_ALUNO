@@ -1,0 +1,152 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="63101012-A923-9FC5-19DE-B032B965F7E4" name="Grade_Curso">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>908FDB63-8A07-075A-3D4E-B2B8189D8506</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="gur_id" id="712B0DD3-F7EF-EC4A-54D9-BC3A8C43DA34">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:13:18 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gur_obrigatorio" id="9B872872-E19C-B0AC-F53F-336FE643F26C">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>1EFC0C8C-0C70-6674-7DD5-E5A7A3DC9453</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT033</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gur_dtcadastro" id="0EA8B456-C629-E6C2-486C-C2257A28171E">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>6280E1E1-9AF1-29D9-9E4C-565686B1A702</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gur_cur_id" id="82563EB9-05F4-C5F5-41D6-1FA81DF066B4">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>1E7A2197-04E0-BBBE-94FF-5EAE03BD5E49</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="70DA358B-2522-6CCC-5418-75C2DACCF7C1" referredColumn="840D5E1B-30FA-85D9-9C99-E3E2E26E7A85"/>
+</associations>
+</Column>
+<Column name="gur_mat_id" id="06372E7E-2EA1-4FB6-15B2-06842C91FD45">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>7C434856-4D0B-7413-173B-1E5EC68E233F</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E78083D2-4F22-115A-F513-F0CD3BD440D1" referredColumn="2D8DE759-0F65-F809-632A-7F81D24F52F5"/>
+</associations>
+</Column>
+<Column name="gur_pro_id" id="8CBA7286-EF86-7DCE-5C7E-60E85BC81AB5">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>ED4EE4C7-56C0-0071-8B5E-E1B0C235BE5D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C7CF09FD-E76B-FDB2-E9A1-9084AF5909D5" referredColumn="913B4C2D-5934-3461-361D-89DD13EED840"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B08BF757-BCEB-EC71-5D56-5A0A1AD867F1" name="Grade_Curso_PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>E285E055-81A4-BC55-ACFF-1A5F4593A659</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="712B0DD3-F7EF-EC4A-54D9-BC3A8C43DA34"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="59BC25B8-83B9-482A-A6BC-AE0E6CABE42D" name="UK_CUR_MAT_PRO_ID">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:14:03 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="82563EB9-05F4-C5F5-41D6-1FA81DF066B4"/>
+<colUsage columnID="06372E7E-2EA1-4FB6-15B2-06842C91FD45"/>
+<colUsage columnID="8CBA7286-EF86-7DCE-5C7E-60E85BC81AB5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8EBAF35B-212D-0E17-A077-53AF3BEAEC91" name="Grade_Curso_Cursos_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>F7206831-ECA5-A289-4B55-9AE445AEA24D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="82563EB9-05F4-C5F5-41D6-1FA81DF066B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2C34B5A1-7D18-3A64-53F7-DC19407CEF4E" name="Grade_Curso_Materias_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>03EFE528-F74A-0479-1786-974225B1045C</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="06372E7E-2EA1-4FB6-15B2-06842C91FD45"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9301AEDB-0B83-3634-FBBD-9FE9F43D0CDE" name="Grade_Curso_Professores_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>4E461A92-DE8A-1394-21A2-F595C12F4267</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8CBA7286-EF86-7DCE-5C7E-60E85BC81AB5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

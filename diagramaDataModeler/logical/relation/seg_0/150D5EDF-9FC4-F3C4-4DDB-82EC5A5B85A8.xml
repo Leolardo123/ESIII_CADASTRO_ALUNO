@@ -1,0 +1,31 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="dependentes" directorySegmentName="seg_0" id="150D5EDF-9FC4-F3C4-4DDB-82EC5A5B85A8">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:55:06 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>EB2C4706-CEFD-0050-9B24-D244050D2948</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>EB2C4706-CEFD-0050-9B24-D244050D2948</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="dep_dtcadastro" id="05A43179-8154-AA72-EF52-ADA9B7D9C5BD">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:55:08 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

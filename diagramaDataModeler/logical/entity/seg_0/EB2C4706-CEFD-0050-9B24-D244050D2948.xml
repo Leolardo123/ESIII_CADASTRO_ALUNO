@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="EB2C4706-CEFD-0050-9B24-D244050D2948" name="Materias">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>589D5673-21A0-3BCC-14B1-DE73882C2AA5</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="mat id" id="B18E20A4-CFCC-6712-8344-18DAAC9EEC11">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>4F2F69A9-B920-DEF7-F0DF-86A60D02FCA9</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="mat nome" id="CB2830E4-6D1A-DB53-C13F-0305EC0E84BE">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>29320E38-7431-083D-A48F-6166B1FF341D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="mat descricao" id="23FAECDD-8231-9EE6-D7FE-00E2EA56D494">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>D6A8FB78-CDCE-BDB7-4782-78ABC30D2297</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="mat carga horaria" id="4CF26AD8-F086-D7F3-A809-95CEB573AB65">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>0353EE9F-F85B-65DF-E17E-870DE6A8DE2E</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="mat dtcadastro" id="0FF598EE-0532-8015-44C9-09365938F5E9">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>75021321-1B04-5222-E20C-80098842E4CF</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="B8B9AAEA-1FE7-7649-459F-DCE584EA1D6D" name="Materias PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>FD69FF3A-AF2C-6C37-D717-A8316DE9D3E5</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>B18E20A4-CFCC-6712-8344-18DAAC9EEC11</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="A6125C54-5C07-5FF6-D72F-533A06A4BE56" name="Materias mat nome UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>3E43A4D7-3739-72BC-843C-DD137F80C126</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<usedAttributes>
+<attributeRef>CB2830E4-6D1A-DB53-C13F-0305EC0E84BE</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

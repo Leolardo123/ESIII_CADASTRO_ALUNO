@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Historico_Aluno_Alunos_FK" directorySegmentName="seg_0" id="8A702582-B099-2AA0-F68E-22A2FA72C555">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>6539BB6E-4316-1AC7-2241-5176FCDA803D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<sourcePk>C90A7C8F-1F87-23D6-DBBF-BDC34B52BE88</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>8247F759-A169-21E8-C3C0-9B1E29F92306</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>F93EC116-504B-F2CC-7E19-FBFDF703F1F5</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,96 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A45A7EEC-9FF8-EBF0-C9FF-5276F318F756" name="Materias">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>EB2C4706-CEFD-0050-9B24-D244050D2948</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="mat_id" id="2D8DE759-0F65-F809-632A-7F81D24F52F5">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>B18E20A4-CFCC-6712-8344-18DAAC9EEC11</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mat_nome" id="06211A1A-D837-3188-F2A1-DAB5DC0770B0">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>CB2830E4-6D1A-DB53-C13F-0305EC0E84BE</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mat_descricao" id="EDB0F1CB-928B-F4FD-E3D9-2E40CFCB6C3B">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>23FAECDD-8231-9EE6-D7FE-00E2EA56D494</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mat_carga_horaria" id="4A4677BF-A5A8-632D-6AA4-4E013DBE5B9F">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>4CF26AD8-F086-D7F3-A809-95CEB573AB65</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="mat_dtcadastro" id="EEE9C3B7-D878-E26D-6BA3-7F44CAE4C55D">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>0FF598EE-0532-8015-44C9-09365938F5E9</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3C05F0B3-EFAA-B41D-113B-EFF903D235E9" name="Materias_PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>B8B9AAEA-1FE7-7649-459F-DCE584EA1D6D</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D8DE759-0F65-F809-632A-7F81D24F52F5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="243CA1A2-6263-895B-B8FC-14B68F63715A" name="Materias_mat_nome_UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>A6125C54-5C07-5FF6-D72F-533A06A4BE56</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="06211A1A-D837-3188-F2A1-DAB5DC0770B0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

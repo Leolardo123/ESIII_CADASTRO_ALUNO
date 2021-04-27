@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="6E13917B-4B78-DA19-B23A-B564A5269E6C" containerWithKeyObject="D8FCCE1C-24A0-4F69-3CB7-952E9380610D" localFKIndex="DAF51996-3CA1-0C33-AB14-6328387EA8C1" name="Historico_Aluno_Grade_Curso_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>C3CF0ED0-3D81-EC3D-3376-AA28811CA092</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<referredTableLongName>Grade_Curso</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>63101012-A923-9FC5-19DE-B032B965F7E4</referredTableID>
+<keyObject>B08BF757-BCEB-EC71-5D56-5A0A1AD867F1</keyObject>
+<referredKeyID>B08BF757-BCEB-EC71-5D56-5A0A1AD867F1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>gur_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

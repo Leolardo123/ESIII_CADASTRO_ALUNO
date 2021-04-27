@@ -1,0 +1,203 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7AB5F0D8-F8B3-C053-DF7A-8A9DEEDAC188" name="Pessoa">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>1B263D1D-65CA-C7F2-3F58-1D2FDB9099DE</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="pes_id" id="9391256C-BA8D-E7C1-3976-70440A6D8070">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>96EF7D65-5110-9BD0-FE69-484F358A0DB2</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_matricula" id="CD4AC061-70FD-F29D-7087-9288F021D6D8">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>D1BC5540-E076-1B25-3C78-C6D51A516046</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 CHAR</dataTypeSize>
+<ownDataTypeParameters>30 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_cpf" id="78BA374A-C659-16C5-65B6-6430EF9258AD">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>1EF8A649-BF44-C57E-25AD-89BDC940CD71</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>11 CHAR</dataTypeSize>
+<ownDataTypeParameters>11 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_rg" id="99D53201-FF07-96E6-3604-D210F77D91F4">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>F2C91486-02DE-A454-2808-5CE40794B8C6</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>9 CHAR</dataTypeSize>
+<ownDataTypeParameters>9 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_pnome" id="EC8FC687-CF6C-0B5B-26AB-9ECBB133E7EB">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>9909BDB7-C943-E361-10A4-DC145D6A5B40</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 CHAR</dataTypeSize>
+<ownDataTypeParameters>15 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_unome" id="0EDEDAF7-814C-0AF5-BCFF-917352B9A555">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>CC5AF17B-BA01-0C5A-7935-27E989C99D1A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_email" id="F5FFD487-1F4F-B56A-39F5-413D700E9B63">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>25ECF78E-E82D-4F48-7701-DBCA0C82DEAA</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_data_nascimento" id="14C584D8-DECA-BCD7-EB3A-AFB208301026">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>20BF4742-A8FF-9CD7-82B1-9DA9BA70D426</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_dtcadastro" id="22165748-22C4-DE9F-C8D8-8F7ECE2BB7A0">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>CAD111F8-D347-E806-D4FA-FBA01AB34E35</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pes_end_id" id="791901C8-BD67-F806-E7C9-1B7544E14DDB">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>9477AC90-4864-8A40-2BD2-34AADD594222</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4B0E11F1-152C-5260-C458-ECBDAE00ED7A" referredColumn="AA1B2A71-E00A-CA7A-64C5-08E382C93F62"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="17A299D0-C8DD-B1B2-19D3-FAAD49D00E18" name="Pessoa_PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>C90A7C8F-1F87-23D6-DBBF-BDC34B52BE88</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9391256C-BA8D-E7C1-3976-70440A6D8070"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="33418057-09DC-326D-880D-D93EF1A05424" name="Pessoa_pes_matricula_UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>7155EC0A-9998-27B1-2A7D-A66B126F22A4</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CD4AC061-70FD-F29D-7087-9288F021D6D8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5504AB40-2DEB-B0FF-C9F7-AF02F505AD4B" name="Pessoa_pes_cpf_UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>13131284-438F-776C-C87D-E74D69E6D8A3</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="78BA374A-C659-16C5-65B6-6430EF9258AD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="11A146DA-6681-6BDB-14D2-E8637FFF4AD8" name="Pessoa_pes_rg_UN">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>2AB13B97-A971-C636-57FE-0212081CF783</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="99D53201-FF07-96E6-3604-D210F77D91F4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C90EFB29-3C9D-BCCD-3859-71C3ACE143F8" name="Pessoa__IDX">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>B7566ED5-A0DD-B1E1-B97B-FD9D4D15315A</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="791901C8-BD67-F806-E7C9-1B7544E14DDB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="129455DF-3ED1-D8D8-8565-47C7154ADF74" name="Pessoa_Endereco_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>B7566ED5-A0DD-B1E1-B97B-FD9D4D15315A</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="791901C8-BD67-F806-E7C9-1B7544E14DDB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

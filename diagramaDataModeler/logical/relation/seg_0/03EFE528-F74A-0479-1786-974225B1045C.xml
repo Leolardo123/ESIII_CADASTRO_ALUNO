@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Grade_Curso_Materias_FK" directorySegmentName="seg_0" id="03EFE528-F74A-0479-1786-974225B1045C">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 00:52:56 UTC</createdTime>
+<generatorID>77D9D306-9140-A021-1FD8-57C9628C96E1</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<engineerTo>
+<item key="4178EE24-4C18-7688-B711-9FB8A7685BC7" value="true"/>
+</engineerTo>
+<sourcePk>B8B9AAEA-1FE7-7649-459F-DCE584EA1D6D</sourcePk>
+<identifying>true</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>EB2C4706-CEFD-0050-9B24-D244050D2948</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>908FDB63-8A07-075A-3D4E-B2B8189D8506</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

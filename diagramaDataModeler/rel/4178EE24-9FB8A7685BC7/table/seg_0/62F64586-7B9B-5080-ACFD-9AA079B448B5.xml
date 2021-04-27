@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="62F64586-7B9B-5080-ACFD-9AA079B448B5" name="dependentes">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="dep_materia_id" id="64987354-8AAD-8DFE-3376-58B5335CAB9D">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="560E9D0C-4358-2D7C-EE1A-4B5C8A81D4A0" referredColumn="2D8DE759-0F65-F809-632A-7F81D24F52F5"/>
+</associations>
+</Column>
+<Column name="dep_dependencia_id" id="DB84D0CE-CE19-15CA-7A4E-2E63A9A3400B">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1FD1CDC3-E572-6C5F-B78A-CA5E0B3AC416" referredColumn="2D8DE759-0F65-F809-632A-7F81D24F52F5"/>
+</associations>
+</Column>
+<Column name="dep_dtcadastro" id="0DBA0413-27B6-8952-2916-238268DB7844">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>05A43179-8154-AA72-EF52-ADA9B7D9C5BD</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<isRelationshipColumn>true</isRelationshipColumn>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1662ED2B-D0FE-8821-3402-A12D949FCFC7" name="dependentes_PK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="64987354-8AAD-8DFE-3376-58B5335CAB9D"/>
+<colUsage columnID="DB84D0CE-CE19-15CA-7A4E-2E63A9A3400B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3AFEB07E-D9E4-8C84-120C-00F087A9D110" name="dependentes_Materias_FK">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>150D5EDF-9FC4-F3C4-4DDB-82EC5A5B85A8</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="64987354-8AAD-8DFE-3376-58B5335CAB9D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7C897ABD-5922-06E4-429D-B6D05C326A87" name="dependentes_Materias_FKv1">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-24 01:01:17 UTC</createdTime>
+<generatorID>150D5EDF-9FC4-F3C4-4DDB-82EC5A5B85A8</generatorID>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DB84D0CE-CE19-15CA-7A4E-2E63A9A3400B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
