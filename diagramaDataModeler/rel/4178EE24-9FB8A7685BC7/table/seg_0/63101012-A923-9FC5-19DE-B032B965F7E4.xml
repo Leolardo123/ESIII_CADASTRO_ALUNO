@@ -8,7 +8,7 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="gur_id" id="712B0DD3-F7EF-EC4A-54D9-BC3A8C43DA34">
+<Column name="gra_id" id="712B0DD3-F7EF-EC4A-54D9-BC3A8C43DA34">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:13:18 UTC</createdTime>
 <ownerDesignName>diagramaDataModeler</ownerDesignName>
@@ -19,7 +19,7 @@
 <ownDataTypeParameters>,6,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="gur_obrigatorio" id="9B872872-E19C-B0AC-F53F-336FE643F26C">
+<Column name="gra_obrigatorio" id="9B872872-E19C-B0AC-F53F-336FE643F26C">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>1EFC0C8C-0C70-6674-7DD5-E5A7A3DC9453</generatorID>
@@ -30,7 +30,51 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="gur_dtcadastro" id="0EA8B456-C629-E6C2-486C-C2257A28171E">
+<Column name="gra_semestre" id="CE312326-B7C6-615B-A99A-4895119BBD97">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-30 00:34:02 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<ownDataTypeParameters>,2,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gra_turno" id="60E9A8C1-A0B9-99EF-E9A8-E28A0C70A5C5">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-28 14:35:21 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gra_dia_semana" id="77D43C56-6A3C-CD67-FA88-74EA41EF8017">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-28 14:35:06 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gra_periodo" id="AFE6E3E2-6781-A882-F10A-27979146C9EE">
+<createdBy>55119</createdBy>
+<createdTime>2021-04-28 14:39:03 UTC</createdTime>
+<ownerDesignName>diagramaDataModeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<ownDataTypeParameters>,1,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="gra_dtcadastro" id="0EA8B456-C629-E6C2-486C-C2257A28171E">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>6280E1E1-9AF1-29D9-9E4C-565686B1A702</generatorID>
@@ -41,7 +85,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="gur_cur_id" id="82563EB9-05F4-C5F5-41D6-1FA81DF066B4">
+<Column name="gra_cur_id" id="82563EB9-05F4-C5F5-41D6-1FA81DF066B4">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>1E7A2197-04E0-BBBE-94FF-5EAE03BD5E49</generatorID>
@@ -50,14 +94,14 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>6</dataTypePrecision>
-<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="70DA358B-2522-6CCC-5418-75C2DACCF7C1" referredColumn="840D5E1B-30FA-85D9-9C99-E3E2E26E7A85"/>
 </associations>
 </Column>
-<Column name="gur_mat_id" id="06372E7E-2EA1-4FB6-15B2-06842C91FD45">
+<Column name="gra_mat_id" id="06372E7E-2EA1-4FB6-15B2-06842C91FD45">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>7C434856-4D0B-7413-173B-1E5EC68E233F</generatorID>
@@ -66,14 +110,14 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>6</dataTypePrecision>
-<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="E78083D2-4F22-115A-F513-F0CD3BD440D1" referredColumn="2D8DE759-0F65-F809-632A-7F81D24F52F5"/>
 </associations>
 </Column>
-<Column name="gur_pro_id" id="8CBA7286-EF86-7DCE-5C7E-60E85BC81AB5">
+<Column name="gra_pro_id" id="8CBA7286-EF86-7DCE-5C7E-60E85BC81AB5">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>ED4EE4C7-56C0-0071-8B5E-E1B0C235BE5D</generatorID>
@@ -82,7 +126,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>6</dataTypePrecision>
-<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>

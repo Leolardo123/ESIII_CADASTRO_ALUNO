@@ -8,7 +8,7 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="hal_status" id="0C1D10AA-929F-ACFD-27BF-64EA04176FEC">
+<Column name="his_status" id="0C1D10AA-929F-ACFD-27BF-64EA04176FEC">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>DB9B65C7-90B8-225C-1708-74A9E2E3BD36</generatorID>
@@ -20,7 +20,7 @@
 <ownDataTypeParameters>15 CHAR,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="hal_semestre" id="053B8B5E-935B-575C-D2B1-AA7CB5CACAE4">
+<Column name="his_semestre" id="053B8B5E-935B-575C-D2B1-AA7CB5CACAE4">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>D0A9EA4D-DC3E-6440-DFBA-F3DE25146719</generatorID>
@@ -32,7 +32,7 @@
 <ownDataTypeParameters>,2,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="hal_notaFinal" id="8FEC0F0C-C1BB-94BA-52AF-B269432618F0">
+<Column name="his_notaFinal" id="8FEC0F0C-C1BB-94BA-52AF-B269432618F0">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>A1C0E43B-7E3A-B350-92E2-B91FCD24886F</generatorID>
@@ -45,7 +45,7 @@
 <ownDataTypeParameters>,2,2</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="hal_dtcadastro" id="9C710979-1EC6-29F9-7FE4-0B366B50E979">
+<Column name="his_dtcadastro" id="9C710979-1EC6-29F9-7FE4-0B366B50E979">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>239C39B2-C57B-7C60-6E0F-EECA596F24C1</generatorID>
@@ -56,7 +56,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="hal_alu_id" id="38D54F63-2FC1-8BA3-7D4A-D4DA6F3B7F9B">
+<Column name="his_alu_id" id="38D54F63-2FC1-8BA3-7D4A-D4DA6F3B7F9B">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:01:17 UTC</createdTime>
 <generatorID>0F3BA331-CC9C-B463-8DE4-7636D0F62165</generatorID>
@@ -65,14 +65,14 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>6</dataTypePrecision>
-<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="7C6B323F-AAC9-6807-7E35-C98A265E5292" referredColumn="74775090-0AC7-6633-00FC-50295D9FF9E5"/>
 </associations>
 </Column>
-<Column name="hal_gur_id" id="BF388E18-49A5-9CE5-0532-DB677B4B4127">
+<Column name="his_gra_id" id="BF388E18-49A5-9CE5-0532-DB677B4B4127">
 <createdBy>55119</createdBy>
 <createdTime>2021-04-24 01:14:23 UTC</createdTime>
 <ownerDesignName>diagramaDataModeler</ownerDesignName>
@@ -80,7 +80,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>6</dataTypePrecision>
-<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
