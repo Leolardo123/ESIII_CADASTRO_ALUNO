@@ -19,35 +19,23 @@ public class Pessoa extends EntidadeDominio {
     String pnome;
     String unome;
     String email;
-    Date dtnascimento;
+    Date dtNascimento;
 
     Endereco endereco;
     
     public Pessoa(){}
 
     public Pessoa(String matricula, String rg, String cpf, String pnome, 
-            String unome, String email, Date dtnascimento, Endereco endereco) {
+            String unome, String email, Date dtNascimento, Endereco endereco) {
         this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
         this.pnome = pnome;
         this.unome = unome;
         this.email = email;
-        this.dtnascimento = dtnascimento;
+        this.dtNascimento = dtNascimento;
         
         this.endereco = endereco;
-    }
-
-    public Pessoa(Pessoa pessoa) {
-        this.matricula = pessoa.matricula;
-        this.cpf = pessoa.cpf;
-        this.rg = pessoa.rg;
-        this.pnome = pessoa.pnome;
-        this.unome = pessoa.unome;
-        this.email = pessoa.email;
-        this.dtnascimento = pessoa.dtnascimento;
-        
-        this.endereco = pessoa.endereco;
     }
     
     public String getMatricula() {
@@ -83,11 +71,11 @@ public class Pessoa extends EntidadeDominio {
     }
 
     public Date getDtnasciemento() {
-        return dtnascimento;
+        return dtNascimento;
     }
 
     public void setDtnasciemento(Date dtnasciemento) {
-        this.dtnascimento = dtnasciemento;
+        this.dtNascimento = dtnasciemento;
     }
 
     public Endereco getEndereco() {

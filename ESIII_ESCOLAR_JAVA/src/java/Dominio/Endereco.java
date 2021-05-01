@@ -19,15 +19,6 @@ public class Endereco extends EntidadeDominio{
     
     public Endereco(){}
     
-    public Endereco(String cep,String estado,String cidade,int numero,String logradouro,String complemento){
-        this.cep = cep;
-        this.estado = estado;
-        this.cidade = cidade;
-        this.numero = numero;
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-    }
-    
     public Endereco(String cep,String estado,String cidade,int numero,String logradouro){
         this.cep = cep;
         this.estado = estado;
