@@ -13,6 +13,7 @@ public class Materia extends EntidadeDominio{
     private String nome;
     private String descricao;
     private int carga_horaria;
+    private int dependencia;
     
     public Materia(String nome, String descricao, int carga_horaria){
         this.nome = nome;
@@ -43,6 +44,16 @@ public class Materia extends EntidadeDominio{
     public void setCarga_horaria(int carga_horaria) {
         this.carga_horaria = carga_horaria;
     }
+
+    public int getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(int dependencia) {
+        this.dependencia = dependencia;
+    }
+    
+    
     
     
 }
