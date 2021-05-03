@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
-
-import Dominio.EntidadeDominio;
+package Controle;
 
 /**
  *
  * @author Eu
  */
-public abstract class AbstractIDAO implements IDAO{
-    protected Object conexao;
+public class AlterarCommand extends AbstractCommand{
     
-    protected void conectar(){}
-    public void excluir() {}
-
 }

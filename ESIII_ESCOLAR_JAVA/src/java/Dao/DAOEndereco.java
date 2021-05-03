@@ -11,7 +11,7 @@ import Dominio.EntidadeDominio;
  *
  * @author Eu
  */
-public class DAOEndereco {
+public class DAOEndereco extends AbstractDAO{
     public DAOEndereco(){}
     
     public void salvar(EntidadeDominio entidade) {
@@ -23,6 +23,10 @@ public class DAOEndereco {
     }
 
     public void consultar(EntidadeDominio entidade) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void excluir(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
