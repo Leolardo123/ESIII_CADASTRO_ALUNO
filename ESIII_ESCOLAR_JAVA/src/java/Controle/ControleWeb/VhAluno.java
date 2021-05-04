@@ -5,10 +5,16 @@
  */
 package Controle.ControleWeb;
 
+import Dominio.Aluno;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,38 +27,33 @@ public class VhAluno implements IViewHelper{
 
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
+        SimpleDateFormat date_format = new SimpleDateFormat();
+        
         String primeiro_nome = request.getParameter("primeiro_nome");
         String ultimo_nome = request.getParameter("ultimo_nome");
         String rg = request.getParameter("rg");
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
         String curso = request.getParameter("curso");
+        Date data_nascimento = null;
+        try {
+            data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
+        } catch (ParseException ex) {
+            Logger.getLogger(VhAluno.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         String logradouro = request.getParameter("txtCliente");
-        String numero = request.getParameter("numero");
+        int numero = Integer.parseInt(request.getParameter("numero"));
         String complemento = request.getParameter("complemento");
         String cidade = request.getParameter("cidade");
         String estado = request.getParameter("estado");
-
-        Estado estado = new Estado(primeiro_nome);
-        Cidade cidade = new Cidade(ultimo_nome, estado);
-
-        Endereco endereco = new Endereco(rg, email, cpf, cidade);
-        endereco.setDtCadastro(new Date());
-
-        String txtDep1 = request.getParameter("txtDep1");
-        String txtDep2 = request.getParameter("txtDep2");
-
-        String txtParentesco1 = request.getParameter("txtParentesco1");
-        String txtParentesco2 = request.getParameter("txtParentesco2");
-
-        Parentesco par1 = new Parentesco(txtParentesco1);
-        Parentesco par2 = new Parentesco(txtParentesco2);
-
-        Dependente dep1 = new Dependente(txtDep1, par1);
-        Dependente dep2 = new Dependente(txtDep2, par2);
-
-        Cliente cliente = new Cliente(logradouro, curso, numero, complemento, endereco, dep1, dep2);
-        return cliente;
+        String cep = request.getParameter("cep");//adicionar no formulário
+        
+        Endereco endereco = new Endereco(cep, estado, cidade, numero, logradouro);
+        
+        Aluno aluno = new Aluno("'AL001", rg, cpf, primeiro_nome, ultimo_nome,
+                email, data_nascimento, endereco, 1);
+        return aluno;
     }
 
     @Override
