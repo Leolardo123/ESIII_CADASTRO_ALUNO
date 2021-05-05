@@ -14,9 +14,9 @@ import java.util.Date;
 public class Professor extends Pessoa {
     private float salario;
 
-    public Professor(float salario, String matricula, String rg, String cpf, 
+    public Professor(float salario, String rg, String cpf, 
         String pnome, String unome, String email, Date dtNascimento, Endereco endereco) {
-        super(matricula, rg, cpf, pnome, unome, email, dtNascimento, endereco);
+        super(rg, cpf, pnome, unome, email, dtNascimento, endereco);
         this.salario = salario;
     }
 

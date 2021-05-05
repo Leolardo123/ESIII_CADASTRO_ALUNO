@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class VhAluno implements IViewHelper{
 
     @Override
-    public EntidadeDominio getEntidade(HttpServletRequest request) {
+    public EntidadeDominio getEntidade(HttpServletRequest request)throw ParseException {
         SimpleDateFormat date_format = new SimpleDateFormat();
         
         String primeiro_nome = request.getParameter("primeiro_nome");
@@ -35,13 +35,12 @@ public class VhAluno implements IViewHelper{
         String cpf = request.getParameter("cpf");
         String email = request.getParameter("email");
         String curso = request.getParameter("curso");
-        Date data_nascimento = null;
-        try {
-            data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
+        Date data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
+                try {
+            
         } catch (ParseException ex) {
             Logger.getLogger(VhAluno.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         String logradouro = request.getParameter("txtCliente");
         int numero = Integer.parseInt(request.getParameter("numero"));
         String complemento = request.getParameter("complemento");

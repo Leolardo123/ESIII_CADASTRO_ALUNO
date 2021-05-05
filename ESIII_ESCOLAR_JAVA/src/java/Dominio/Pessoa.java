@@ -13,21 +13,20 @@ import java.util.Date;
  */
 public class Pessoa extends EntidadeDominio {
 
-    String matricula;
-    String cpf;
-    String rg;
-    String pnome;
-    String unome;
-    String email;
-    Date dtNascimento;
+    private String matricula;
+    private String cpf;
+    private String rg;
+    private String pnome;
+    private String unome;
+    private String email;
+    private Date dtNascimento;
 
     Endereco endereco;
     
     public Pessoa(){}
 
-    public Pessoa(String matricula, String rg, String cpf, String pnome, 
+    public Pessoa(String rg, String cpf, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco) {
-        this.matricula = matricula;
         this.cpf = cpf;
         this.rg = rg;
         this.pnome = pnome;
@@ -74,8 +73,8 @@ public class Pessoa extends EntidadeDominio {
         return dtNascimento;
     }
 
-    public void setDtnasciemento(Date dtnasciemento) {
-        this.dtNascimento = dtnasciemento;
+    public void setDtnasciemento(Date dtNascimento) {
+        this.dtNascimento = dtNascimento;
     }
 
     public Endereco getEndereco() {

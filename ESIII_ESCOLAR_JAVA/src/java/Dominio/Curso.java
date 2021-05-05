@@ -13,7 +13,8 @@ public class Curso extends EntidadeDominio{
     private String nome;
     private String descricao;
     private String nivel;
-    private int    duracao;
+    private int duracao;
+    private double mensalidade;
     
     public Curso(){}
     
