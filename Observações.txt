@@ -1,0 +1,6 @@
+Diagrama Relacional
+
+-relacional o curso se encontra sem a mensalidade
+-em relação a matricula ela será construida pelo banco de dados atráves de um trigger que adicionará AL+id do aluno ou professor ou alguer outros valores
+
+
