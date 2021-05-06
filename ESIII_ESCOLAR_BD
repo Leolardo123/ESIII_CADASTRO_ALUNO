@@ -1,0 +1,450 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-05-06 20:09:48
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 203 (class 1259 OID 25073)
+-- Name: Alunos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Alunos" (
+    alu_semestre numeric(2,0) NOT NULL,
+    alu_pes_id numeric(6,0) NOT NULL,
+    alu_cur_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Alunos" OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 33165)
+-- Name: Cursos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Cursos" (
+    cur_id numeric(6,0) NOT NULL,
+    cur_nome character varying(30) NOT NULL,
+    cur_descricao character varying(255) NOT NULL,
+    cur_nivel character varying(30) NOT NULL,
+    cur_duracao numeric(2,0) NOT NULL,
+    cur_dtcadastro date NOT NULL,
+    cur_mensalidade numeric(6,2) NOT NULL
+);
+
+
+ALTER TABLE public."Cursos" OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 33142)
+-- Name: Dependentes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Dependentes" (
+    dep_materia_id numeric(6,0) NOT NULL,
+    dep_dependencia_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Dependentes" OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 25055)
+-- Name: Enderecos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Enderecos" (
+    end_id numeric(6,0) NOT NULL,
+    end_cep character varying(8) NOT NULL,
+    end_estado character varying(50) NOT NULL,
+    end_cidade character varying(50) NOT NULL,
+    end_numero numeric(6,0) NOT NULL,
+    end_logradouro character varying(255) NOT NULL,
+    end_complemento character varying(255),
+    end_dtcadastro date NOT NULL
+);
+
+
+ALTER TABLE public."Enderecos" OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 33172)
+-- Name: Grade_Curso; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Grade_Curso" (
+    gra_id numeric(6,0) NOT NULL,
+    gra_obrigatorio boolean NOT NULL,
+    gra_turno numeric(1,0) NOT NULL,
+    gra_dia_semana numeric(1,0) NOT NULL,
+    gra_periodo numeric(1,0) NOT NULL,
+    gra_dtcadastro date NOT NULL,
+    gra_cur_id numeric(6,0) NOT NULL,
+    gra_mat_id numeric(6,0) NOT NULL,
+    gra_pro_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Grade_Curso" OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 33202)
+-- Name: Historico_Aluno; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Historico_Aluno" (
+    his_status character varying(15) NOT NULL,
+    his_semestre numeric(2,0) NOT NULL,
+    "his_notaFinal" numeric(2,2) NOT NULL,
+    his_dtcadastro date NOT NULL,
+    his_alu_id numeric(6,0) NOT NULL,
+    his_gra_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Historico_Aluno" OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 33145)
+-- Name: Materias; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Materias" (
+    mat_id numeric(6,0) NOT NULL,
+    mat_nome character varying(255) NOT NULL,
+    mat_descricao character varying(255) NOT NULL,
+    mat_carga_horaria numeric(6,0) NOT NULL,
+    mat_dtcadastro date NOT NULL
+);
+
+
+ALTER TABLE public."Materias" OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 25044)
+-- Name: Pessoas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Pessoas" (
+    pes_id numeric(6,0) NOT NULL,
+    pes_cpf character varying(11) NOT NULL,
+    pes_rg character varying(9) NOT NULL,
+    pes_pnome character varying(15) NOT NULL,
+    pes_unome character varying(50) NOT NULL,
+    pes_email character varying(255) NOT NULL,
+    pes_dtnascimento date NOT NULL,
+    pes_dtcadastro date NOT NULL,
+    pes_end_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Pessoas" OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 25063)
+-- Name: Professores; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Professores" (
+    pro_salario numeric(6,2) NOT NULL,
+    pro_pes_id numeric(6,0) NOT NULL
+);
+
+
+ALTER TABLE public."Professores" OWNER TO postgres;
+
+--
+-- TOC entry 3045 (class 0 OID 25073)
+-- Dependencies: 203
+-- Data for Name: Alunos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Alunos" (alu_semestre, alu_pes_id, alu_cur_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3048 (class 0 OID 33165)
+-- Dependencies: 206
+-- Data for Name: Cursos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Cursos" (cur_id, cur_nome, cur_descricao, cur_nivel, cur_duracao, cur_dtcadastro, cur_mensalidade) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3046 (class 0 OID 33142)
+-- Dependencies: 204
+-- Data for Name: Dependentes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Dependentes" (dep_materia_id, dep_dependencia_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3043 (class 0 OID 25055)
+-- Dependencies: 201
+-- Data for Name: Enderecos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Enderecos" (end_id, end_cep, end_estado, end_cidade, end_numero, end_logradouro, end_complemento, end_dtcadastro) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3049 (class 0 OID 33172)
+-- Dependencies: 207
+-- Data for Name: Grade_Curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Grade_Curso" (gra_id, gra_obrigatorio, gra_turno, gra_dia_semana, gra_periodo, gra_dtcadastro, gra_cur_id, gra_mat_id, gra_pro_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3050 (class 0 OID 33202)
+-- Dependencies: 208
+-- Data for Name: Historico_Aluno; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Historico_Aluno" (his_status, his_semestre, "his_notaFinal", his_dtcadastro, his_alu_id, his_gra_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3047 (class 0 OID 33145)
+-- Dependencies: 205
+-- Data for Name: Materias; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Materias" (mat_id, mat_nome, mat_descricao, mat_carga_horaria, mat_dtcadastro) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3042 (class 0 OID 25044)
+-- Dependencies: 200
+-- Data for Name: Pessoas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Pessoas" (pes_id, pes_cpf, pes_rg, pes_pnome, pes_unome, pes_email, pes_dtnascimento, pes_dtcadastro, pes_end_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3044 (class 0 OID 25063)
+-- Dependencies: 202
+-- Data for Name: Professores; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Professores" (pro_salario, pro_pes_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2895 (class 2606 OID 33152)
+-- Name: Materias Materias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Materias"
+    ADD CONSTRAINT "Materias_pkey" PRIMARY KEY (mat_id);
+
+
+--
+-- TOC entry 2893 (class 2606 OID 25077)
+-- Name: Alunos PK_ALU; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Alunos"
+    ADD CONSTRAINT "PK_ALU" PRIMARY KEY (alu_pes_id);
+
+
+--
+-- TOC entry 2897 (class 2606 OID 33169)
+-- Name: Cursos PK_CUR; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Cursos"
+    ADD CONSTRAINT "PK_CUR" PRIMARY KEY (cur_id);
+
+
+--
+-- TOC entry 2889 (class 2606 OID 25062)
+-- Name: Enderecos PK_END; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Enderecos"
+    ADD CONSTRAINT "PK_END" PRIMARY KEY (end_id);
+
+
+--
+-- TOC entry 2901 (class 2606 OID 33176)
+-- Name: Grade_Curso PK_GUR; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Grade_Curso"
+    ADD CONSTRAINT "PK_GUR" PRIMARY KEY (gra_id);
+
+
+--
+-- TOC entry 2883 (class 2606 OID 25048)
+-- Name: Pessoas PK_PES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Pessoas"
+    ADD CONSTRAINT "PK_PES" PRIMARY KEY (pes_id);
+
+
+--
+-- TOC entry 2891 (class 2606 OID 25067)
+-- Name: Professores PRO_PES; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Professores"
+    ADD CONSTRAINT "PRO_PES" PRIMARY KEY (pro_pes_id);
+
+
+--
+-- TOC entry 2899 (class 2606 OID 33171)
+-- Name: Cursos UK_CUR_NOME; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Cursos"
+    ADD CONSTRAINT "UK_CUR_NOME" UNIQUE (cur_nome);
+
+
+--
+-- TOC entry 2885 (class 2606 OID 25052)
+-- Name: Pessoas UK_PES_CPF; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Pessoas"
+    ADD CONSTRAINT "UK_PES_CPF" UNIQUE (pes_cpf);
+
+
+--
+-- TOC entry 2887 (class 2606 OID 25054)
+-- Name: Pessoas UK_PES_RG; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Pessoas"
+    ADD CONSTRAINT "UK_PES_RG" UNIQUE (pes_rg);
+
+
+--
+-- TOC entry 2903 (class 2606 OID 33215)
+-- Name: Alunos FK_ALU_CUR_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Alunos"
+    ADD CONSTRAINT "FK_ALU_CUR_ID" FOREIGN KEY (alu_cur_id) REFERENCES public."Cursos"(cur_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 2904 (class 2606 OID 33220)
+-- Name: Alunos FK_ALU_PES_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Alunos"
+    ADD CONSTRAINT "FK_ALU_PES_ID" FOREIGN KEY (alu_semestre) REFERENCES public."Pessoas"(pes_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 2906 (class 2606 OID 33230)
+-- Name: Dependentes FK_DEP_DEPENDENCIA_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Dependentes"
+    ADD CONSTRAINT "FK_DEP_DEPENDENCIA_ID" FOREIGN KEY (dep_dependencia_id) REFERENCES public."Materias"(mat_id) ON UPDATE CASCADE ON DELETE RESTRICT NOT VALID;
+
+
+--
+-- TOC entry 2905 (class 2606 OID 33225)
+-- Name: Dependentes FK_DEP_MATERIA_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Dependentes"
+    ADD CONSTRAINT "FK_DEP_MATERIA_ID" FOREIGN KEY (dep_materia_id) REFERENCES public."Materias"(mat_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
+
+
+--
+-- TOC entry 2909 (class 2606 OID 33187)
+-- Name: Grade_Curso FK_GRA_CUR_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Grade_Curso"
+    ADD CONSTRAINT "FK_GRA_CUR_ID" FOREIGN KEY (gra_cur_id) REFERENCES public."Cursos"(cur_id);
+
+
+--
+-- TOC entry 2908 (class 2606 OID 33182)
+-- Name: Grade_Curso FK_GRA_MAT_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Grade_Curso"
+    ADD CONSTRAINT "FK_GRA_MAT_ID" FOREIGN KEY (gra_mat_id) REFERENCES public."Materias"(mat_id);
+
+
+--
+-- TOC entry 2907 (class 2606 OID 33177)
+-- Name: Grade_Curso FK_GRA_PRO_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Grade_Curso"
+    ADD CONSTRAINT "FK_GRA_PRO_ID" FOREIGN KEY (gra_pro_id) REFERENCES public."Professores"(pro_pes_id);
+
+
+--
+-- TOC entry 2910 (class 2606 OID 33205)
+-- Name: Historico_Aluno FK_HIS_ALU_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Historico_Aluno"
+    ADD CONSTRAINT "FK_HIS_ALU_ID" FOREIGN KEY (his_alu_id) REFERENCES public."Alunos"(alu_pes_id);
+
+
+--
+-- TOC entry 2911 (class 2606 OID 33210)
+-- Name: Historico_Aluno FK_HIS_GRA_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Historico_Aluno"
+    ADD CONSTRAINT "FK_HIS_GRA_ID" FOREIGN KEY (his_gra_id) REFERENCES public."Grade_Curso"(gra_id);
+
+
+--
+-- TOC entry 2902 (class 2606 OID 25068)
+-- Name: Professores FK_PRO_PES; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Professores"
+    ADD CONSTRAINT "FK_PRO_PES" FOREIGN KEY (pro_pes_id) REFERENCES public."Pessoas"(pes_id) NOT VALID;
+
+
+-- Completed on 2021-05-06 20:09:48
+
+--
+-- PostgreSQL database dump complete
+--
+
