@@ -5,10 +5,17 @@
  */
 package Controle;
 
+import Dominio.EntidadeDominio;
+
 /**
  *
  * @author Eu
  */
-public class ConsultarCommand extends AbstractCommand{
-    
+public class ConsultarCommand extends AbstractCommand {
+
+    @Override
+    public String execute(EntidadeDominio entidade) {
+        return fachada.cadastrar(entidade);
+    }
+
 }

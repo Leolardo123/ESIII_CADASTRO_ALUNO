@@ -18,11 +18,12 @@ public class Curso extends EntidadeDominio{
     
     public Curso(){}
     
-    public Curso(String nome,String descricao,String nivel,int duracao){
+    public Curso(String nome,String descricao,String nivel,int duracao, double mensalidade){
         this.nome = nome;
         this.descricao = descricao;
         this.nivel = nivel;
         this.duracao = duracao;
+        this.mensalidade = mensalidade;
     }
 
     public String getNome() {

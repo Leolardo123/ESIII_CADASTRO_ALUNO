@@ -11,11 +11,8 @@ import Dominio.EntidadeDominio;
  *
  * @author Eu
  */
-public class AbstractCommand implements ICommand{
-
-    @Override
-    public void execute(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public abstract class AbstractCommand implements ICommand{
+    
+    protected IFachada fachada = new Fachada();
     
 }

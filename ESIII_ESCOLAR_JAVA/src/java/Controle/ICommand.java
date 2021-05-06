@@ -12,5 +12,5 @@ import Dominio.EntidadeDominio;
  * @author Eu
  */
 public interface ICommand {
-    public void execute(EntidadeDominio entidade);
+    public String execute(EntidadeDominio entidade);
 }

@@ -5,9 +5,10 @@
  */
 package Controle.ControleWeb;
 
-import Dominio.Aluno;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import Dominio.Pessoa;
+import Dominio.Professor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Eu
  */
-public class VhAluno implements IViewHelper{
+public class VhProfessor implements IViewHelper{
 
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
@@ -32,11 +33,11 @@ public class VhAluno implements IViewHelper{
 
             String primeiro_nome = request.getParameter("primeiro_nome");
             String ultimo_nome = request.getParameter("ultimo_nome");
+            Date data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
             String rg = request.getParameter("rg");
             String cpf = request.getParameter("cpf");
             String email = request.getParameter("email");
-            String curso = request.getParameter("curso");
-            Date data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
+            float salario = Float.parseFloat(request.getParameter("salario"));
 
 
             String logradouro = request.getParameter("logradouro");
@@ -50,9 +51,9 @@ public class VhAluno implements IViewHelper{
             
             if(complemento != null) endereco.setCep(cep);
 
-            Aluno aluno = new Aluno( rg, cpf, primeiro_nome, ultimo_nome,
-                    email, data_nascimento, endereco, 1);
-            return aluno;
+            Professor professor = new Professor(salario, rg, cpf, primeiro_nome, ultimo_nome,
+                    email, data_nascimento, endereco);
+            return professor;
         } catch (ParseException ex) {
             return null;
         }
@@ -66,7 +67,7 @@ public class VhAluno implements IViewHelper{
                 if (resultado != null) {
                         out.println(resultado);
                 } else {
-                        out.println("<h1>Aluno cadastrado!</h1>");
+                        out.println("<h1>Professor cadastrado!</h1>");
                 }
         } catch (IOException e) {
                 // TODO Auto-generated catch block

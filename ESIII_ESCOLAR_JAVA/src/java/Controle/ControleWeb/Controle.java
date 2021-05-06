@@ -58,9 +58,11 @@ public class Controle {
         EntidadeDominio entidade = vh.getEntidade(request);
 
         ICommand cmd = commands.get(operacao);
-
-        //Object msg = cmd.execute(entidade);
-        //vh.setView(msg, request, response);
+        
+        if(entidade != null){
+            Object msg = cmd.execute(entidade);
+            vh.setView(msg, request, response);
+        }
     }
 
 }
