@@ -6,39 +6,38 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
-import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import Dominio.Materia;
 import Dominio.Pessoa;
-import Dominio.Professor;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Eu
  */
-public class DAOProfessor extends AbstractDAO{
-    public DAOProfessor(){}
+public class DAODependentes extends AbstractDAO{
+    public DAODependentes(){}
     
     public void salvar(EntidadeDominio entidade) {
-        Professor professor = (Professor)entidade;
-        Pessoa pessoa = (Pessoa)entidade;
-        Endereco endereco = pessoa.getEndereco();
+        Materia materia = (Materia)entidade;
 
         try {
                 conexao.setAutoCommit(false);	
-                DAOEndereco DAOend = new DAOEndereco();
-                DAOend.ctrlTransaction = false;
-                DAOend.salvar(endereco);
-                DAOPessoa DAOpes = new DAOPessoa();
-                DAOpes.salvar(pessoa);
+                DAODependentes DAOdep = new DAODependentes();
+                DAOdep.ctrlTransaction = false;
+                DAOdep.salvar(materia);
 
                 StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO Professor(pro_salario, pro_pes_id)");
+                sql.append("INSERT INTO Dependentes(mat_nome, mat_descricao, mat_carga_horaria, mat_dtcadastro)");
                 sql.append(" VALUES (?,?)");		
 
                 pst = conexao.prepareStatement(sql.toString());
-                pst.setDouble(1, professor.getSalario());
-                pst.setInt(2, professor.getId());
+                pst.setString(1, materia.getNome());
+                pst.setString(2, materia.getDescricao());
+                pst.setInt(3, materia.getCarga_horaria());
+                Timestamp time = new Timestamp(materia.getDtcadastro().getTime());
+                pst.setTimestamp(4, time);
                 pst.executeUpdate();			
                 conexao.commit();		
         } catch (SQLException e) {
@@ -54,7 +53,7 @@ public class DAOProfessor extends AbstractDAO{
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-        }	
+        }		
     }
 
     public void alterar(EntidadeDominio entidade) {

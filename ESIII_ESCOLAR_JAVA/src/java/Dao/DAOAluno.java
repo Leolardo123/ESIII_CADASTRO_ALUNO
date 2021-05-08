@@ -5,7 +5,15 @@
  */
 package Dao;
 
+import static Dao.AbstractDAO.conexao;
+import Dominio.Aluno;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import Dominio.Pessoa;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,7 +23,42 @@ public class DAOAluno extends AbstractDAO{
     public DAOAluno(){}
     
     public void salvar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Aluno aluno = (Aluno)entidade;
+        Pessoa pessoa = (Pessoa)entidade;
+        Endereco endereco = pessoa.getEndereco();
+
+        try {
+                conexao.setAutoCommit(false);	
+                DAOEndereco DAOend = new DAOEndereco();
+                DAOend.ctrlTransaction = false;
+                DAOend.salvar(endereco);
+                DAOPessoa DAOpes = new DAOPessoa();
+                DAOpes.salvar(pessoa);
+
+                StringBuilder sql = new StringBuilder();
+                sql.append("INSERT INTO Aluno(alu_semestre, alu_pes_id, alu_cur_id)");
+                sql.append(" VALUES (?,?,?)");		
+
+                pst = conexao.prepareStatement(sql.toString());
+                pst.setInt(1, aluno.getSemestre());
+                pst.setInt(2, pessoa.getId());
+                pst.setInt(3, aluno.getCurso_id());
+                pst.executeUpdate();			
+                conexao.commit();		
+        } catch (SQLException e) {
+                try {
+                        conexao.rollback();
+                } catch (SQLException e1) {
+                        e1.printStackTrace();
+                }
+                e.printStackTrace();			
+        }finally{
+                try {
+                    closeConnection();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }		
     }
 
     public void alterar(EntidadeDominio entidade) {

@@ -35,7 +35,7 @@ public class VhAluno implements IViewHelper{
             String rg = request.getParameter("rg");
             String cpf = request.getParameter("cpf");
             String email = request.getParameter("email");
-            String curso = request.getParameter("curso");
+            int curso = Integer.parseInt(request.getParameter("curso"));
             Date data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
 
 
@@ -51,7 +51,7 @@ public class VhAluno implements IViewHelper{
             if(complemento != null) endereco.setCep(cep);
 
             Aluno aluno = new Aluno( rg, cpf, primeiro_nome, ultimo_nome,
-                    email, data_nascimento, endereco, 1);
+                    email, data_nascimento, endereco, 1, curso);
             return aluno;
         } catch (ParseException ex) {
             return null;

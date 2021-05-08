@@ -51,9 +51,5 @@ public class Materia extends EntidadeDominio{
 
     public void setDependencia(int dependencia) {
         this.dependencia = dependencia;
-    }
-    
-    
-    
-    
+    }  
 }
