@@ -5,10 +5,16 @@
  */
 package Dao;
 
+import static Dao.AbstractDAO.conexao;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import Dominio.Pessoa;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Eu
@@ -74,8 +80,47 @@ public class DAOEndereco extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void consultar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<EntidadeDominio> consultar() {
+        try {
+            
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM enderecos");
+
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               Endereco endereco = new Endereco(rs.getString("end_cep"),rs.getString("end_estado"),
+               rs.getString("end_cidade"),rs.getInt("end_numero"),rs.getString("end_logradouro"));
+               
+               endereco.setId(rs.getInt("end_id"));
+               endereco.setDtcadastro(rs.getDate("end_dtcadastro"));
+               
+               enderecos.add(endereco);
+            }
+            
+            return enderecos;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public void excluir(EntidadeDominio entidade) {

@@ -46,8 +46,8 @@ public class DAOCursoTest {
     @Test
     public void testSalvar(){;
         Curso curso;
-        curso = new Curso("Administração", "Curso de TI","Tecnologo",480, 240.00);
-        curso.setId(1);
+        curso = new Curso("Administração", "Curso de TI","Tecnologo",48, 240.00);
+
         DAOCurso dao = new DAOCurso();
         dao.salvar(curso);
     }

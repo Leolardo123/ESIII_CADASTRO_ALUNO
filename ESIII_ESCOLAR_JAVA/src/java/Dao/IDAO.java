@@ -6,6 +6,7 @@
 package Dao;
 
 import Dominio.*;
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,5 @@ public interface IDAO {
     public void salvar(EntidadeDominio entidade);
     public void alterar(EntidadeDominio entidade);
     public void excluir(EntidadeDominio entidade);
-    public void consultar(EntidadeDominio entidade);
+//    public List<EntidadeDominio> consultar(EntidadeDominio entidade);//corrigir tipo da lista (erro nos DAO's que a herdam)
 }

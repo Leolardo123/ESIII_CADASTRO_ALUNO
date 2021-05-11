@@ -8,7 +8,10 @@ package Dao;
 import static Dao.AbstractDAO.conexao;
 import Dominio.Curso;
 import Dominio.EntidadeDominio;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 /**
  *
  * @author Eu
@@ -29,7 +32,7 @@ public class DAOCurso extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO cursos(cur_nome, cur_descricao, cur_nivel, ");
             sql.append("cur_duracao, cur_mensalidade)");
-            sql.append(" VALUES (?,?,?,?,?,?)");
+            sql.append(" VALUES (?,?,?,?,?)");
             pst = conexao.prepareStatement(sql.toString());
             pst.setString(1, curso.getNome());
             pst.setString(2, curso.getDescricao());
@@ -39,6 +42,7 @@ public class DAOCurso extends AbstractDAO {
             pst.executeUpdate();
 
             conexao.commit();
+            
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {
@@ -58,7 +62,7 @@ public class DAOCurso extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

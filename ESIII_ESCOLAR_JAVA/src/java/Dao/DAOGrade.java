@@ -9,6 +9,7 @@ import static Dao.AbstractDAO.conexao;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import java.sql.SQLException;
+import java.util.List;
 /**
  *
  * @author Eu
@@ -63,7 +64,7 @@ public class DAOGrade extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

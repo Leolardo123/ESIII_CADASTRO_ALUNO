@@ -9,6 +9,7 @@ import static Dao.AbstractDAO.conexao;
 import Dominio.EntidadeDominio;
 import Dominio.Materia;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -61,7 +62,7 @@ public class DAODependentes extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

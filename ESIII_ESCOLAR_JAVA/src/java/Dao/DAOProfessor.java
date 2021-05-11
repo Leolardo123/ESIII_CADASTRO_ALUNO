@@ -10,6 +10,7 @@ import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import Dominio.Professor;
 import java.sql.SQLException;
+import java.util.List;
 /**
  *
  * @author Eu
@@ -61,7 +62,7 @@ public class DAOProfessor extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

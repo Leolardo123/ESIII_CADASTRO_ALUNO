@@ -4,3 +4,6 @@
 **/*.DS_Store
 /ESIII_ESCOLAR_JAVA/nbproject/private/
 /ESIII_ESCOLAR_JAVA/build/
+/ESIII_ESCOLAR_BACKUP/nbproject/private/
+/ESIII_ESCOLAR_BACKUP/build/
+/ESIII_ESCOLAR_JAVA/dist/

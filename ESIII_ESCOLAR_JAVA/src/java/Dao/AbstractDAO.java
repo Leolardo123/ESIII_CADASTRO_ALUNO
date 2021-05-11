@@ -25,7 +25,7 @@ public abstract class AbstractDAO implements IDAO{
     protected void conectar() throws ClassNotFoundException, SQLException{
         Class.forName("org.postgresql.Driver");
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ESIII_ESCOLAR"
-                , "postgres", "postgres");
+                , "postgres", "123");
         conexao = conn;
     }
     
