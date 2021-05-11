@@ -9,15 +9,18 @@ package Dominio;
  *
  * @author 55119
  */
-public class Grade_Curso  extends EntidadeDominio{
+public class GradeCurso  extends EntidadeDominio{
     private boolean obrigatorio;
     private int dia_semana;
     private int turno;
     private int periodo;
+    private int curso_id;
+    private int materia_id;
+    private int professor_id;
     
-    public Grade_Curso(){}
+    public GradeCurso(){}
     
-    public Grade_Curso(boolean obrigatorio,int dia_semana,int turno,int periodo){
+    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo){
         this.obrigatorio = obrigatorio;
         this.dia_semana = dia_semana;
         this.turno = turno;
@@ -55,5 +58,28 @@ public class Grade_Curso  extends EntidadeDominio{
     public void setPeriodo(int periodo) {
         this.periodo = periodo;
     }
-    
+
+    public int getCurso_id() {
+        return curso_id;
+    }
+
+    public void setCurso_id(int curso_id) {
+        this.curso_id = curso_id;
+    }
+
+    public int getMateria_id() {
+        return materia_id;
+    }
+
+    public void setMateria_id(int materia_id) {
+        this.materia_id = materia_id;
+    }
+
+    public int getProfessor_id() {
+        return professor_id;
+    }
+
+    public void setProfessor_id(int professor_id) {
+        this.professor_id = professor_id;
+    }    
 }

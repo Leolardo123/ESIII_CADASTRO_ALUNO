@@ -6,39 +6,32 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
-import Dominio.Endereco;
 import Dominio.EntidadeDominio;
-import Dominio.Pessoa;
-import Dominio.Professor;
+import Dominio.Materia;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Eu
  */
-public class DAOProfessor extends AbstractDAO{
-    public DAOProfessor(){}
+public class DAODependentes extends AbstractDAO{
+    public DAODependentes(){}
     
     public void salvar(EntidadeDominio entidade) {
-        Professor professor = (Professor)entidade;
-        Pessoa pessoa = (Pessoa)entidade;
-        Endereco endereco = pessoa.getEndereco();
 
         try {
-                conexao.setAutoCommit(false);	
-                DAOEndereco DAOend = new DAOEndereco();
-                DAOend.ctrlTransaction = false;
-                DAOend.salvar(endereco);
-                DAOPessoa DAOpes = new DAOPessoa();
-                DAOpes.salvar(pessoa);
+                if(conexao == null) openConnection();
+                Materia materia = (Materia)entidade;
 
                 StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO Professor(pro_salario, pro_pes_id)");
+                sql.append("INSERT INTO Dependentes(dep_materia_id, dep_dependencia_id)");
                 sql.append(" VALUES (?,?)");		
 
                 pst = conexao.prepareStatement(sql.toString());
-                pst.setDouble(1, professor.getSalario());
-                pst.setInt(2, professor.getId());
+                pst.setInt(1, materia.getId());
+                pst.setInt(2, materia.getDependencia());
                 pst.executeUpdate();			
                 conexao.commit();		
         } catch (SQLException e) {
@@ -47,13 +40,18 @@ public class DAOProfessor extends AbstractDAO{
                 } catch (SQLException e1) {
                         e1.printStackTrace();
                 }
-                e.printStackTrace();			
+                e.printStackTrace();	
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DAOEndereco.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
+            if(ctrlTransaction){
                 try {
                     closeConnection();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                 }
+            }
         }	
     }
 

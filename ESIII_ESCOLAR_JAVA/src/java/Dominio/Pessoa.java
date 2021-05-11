@@ -13,7 +13,6 @@ import java.util.Date;
  */
 public class Pessoa extends EntidadeDominio {
 
-    private String matricula;
     private String cpf;
     private String rg;
     private String pnome;
@@ -35,14 +34,6 @@ public class Pessoa extends EntidadeDominio {
         this.dtNascimento = dtNascimento;
         
         this.endereco = endereco;
-    }
-    
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
     }
 
     public String getPnome() {
@@ -85,4 +76,27 @@ public class Pessoa extends EntidadeDominio {
         this.endereco = endereco;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public Date getDtNascimento() {
+        return dtNascimento;
+    }
+
+    public void setDtNascimento(Date dtNascimento) {
+        this.dtNascimento = dtNascimento;
+    }  
 }

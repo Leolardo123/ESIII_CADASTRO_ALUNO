@@ -38,7 +38,7 @@ public class Fachada implements IFachada {
         daos.put(Endereco.class.getName(), new DAOEndereco());
         daos.put(Curso.class.getName(), new DAOCurso());
         daos.put(Materia.class.getName(), new DAOMateria());
-        daos.put(Grade_Curso.class.getName(), new DAOGrade());
+        daos.put(GradeCurso.class.getName(), new DAOGrade());
     }
 
     // Strategy a ser implementado

@@ -57,6 +57,16 @@ public class Curso extends EntidadeDominio{
     public void setDuracao(int duracao) {
         this.duracao = duracao;
     }
+
+    public double getMensalidade() {
+        return mensalidade;
+    }
+
+    public void setMensalidade(double mensalidade) {
+        this.mensalidade = mensalidade;
+    }
+    
+    
     
     
 }

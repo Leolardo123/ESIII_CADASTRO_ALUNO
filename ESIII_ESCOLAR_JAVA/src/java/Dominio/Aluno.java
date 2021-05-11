@@ -13,11 +13,30 @@ import java.util.Date;
  */
 public class Aluno extends Pessoa{
     private int semestre;
+    private int curso_id;
     
     public Aluno(String rg, String cpf, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco,
-            int semestre){
+            int semestre, int curso_id){
         super(rg, cpf, pnome, unome, email, dtNascimento, endereco);
         this.semestre = semestre;
+        this.curso_id = curso_id;
     }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
+
+    public int getCurso_id() {
+        return curso_id;
+    }
+
+    public void setCurso_id(int curso_id) {
+        this.curso_id = curso_id;
+    }
+    
 }
