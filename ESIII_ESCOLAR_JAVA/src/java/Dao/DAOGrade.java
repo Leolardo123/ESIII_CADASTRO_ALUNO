@@ -9,15 +9,17 @@ import static Dao.AbstractDAO.conexao;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
 /**
  *
  * @author Eu
  */
-public class DAOGrade extends AbstractDAO{
-    public DAOGrade(){}
-    
+public class DAOGrade extends AbstractDAO {
+
+    public DAOGrade() {
+    }
+
+    //concluido - falta testar
+    @Override
     public void salvar(EntidadeDominio entidade) {
         GradeCurso grade = (GradeCurso) entidade;
 
@@ -25,28 +27,27 @@ public class DAOGrade extends AbstractDAO{
             conexao.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO Cursos(cur_nome, cur_descricao, cur_nivel, ");
-            sql.append("cur_duracao, cur_dtcadastro, cur_mensalidade");
-            sql.append(" VALUES (?,?,?,?,?,?)");
+            sql.append("INSERT INTO grade_curso(gra_obrigatorio, gra_turno, gra_dia_semana, ");
+            sql.append("gra_periodo, gra_cur_id, gra_mat_id, gra_pro_id)");
+            sql.append(" VALUES (?,?,?,?,?,?,?)");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setBoolean(1, grade.isObrigatorio());
             pst.setInt(2, grade.getTurno());
             pst.setInt(3, grade.getDia_semana());
             pst.setInt(4, grade.getPeriodo());
-            Timestamp time = new Timestamp(grade.getDtcadastro().getTime());
-            pst.setTimestamp(5, time);
-            pst.setInt(6, grade.getCurso_id());
-            pst.setInt(7, grade.getMateria_id());
-            pst.setInt(8, grade.getProfessor_id());
+            pst.setInt(5, grade.getCurso_id());
+            pst.setInt(6, grade.getMateria_id());
+            pst.setInt(7, grade.getProfessor_id());
             pst.executeUpdate();
 
             conexao.commit();
+            System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {
+                System.out.println("Erro na inserção: " + e);
                 conexao.rollback();
             } catch (SQLException e1) {
-                e1.printStackTrace();
             }
             e.printStackTrace();
         } finally {

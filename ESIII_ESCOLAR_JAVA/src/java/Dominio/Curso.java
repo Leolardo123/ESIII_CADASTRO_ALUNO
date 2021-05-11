@@ -5,6 +5,8 @@
  */
 package Dominio;
 
+import java.util.Date;
+
 /**
  *
  * @author 55119
@@ -65,8 +67,5 @@ public class Curso extends EntidadeDominio{
     public void setMensalidade(double mensalidade) {
         this.mensalidade = mensalidade;
     }
-    
-    
-    
     
 }

@@ -9,8 +9,6 @@ import static Dao.AbstractDAO.conexao;
 import Dominio.EntidadeDominio;
 import Dominio.Materia;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
 /**
  *
  * @author Eu
@@ -20,31 +18,34 @@ public class DAOMateria extends AbstractDAO {
     public DAOMateria() {
     }
 
+    //concluido - falta testar
+    @Override
     public void salvar(EntidadeDominio entidade) {
         Materia materia = (Materia) entidade;
 
         try {
+            openConnection();
             conexao.setAutoCommit(false);
             DAODependentes DAOdep = new DAODependentes();
             DAOdep.ctrlTransaction = false;
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO Materias(mat_nome, mat_descricao, mat_carga_horaria, mat_dtcadastro)");
-            sql.append(" VALUES (?,?,?,?)");
+            sql.append("INSERT INTO materias(mat_nome, mat_descricao, mat_carga_horaria)");
+            sql.append(" VALUES (?,?,?)");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setString(1, materia.getNome());
             pst.setString(2, materia.getDescricao());
             pst.setInt(3, materia.getCarga_horaria());
-            Timestamp time = new Timestamp(materia.getDtcadastro().getTime());
-            pst.setTimestamp(4, time);
             pst.executeUpdate();
 
             DAOdep.salvar(materia);
 
             conexao.commit();
+            System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {
+                System.out.println("Erro na inserção: " + e);
                 conexao.rollback();
             } catch (SQLException e1) {
                 e1.printStackTrace();

@@ -81,5 +81,8 @@ public class GradeCurso  extends EntidadeDominio{
 
     public void setProfessor_id(int professor_id) {
         this.professor_id = professor_id;
-    }    
+    }
+    
+    
+    
 }

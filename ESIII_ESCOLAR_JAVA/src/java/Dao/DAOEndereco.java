@@ -5,69 +5,66 @@
  */
 package Dao;
 
-import static Dao.AbstractDAO.conexao;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Eu
  */
-public class DAOEndereco extends AbstractDAO{
-    public DAOEndereco(){}
-    
-    public void salvar(EntidadeDominio entidade){
+public class DAOEndereco extends AbstractDAO {
+
+    public DAOEndereco() {
+    }
+
+    //concluido - falta testar
+    @Override
+    public void salvar(EntidadeDominio entidade) {
         try {
-            if(conexao == null) openConnection();
-            Endereco end = (Endereco)entidade;
+            openConnection();
+            Endereco end = (Endereco) entidade;
             StringBuilder sql = new StringBuilder();
 
-            sql.append("INSERT INTO Enderecos(cep, estado, cidade, numero");
-            sql.append("logradouro, complemento, dt_Cadastro)");
-            sql.append(" VALUES (?, ?, ?, ?, ?,?)");	
+            sql.append("INSERT INTO enderecos(end_cep, end_estado, end_cidade, end_numero, ");
+            sql.append("end_logradouro, end_complemento)");
+            sql.append(" VALUES (?, ?, ?, ?, ?,?)");
             conexao.setAutoCommit(false);
 
-
-            pst = conexao.prepareStatement(sql.toString(), 
-                            Statement.RETURN_GENERATED_KEYS);
+            pst = conexao.prepareStatement(sql.toString(),
+                    Statement.RETURN_GENERATED_KEYS);
 
             pst.setString(1, end.getCep());
             pst.setString(2, end.getEstado());
             pst.setString(3, end.getCidade());
             pst.setInt(4, end.getNumero());
-            pst.setString(5, end.getComplemento());
-            Timestamp time = new Timestamp(end.getDtcadastro().getTime());
-            pst.setTimestamp(6, time);
-            pst.executeUpdate();		
+            pst.setString(5, end.getLogradouro());
+            pst.setString(6, end.getComplemento());
+            pst.executeUpdate();
 
             rs = pst.getGeneratedKeys();
-            int idEnd=0;
-            if(rs.next())
-                    idEnd = rs.getInt(1);
+            int idEnd = 0;
+            if (rs.next()) {
+                idEnd = rs.getInt(1);
+            }
             end.setId(idEnd);
 
-            conexao.commit();					
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
-                try {
-                        conexao.rollback();
-                } catch (SQLException e1) {
-                        e1.printStackTrace();
-                }
-                e.printStackTrace();	
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DAOEndereco.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(ctrlTransaction){
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            if (ctrlTransaction) {
                 try {
                     closeConnection();
                 } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
         }

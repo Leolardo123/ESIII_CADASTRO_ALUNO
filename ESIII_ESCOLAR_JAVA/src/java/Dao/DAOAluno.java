@@ -5,60 +5,56 @@
  */
 package Dao;
 
-import static Dao.AbstractDAO.conexao;
 import Dominio.Aluno;
-import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
 /**
  *
  * @author Eu
  */
-public class DAOAluno extends AbstractDAO{
-    public DAOAluno(){}
-    
+public class DAOAluno extends AbstractDAO {
+
+    public DAOAluno() {
+    }
+
+    //concluido - falta testar
+    @Override
     public void salvar(EntidadeDominio entidade) {
-        Aluno aluno = (Aluno)entidade;
-        Pessoa pessoa = (Pessoa)entidade;
-        Endereco endereco = pessoa.getEndereco();
+        Aluno aluno = (Aluno) entidade;
+        Pessoa pessoa = (Pessoa) entidade;
 
         try {
-                conexao.setAutoCommit(false);	
-                DAOEndereco DAOend = new DAOEndereco();
-                DAOend.ctrlTransaction = false;
-                DAOend.salvar(endereco);
-                DAOPessoa DAOpes = new DAOPessoa();
-                DAOpes.salvar(pessoa);
+            conexao.setAutoCommit(false);
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.ctrlTransaction = false;
+            DAOpes.salvar(pessoa);
 
-                StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO Aluno(alu_semestre, alu_pes_id, alu_cur_id)");
-                sql.append(" VALUES (?,?,?)");		
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO alunos(alu_semestre, alu_pes_id, alu_cur_id)");
+            sql.append(" VALUES (?,?,?)");
 
-                pst = conexao.prepareStatement(sql.toString());
-                pst.setInt(1, aluno.getSemestre());
-                pst.setInt(2, pessoa.getId());
-                pst.setInt(3, aluno.getCurso_id());
-                pst.executeUpdate();			
-                conexao.commit();		
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, aluno.getSemestre());
+            pst.setInt(2, pessoa.getId());
+            pst.setInt(3, aluno.getCurso_id());
+            pst.executeUpdate();
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
-                try {
-                        conexao.rollback();
-                } catch (SQLException e1) {
-                        e1.printStackTrace();
-                }
-                e.printStackTrace();			
-        }finally{
-                try {
-                    closeConnection();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-        }		
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void alterar(EntidadeDominio entidade) {

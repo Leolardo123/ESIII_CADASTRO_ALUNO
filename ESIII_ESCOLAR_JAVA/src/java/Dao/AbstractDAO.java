@@ -29,8 +29,14 @@ public abstract class AbstractDAO implements IDAO{
         conexao = conn;
     }
     
-    protected void openConnection()throws ClassNotFoundException, SQLException{
-        if(conexao == null || conexao.isClosed()) conectar();
+    protected void openConnection(){
+        try{
+            if(conexao == null || conexao.isClosed()) conectar();
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+                e.printStackTrace();
+        }
     }
     
     protected static void closeConnection()throws SQLException{

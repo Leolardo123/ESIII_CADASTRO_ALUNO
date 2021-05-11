@@ -15,7 +15,7 @@ public class Endereco extends EntidadeDominio{
     private String cidade;
     private int numero;
     private String logradouro;
-    private String complemento;
+    private String complemento=null;
     
     public Endereco(){}
     

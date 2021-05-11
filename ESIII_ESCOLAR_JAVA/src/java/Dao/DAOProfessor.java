@@ -6,55 +6,55 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
-import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import Dominio.Professor;
 import java.sql.SQLException;
-
 /**
  *
  * @author Eu
  */
-public class DAOProfessor extends AbstractDAO{
-    public DAOProfessor(){}
-    
+public class DAOProfessor extends AbstractDAO {
+
+    public DAOProfessor() {
+    }
+
+    //concluido - falta testar
+    @Override
     public void salvar(EntidadeDominio entidade) {
-        Professor professor = (Professor)entidade;
-        Pessoa pessoa = (Pessoa)entidade;
-        Endereco endereco = pessoa.getEndereco();
+        Professor professor = (Professor) entidade;
+        Pessoa pessoa = (Pessoa) entidade;
 
         try {
-                conexao.setAutoCommit(false);	
-                DAOEndereco DAOend = new DAOEndereco();
-                DAOend.ctrlTransaction = false;
-                DAOend.salvar(endereco);
-                DAOPessoa DAOpes = new DAOPessoa();
-                DAOpes.salvar(pessoa);
+            conexao.setAutoCommit(false);
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.ctrlTransaction = false;
+            DAOpes.salvar(pessoa);
 
-                StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO Professor(pro_salario, pro_pes_id)");
-                sql.append(" VALUES (?,?)");		
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO professores(pro_salario, pro_pes_id)");
+            sql.append(" VALUES (?,?)");
 
-                pst = conexao.prepareStatement(sql.toString());
-                pst.setDouble(1, professor.getSalario());
-                pst.setInt(2, professor.getId());
-                pst.executeUpdate();			
-                conexao.commit();		
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setDouble(1, professor.getSalario());
+            pst.setInt(2, professor.getId());
+            pst.executeUpdate();
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
-                try {
-                        conexao.rollback();
-                } catch (SQLException e1) {
-                        e1.printStackTrace();
-                }
-                e.printStackTrace();			
-        }finally{
-                try {
-                    closeConnection();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-        }	
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void alterar(EntidadeDominio entidade) {
