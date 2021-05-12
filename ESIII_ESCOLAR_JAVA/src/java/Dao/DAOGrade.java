@@ -17,6 +17,8 @@ import java.util.List;
 public class DAOGrade extends AbstractDAO {
 
     public DAOGrade() {
+        table = "grade_curso";
+        id_table = "gra_id";
     }
 
     //concluido - falta testar
@@ -68,7 +70,4 @@ public class DAOGrade extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

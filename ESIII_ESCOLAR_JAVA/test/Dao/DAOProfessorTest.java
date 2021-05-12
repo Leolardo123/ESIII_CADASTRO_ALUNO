@@ -48,13 +48,25 @@ public class DAOProfessorTest {
      */
     @Test
     public void testSalvar() throws ParseException {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date data = formato.parse("25/12/1967");
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        Date data = formato.parse("25-12-1967");
         Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
         Professor professor = new Professor(1500.00,"123675677", "45644411", "Leonardo", 
             "Takeshi", "leo_takeshi@gmail.com", data, endereco);
         
         DAOProfessor DAOpro = new DAOProfessor();
         DAOpro.salvar(professor);
+    }
+    
+    @Test
+    public void testExcluir() throws ParseException{;
+                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        Date data = formato.parse("25-12-1967");
+        Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
+        Professor professor = new Professor(1500.00,"123675677", "45644411", "Leonardo", 
+            "Takeshi", "leo_takeshi@gmail.com", data, endereco);
+        
+        DAOProfessor DAOpro = new DAOProfessor();
+        DAOpro.excluir(professor);
     }
 }

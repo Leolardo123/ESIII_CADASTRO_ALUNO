@@ -18,6 +18,8 @@ import java.util.List;
 public class DAOProfessor extends AbstractDAO {
 
     public DAOProfessor() {
+        table = "professores";
+        id_table = "pro_pes_id";
     }
 
     //concluido - falta testar
@@ -27,6 +29,7 @@ public class DAOProfessor extends AbstractDAO {
         Pessoa pessoa = (Pessoa) entidade;
 
         try {
+            openConnection();
             conexao.setAutoCommit(false);
             DAOPessoa DAOpes = new DAOPessoa();
             DAOpes.ctrlTransaction = false;
@@ -66,7 +69,4 @@ public class DAOProfessor extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

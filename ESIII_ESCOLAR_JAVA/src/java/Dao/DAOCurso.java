@@ -19,6 +19,8 @@ import java.util.List;
 public class DAOCurso extends AbstractDAO {
 
     public DAOCurso() {
+        table = "cursos";
+        id_table = "cur_id";
     }
 
     //Concluido - falta testar
@@ -66,7 +68,4 @@ public class DAOCurso extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

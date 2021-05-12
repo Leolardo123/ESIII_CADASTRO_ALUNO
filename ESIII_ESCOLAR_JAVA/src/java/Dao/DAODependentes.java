@@ -18,6 +18,8 @@ import java.util.List;
 public class DAODependentes extends AbstractDAO {
 
     public DAODependentes() {
+        table = "dependentes";
+        id_table = "dep_materia_id";
     }
 
     //concluido - falta testar
@@ -47,13 +49,10 @@ public class DAODependentes extends AbstractDAO {
             }
             e.printStackTrace();
         } finally {
-            if (ctrlTransaction) {
-                try {
-                    closeConnection();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -66,7 +65,4 @@ public class DAODependentes extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

@@ -8,7 +8,6 @@ package Dao;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -73,11 +72,13 @@ public class DAOEnderecoTest {
             System.out.println("---------------------------------------------------------------------------");
         }
     }
-//    
-//    public void testExcluir() throws ParseException {
-//        Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
-//        
-//        DAOEndereco DAOend = new DAOEndereco();
-//        DAOend.excluir(endereco);
-//    }
+    
+    @Test
+    public void testExcluir() throws ParseException {;
+        Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
+        endereco.setId(3);
+        
+        DAOEndereco DAOend = new DAOEndereco();
+        DAOend.excluir(endereco);
+    };
 }

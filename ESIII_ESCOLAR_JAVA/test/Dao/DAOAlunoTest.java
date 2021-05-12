@@ -59,6 +59,7 @@ public class DAOAlunoTest {
         DAOalu.salvar(aluno);
     }
     
+    @Test
     public void testAlterar() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
@@ -71,7 +72,8 @@ public class DAOAlunoTest {
         DAOalu.alterar(aluno);
     }
     
-    public void testDeletar() throws ParseException {
+    @Test
+    public void testExcluir() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
         Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
@@ -80,6 +82,6 @@ public class DAOAlunoTest {
             1 , 0);
         
         DAOAluno DAOalu = new DAOAluno();
-        DAOalu.salvar(aluno);
+        DAOalu.excluir(aluno);
     }
 }

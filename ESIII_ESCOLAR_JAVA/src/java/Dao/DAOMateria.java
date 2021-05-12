@@ -17,6 +17,8 @@ import java.util.List;
 public class DAOMateria extends AbstractDAO {
 
     public DAOMateria() {
+        table = "materias";
+        id_table = "mat_id";
     }
 
     //concluido - falta testar
@@ -69,7 +71,4 @@ public class DAOMateria extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

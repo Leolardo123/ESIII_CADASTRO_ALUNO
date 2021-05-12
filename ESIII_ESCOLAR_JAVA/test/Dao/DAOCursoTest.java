@@ -52,4 +52,14 @@ public class DAOCursoTest {
         dao.salvar(curso);
     }
     
+    @Test
+    public void testExcluir(){;
+        Curso curso;
+        curso = new Curso("Administração", "Curso de TI","Tecnologo",48, 240.00);
+        curso.setId(1);
+        
+        DAOCurso dao = new DAOCurso();
+        dao.excluir(curso);
+    }
+    
 }

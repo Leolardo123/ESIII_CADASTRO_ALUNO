@@ -20,11 +20,14 @@ public class GradeCurso  extends EntidadeDominio{
     
     public GradeCurso(){}
     
-    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo){
+    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo, int curso_id, int materia_id, int professor_id){
         this.obrigatorio = obrigatorio;
         this.dia_semana = dia_semana;
         this.turno = turno;
         this.periodo = periodo;
+        this.curso_id = curso_id;
+        this.materia_id = materia_id;
+        this.professor_id = professor_id;
     }
 
     public boolean isObrigatorio() {

@@ -8,13 +8,11 @@ package Dao;
 import static Dao.AbstractDAO.conexao;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
-import Dominio.Pessoa;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 /**
  *
  * @author Eu
@@ -22,6 +20,8 @@ import javax.swing.JOptionPane;
 public class DAOEndereco extends AbstractDAO {
 
     public DAOEndereco() {
+        table = "enderecos";
+        id_table = "end_id";
     }
 
     //concluido - falta testar
@@ -123,7 +123,4 @@ public class DAOEndereco extends AbstractDAO {
         return null;
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

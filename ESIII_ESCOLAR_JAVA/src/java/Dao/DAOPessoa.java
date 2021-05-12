@@ -6,13 +6,13 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
-import Dominio.Aluno;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 /**
  *
@@ -21,6 +21,8 @@ import java.util.List;
 public class DAOPessoa extends AbstractDAO {
 
     public DAOPessoa() {
+        table = "pessoas";
+        id_table = "pes_id";
     }
 
     //concluido - falta testar
@@ -40,15 +42,22 @@ public class DAOPessoa extends AbstractDAO {
             sql.append("pes_email, pes_dtnascimento, pes_end_id)");
             sql.append(" VALUES (?,?,?,?,?,?,?)");
 
-            pst = conexao.prepareStatement(sql.toString());
+            pst = conexao.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, pessoa.getPnome());
             pst.setString(2, pessoa.getUnome());
             pst.setString(3, pessoa.getCpf());
             pst.setString(4, pessoa.getRg());
             pst.setString(5, pessoa.getEmail());
-            pst.setDate(6, (Date) pessoa.getDtNascimento());
+            pst.setDate(6, new java.sql.Date(pessoa.getDtNascimento().getTime()));
             pst.setInt(7, pessoa.getEndereco().getId());
             pst.executeUpdate();
+            
+            ResultSet rs = pst.getGeneratedKeys();
+            int id=0;
+            if(rs.next())
+                    id = rs.getInt(1);
+            pessoa.setId(id);
+            
             conexao.commit();
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
@@ -112,7 +121,4 @@ public class DAOPessoa extends AbstractDAO {
         return null;
     }
 
-    public void excluir(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
