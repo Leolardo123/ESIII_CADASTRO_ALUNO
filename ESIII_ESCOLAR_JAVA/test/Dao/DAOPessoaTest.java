@@ -1,16 +1,13 @@
-package Dao;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package Dao;
 
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
-import Dominio.Professor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,13 +17,15 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 /**
  *
- * @author Eu
+ * @author 55119
  */
-public class DAOProfessorTest {
-    
-    public DAOProfessorTest() {
+public class DAOPessoaTest {
+            
+    public DAOPessoaTest() {
+        
     }
     
     @BeforeClass
@@ -46,21 +45,27 @@ public class DAOProfessorTest {
     }
 
     /**
-     * Test of salvar method, of class DAOProfessor.
+     * Test of salvar method, of class DAOAluno.
      * @throws java.text.ParseException
      */
     @Test
     public void testSalvar() throws ParseException {
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        Date data = formato.parse("25-12-1967");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = formato.parse("25/12/1967");
         Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
-        Professor professor = new Professor(1500.00,"123675677", "45644411", "Leonardo", 
+        Pessoa pessoa = new Pessoa("545615677", "45635644411", "Leonardo", 
             "Takeshi", "leo_takeshi@gmail.com", data, endereco);
         
-        DAOProfessor DAOpro = new DAOProfessor();
-        DAOpro.salvar(professor);
+        DAOPessoa DAOpes = new DAOPessoa();
+        DAOpes.salvar(pessoa);
     }
-    
+//    @Test
+//    public void testAlterar() throws ParseException {
+//        Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
+//        
+//        DAOEndereco DAOend = new DAOEndereco();
+//        DAOend.alterar(endereco);
+//    }
     @Test
     public void testConsultar() throws ParseException {
         Pessoa pessoa = new Pessoa(); 
@@ -94,14 +99,16 @@ public class DAOProfessorTest {
     }
     
     @Test
-    public void testExcluir() throws ParseException{;
-                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-        Date data = formato.parse("25-12-1967");
+    public void testExcluir() throws ParseException {;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = formato.parse("25/12/1967");
         Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
-        Professor professor = new Professor(1500.00,"123675677", "45644411", "Leonardo", 
+        Pessoa pessoa = new Pessoa("545675677", "45645644411", "Leonardo", 
             "Takeshi", "leo_takeshi@gmail.com", data, endereco);
         
-        DAOProfessor DAOpro = new DAOProfessor();
-        DAOpro.excluir(professor);
-    }
+        pessoa.setId(3);
+        
+        DAOPessoa DAOend = new DAOPessoa();
+        DAOend.excluir(endereco);
+    };
 }

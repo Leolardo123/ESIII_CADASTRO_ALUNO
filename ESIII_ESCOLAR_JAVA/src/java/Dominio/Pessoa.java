@@ -23,6 +23,17 @@ public class Pessoa extends EntidadeDominio {
     Endereco endereco;
     
     public Pessoa(){}
+    
+    public Pessoa(Pessoa pessoa){
+        this.cpf = pessoa.getCpf();
+        this.rg = pessoa.getRg();
+        this.pnome = pessoa.getPnome();
+        this.unome = pessoa.getUnome();
+        this.email = pessoa.getEmail();
+        this.dtNascimento = pessoa.getDtNascimento();
+        
+        this.endereco = pessoa.getEndereco();
+    }
 
     public Pessoa(String rg, String cpf, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco) {
@@ -58,14 +69,6 @@ public class Pessoa extends EntidadeDominio {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getDtnasciemento() {
-        return dtNascimento;
-    }
-
-    public void setDtnasciemento(Date dtNascimento) {
-        this.dtNascimento = dtNascimento;
     }
 
     public Endereco getEndereco() {

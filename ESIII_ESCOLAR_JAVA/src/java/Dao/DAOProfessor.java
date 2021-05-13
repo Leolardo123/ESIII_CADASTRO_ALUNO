@@ -9,7 +9,9 @@ import static Dao.AbstractDAO.conexao;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import Dominio.Professor;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -65,8 +67,48 @@ public class DAOProfessor extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<EntidadeDominio> consultar(int id) {
+        try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * FROM professores WHERE pro_pes_id = ?");
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> professores = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAOPessoa DAOpes = new DAOPessoa();
+               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("pro_pes_id")).get(0);
+
+               Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
+               professor.setId(rs.getInt("pro_id"));
+               professor.setDtcadastro(rs.getDate("pro_dtcadastro"));
+               
+               professores.add(professor);
+            }
+            
+            return professores;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }

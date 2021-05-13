@@ -7,12 +7,14 @@ package Dao;
 
 import static Dao.AbstractDAO.conexao;
 import Dominio.Endereco;
+import Dominio.Pessoa;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -28,7 +30,7 @@ public class DAOPessoa extends AbstractDAO {
     //concluido - falta testar
     @Override
     public void salvar(EntidadeDominio entidade) {
-        Pessoa pessoa = (Pessoa) entidade;
+        Pessoa   pessoa   = (Pessoa) entidade;
         Endereco endereco = pessoa.getEndereco();
 
         try {
@@ -49,10 +51,11 @@ public class DAOPessoa extends AbstractDAO {
             pst.setString(4, pessoa.getRg());
             pst.setString(5, pessoa.getEmail());
             pst.setDate(6, new java.sql.Date(pessoa.getDtNascimento().getTime()));
-            pst.setInt(7, pessoa.getEndereco().getId());
+            pst.setInt(7, endereco.getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
+            
             int id=0;
             if(rs.next())
                     id = rs.getInt(1);
@@ -83,30 +86,84 @@ public class DAOPessoa extends AbstractDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        Pessoa pessoa = (Pessoa) entidade;
-        Endereco endereco = pessoa.getEndereco();
-
+    public List<EntidadeDominio> consultar() {
         try {
+            openConnection();
+            
             conexao.setAutoCommit(false);
-            DAOEndereco DAOend = new DAOEndereco();
-            DAOend.ctrlTransaction = false;
-//            endereco = DAOend.consultar(endereco);
-
+            
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT * FROM pessoas WHERE pes_id = ?");
 
+            sql.append("SELECT * FROM pessoas");
             pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, pessoa.getId());
+ 
             ResultSet rs = pst.executeQuery();
             
+            List<EntidadeDominio> pessoas = new ArrayList<EntidadeDominio>();
+            
             while(rs.next()){
-               pessoa = new Pessoa();
+               DAOEndereco DAOend = new DAOEndereco();
+               Endereco endereco = (Endereco)DAOend.consultar(rs.getInt("pes_end_id")).get(0);
+               
+               Pessoa pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
+                       rs.getString("pes_unome"),rs.getString("pes_email"),rs.getDate("pes_dtnascimento"),endereco);
+               
+               pessoa.setId(rs.getInt("pes_id"));
+               pessoa.setDtcadastro(rs.getDate("pes_dtcadastro"));
+               
+               pessoas.add(pessoa);
             }
-
+            
+            return pessoas;
         } catch (SQLException e) {
             try {
-                System.out.println("Erro na inserção: " + e);
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    
+    public List<EntidadeDominio> consultar(int id){
+        try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * FROM pessoas WHERE pes_id = ?");
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> pessoas = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAOEndereco DAOend = new DAOEndereco();
+               Endereco endereco = (Endereco)DAOend.consultar(rs.getInt("pes_end_id")).get(0);
+               
+               Pessoa pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
+                       rs.getString("pes_unome"),rs.getString("pes_email"),rs.getDate("pes_dtnascimento"),endereco);
+               
+               pessoa.setId(rs.getInt("pes_id"));
+               pessoa.setDtcadastro(rs.getDate("pes_dtcadastro"));
+               
+               pessoas.add(pessoa);
+            }
+            
+            return pessoas;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
                 conexao.rollback();
             } catch (SQLException e1) {
             }

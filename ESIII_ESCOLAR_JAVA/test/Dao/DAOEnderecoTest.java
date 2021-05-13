@@ -74,6 +74,23 @@ public class DAOEnderecoTest {
     }
     
     @Test
+    public void testConsultarId() throws ParseException {
+        int id = 1;
+        
+        Endereco endereco = new Endereco();
+        
+        DAOEndereco DAOend = new DAOEndereco();
+        List<EntidadeDominio> EntidadesEndereco = DAOend.consultar(id);
+        
+        for(int i=0;i<EntidadesEndereco.size();i++){
+            endereco = (Endereco)EntidadesEndereco.get(i);
+            System.out.println(endereco.getCep()+"\n"+endereco.getCidade()+"\n"+endereco.getEstado()+"\n"
+                +endereco.getComplemento()+"\n"+endereco.getLogradouro());
+            System.out.println("id---------------------------------------------------------------------------");
+        }
+    }
+    
+    @Test
     public void testExcluir() throws ParseException {;
         Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
         endereco.setId(3);

@@ -14,6 +14,11 @@ import java.util.Date;
 public class Professor extends Pessoa {
     private double salario;
 
+    public Professor(Pessoa pessoa,double salario) {
+        super(pessoa);
+        this.salario = salario;
+    }
+    
     public Professor(double salario, String rg, String cpf, 
         String pnome, String unome, String email, Date dtNascimento, Endereco endereco) {
         super(rg, cpf, pnome, unome, email, dtNascimento, endereco);
@@ -25,6 +30,14 @@ public class Professor extends Pessoa {
     }
 
     public void setSalario(double salario) {
+        this.salario = salario;
+    }
+    
+    public double getPessoa() {
+        return salario;
+    }
+
+    public void setPessoa(double salario) {
         this.salario = salario;
     }
 }

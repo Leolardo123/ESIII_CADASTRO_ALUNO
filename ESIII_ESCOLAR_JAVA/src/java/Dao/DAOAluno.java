@@ -6,10 +6,15 @@
  */
 package Dao;
 
+import static Dao.AbstractDAO.conexao;
 import Dominio.Aluno;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
+import Dominio.Professor;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 /**
  *
@@ -64,9 +69,91 @@ public class DAOAluno extends AbstractDAO {
     public void alterar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+        public List<EntidadeDominio> consultar() {
+                try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
 
-    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            sql.append("SELECT * FROM alunos");
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> alunos = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAOPessoa DAOpes = new DAOPessoa();
+               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
+
+               Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
+               aluno.setId(rs.getInt("alu_id"));
+               aluno.setDtcadastro(rs.getDate("alu_dtcadastro"));
+               
+               alunos.add(aluno);
+            }
+            
+            return alunos;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
+    public List<EntidadeDominio> consultar(int id) {
+                try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * FROM alunos WHERE alu_pes_id = ?");
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> alunos = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAOPessoa DAOpes = new DAOPessoa();
+               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
+
+               Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
+               aluno.setId(rs.getInt("alu_id"));
+               aluno.setDtcadastro(rs.getDate("alu_dtcadastro"));
+               
+               alunos.add(aluno);
+            }
+            
+            return alunos;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

@@ -15,19 +15,19 @@ public class Aluno extends Pessoa{
     private int semestre;
     private int curso_id;
     
+    public Aluno() {}
+    
+    public Aluno(Pessoa pessoa,int semestre, int curso_id) {
+        super(pessoa);
+        this.semestre = semestre;
+        this.curso_id = curso_id;
+    }
+    
     public Aluno(String rg, String cpf, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco,
             int semestre, int curso_id){
         
         super(rg, cpf, pnome, unome, email, dtNascimento, endereco);
-        this.semestre = semestre;
-        this.curso_id = curso_id;
-    }
-    
-    public Aluno(Pessoa pessoa,int semestre, int curso_id){
-        
-        super(pessoa.getRg(), pessoa.getCpf(), pessoa.getPnome(), pessoa.getUnome(),
-                pessoa.getEmail(), pessoa.getDtNascimento(), pessoa.getEndereco());
         this.semestre = semestre;
         this.curso_id = curso_id;
     }

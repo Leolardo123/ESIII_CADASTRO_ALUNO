@@ -5,6 +5,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 /**
  *
  * @author 55119
@@ -13,7 +15,7 @@ public class Materia extends EntidadeDominio{
     private String nome;
     private String descricao;
     private int carga_horaria;
-    private int dependencia;
+    private EntidadeDominio dependencia;
     
     public Materia(String nome, String descricao, int carga_horaria, int dependencia){
         this.nome = nome;
