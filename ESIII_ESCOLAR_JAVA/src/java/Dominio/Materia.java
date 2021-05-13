@@ -17,7 +17,7 @@ public class Materia extends EntidadeDominio{
     private int carga_horaria;
     private EntidadeDominio dependencia;
     
-    public Materia(String nome, String descricao, int carga_horaria, int dependencia){
+    public Materia(String nome, String descricao, int carga_horaria, EntidadeDominio dependencia){
         this.nome = nome;
         this.descricao = descricao;
         this.carga_horaria = carga_horaria;
