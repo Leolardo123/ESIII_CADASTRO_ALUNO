@@ -15,9 +15,17 @@ public class Materia extends EntidadeDominio{
     private String nome;
     private String descricao;
     private int carga_horaria;
-    private EntidadeDominio dependencia;
+    private Materia dependencia;
     
-    public Materia(String nome, String descricao, int carga_horaria, EntidadeDominio dependencia){
+    public Materia(){}
+    
+    public Materia(String nome, String descricao, int carga_horaria){
+        this.nome = nome;
+        this.descricao = descricao;
+        this.carga_horaria = carga_horaria;
+    }
+    
+    public Materia(String nome, String descricao, int carga_horaria, Materia dependencia){
         this.nome = nome;
         this.descricao = descricao;
         this.carga_horaria = carga_horaria;
@@ -48,11 +56,11 @@ public class Materia extends EntidadeDominio{
         this.carga_horaria = carga_horaria;
     }
 
-    public int getDependencia() {
+    public Materia getDependencia() {
         return dependencia;
     }
 
-    public void setDependencia(int dependencia) {
+    public void setDependencia(Materia dependencia) {
         this.dependencia = dependencia;
     }
 }

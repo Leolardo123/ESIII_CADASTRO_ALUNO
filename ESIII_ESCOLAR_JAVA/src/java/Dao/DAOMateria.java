@@ -35,6 +35,7 @@ public class DAOMateria extends AbstractDAO {
             conexao.setAutoCommit(false);
             DAODependentes DAOdep = new DAODependentes();
             DAOdep.ctrlTransaction = false;
+       
 
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO materias(mat_nome, mat_descricao, mat_carga_horaria)");
@@ -44,6 +45,8 @@ public class DAOMateria extends AbstractDAO {
             pst.setString(1, materia.getNome());
             pst.setString(2, materia.getDescricao());
             pst.setInt(3, materia.getCarga_horaria());
+
+            DAOdep.salvar(materia);
             pst.executeUpdate();
 
             DAOdep.salvar(materia);
@@ -87,14 +90,15 @@ public class DAOMateria extends AbstractDAO {
             
             List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();
             
-            while(rs.next()){
-               Materia materia = new Materia(rs.getString("mat_cpf"),rs.getString("pes_rg"),rs.getInt("pes_pnome"),
-                       rs.getInt("pes_unome"));
-               
-               materia.setId(rs.getInt("mat_id"));
-               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
-               
-               materias.add(materia);
+            while(rs.next()){   
+                
+//               Materia materia = new Materia(rs.getString("mat_cpf"),rs.getString("pes_rg"),rs.getInt("pes_pnome"),
+//                       );
+//               
+//               materia.setId(rs.getInt("mat_id"));
+//               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+//               
+//               materias.add(materia);
             }
             
             return materias;
@@ -131,13 +135,13 @@ public class DAOMateria extends AbstractDAO {
             List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
-               Materia materia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
-                       rs.getInt("mat_carga_horaria"),rs.getInt("pes_unome"));
-               
-               materia.setId(rs.getInt("mat_id"));
-               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
-               
-               materias.add(materia);
+//               Materia materia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
+//                       rs.getInt("mat_carga_horaria"),rs.getInt("pes_unome"));
+//               
+//               materia.setId(rs.getInt("mat_id"));
+//               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+//               
+//               materias.add(materia);
             }
             
             return materias;

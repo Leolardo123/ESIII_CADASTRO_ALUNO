@@ -31,14 +31,16 @@ public class DAODependentes extends AbstractDAO {
             Materia materia = (Materia) entidade;
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO dependentes(dep_materia_id, dep_dependencia_id)");
+            sql.append("INSERT INTO dependentes(dep_dependente_id, dep_dependencia_id)");
             sql.append(" VALUES (?,?)");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, materia.getId());
-            pst.setInt(2, materia.getDependencia());
+            pst.setInt(2, materia.getDependencia().getId());
             pst.executeUpdate();
+            
             conexao.commit();
+            
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {

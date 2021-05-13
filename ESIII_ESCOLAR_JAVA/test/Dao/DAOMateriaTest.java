@@ -41,15 +41,19 @@ public class DAOMateriaTest {
      */
     @Test
     public void testSalvar() {
-        Materia materia = new Materia("Administração", "adm", 120, 1);
+        Materia dependencia = new Materia("Administração", "adm", 120);
         
         DAOMateria dao = new DAOMateria();
+        dao.salvar(dependencia);
+        
+        Materia materia = new Materia("Matemática básica", "mab", 80,dependencia);
+   
         dao.salvar(materia);
     }
 
     @Test
     public void testExcluir() {
-        Materia materia = new Materia("Administração", "adm", 120, 1);
+        Materia materia = new Materia("Administração", "adm", 120);
         materia.setId(1);
         
         DAOMateria dao = new DAOMateria();
