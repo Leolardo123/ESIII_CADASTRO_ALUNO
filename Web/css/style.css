@@ -1,0 +1,19 @@
+label{
+    font-size: 12px;
+}
+
+/* Table */
+
+/* Grade */
+.grade-form-thead tr th, .grade-form-td-values{
+    border: 1px solid black;
+}
+
+.grade-form-td-title{
+    text-align: center;
+    border: 1px solid black;
+}
+
+/* Grade */
+
+/* Table */
