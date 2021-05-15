@@ -24,20 +24,21 @@ public class DAODependentes extends AbstractDAO {
 
     //concluido - falta testar
     @Override
-    public void salvar(EntidadeDominio entidade) {
-
+    public void salvar(EntidadeDominio entidade) {//Espera receber uma entidade de uma matéria!
         try {
             openConnection();
             Materia materia = (Materia) entidade;
+            
+            for(Materia dependencia:materia.getDependencias()){
+                StringBuilder sql = new StringBuilder();
+                sql.append("INSERT INTO "+table+"(dep_materia_id, dep_dependencia_id)");
+                sql.append(" VALUES (?,?)");
 
-            StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO dependentes(dep_dependente_id, dep_dependencia_id)");
-            sql.append(" VALUES (?,?)");
-
-            pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, materia.getId());
-            pst.setInt(2, materia.getDependencia().getId());
-            pst.executeUpdate();
+                pst = conexao.prepareStatement(sql.toString());
+                pst.setInt(1, materia.getId());
+                pst.setInt(2, dependencia.getId());
+                pst.executeUpdate();
+            }
             
             conexao.commit();
             
@@ -62,8 +63,12 @@ public class DAODependentes extends AbstractDAO {
     public void alterar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public List<EntidadeDominio> consultar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+    public List<EntidadeDominio> consultar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

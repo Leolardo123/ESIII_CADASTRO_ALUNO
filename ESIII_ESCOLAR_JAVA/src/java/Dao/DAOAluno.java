@@ -67,7 +67,40 @@ public class DAOAluno extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Aluno aluno = (Aluno) entidade;
+        Pessoa pessoa = (Pessoa) entidade;
+
+        try {
+            conexao.setAutoCommit(false);
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.ctrlTransaction = false;
+            DAOpes.salvar(pessoa);
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE alunos SET alu_semestre = ? alu_pes_id = ? alu_cur_id = ? WHERE alu_pes_id = ?");
+
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, aluno.getSemestre());
+            pst.setInt(2, pessoa.getId());
+            pst.setInt(3, aluno.getCurso_id());
+            pst.setInt(4, pessoa.getId());
+            pst.executeUpdate();
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
         public List<EntidadeDominio> consultar() {
@@ -121,7 +154,7 @@ public class DAOAluno extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM alunos WHERE alu_pes_id = ?");
+            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();

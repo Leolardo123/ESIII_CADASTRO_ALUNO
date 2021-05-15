@@ -12,6 +12,7 @@ import Dominio.Materia;
 import Dominio.Pessoa;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -41,16 +42,25 @@ public class DAOMateria extends AbstractDAO {
             sql.append("INSERT INTO materias(mat_nome, mat_descricao, mat_carga_horaria)");
             sql.append(" VALUES (?,?,?)");
 
-            pst = conexao.prepareStatement(sql.toString());
+            pst = conexao.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, materia.getNome());
             pst.setString(2, materia.getDescricao());
             pst.setInt(3, materia.getCarga_horaria());
-
-            DAOdep.salvar(materia);
+            
             pst.executeUpdate();
-
-            DAOdep.salvar(materia);
-
+            
+            ResultSet rs = pst.getGeneratedKeys();
+            
+            if(rs.next()){
+                int id = rs.getInt(1);
+                materia.setId(id);
+            }
+                
+            
+            if(materia.getDependencias()!=null){
+               DAOdep.salvar(materia);
+            }
+            
             conexao.commit();
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
@@ -73,8 +83,8 @@ public class DAOMateria extends AbstractDAO {
     public void alterar(EntidadeDominio entidade) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public List<EntidadeDominio> consultar(int id) {
+    
+    public List<EntidadeDominio> consultar(int id){
         try {
             openConnection();
             
@@ -82,23 +92,28 @@ public class DAOMateria extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM materias WHERE mat_id = ?");
-            pst.setInt(1,id);
+            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
             pst = conexao.prepareStatement(sql.toString());
- 
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();
             
-            while(rs.next()){   
-                
-//               Materia materia = new Materia(rs.getString("mat_cpf"),rs.getString("pes_rg"),rs.getInt("pes_pnome"),
-//                       );
-//               
-//               materia.setId(rs.getInt("mat_id"));
-//               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
-//               
-//               materias.add(materia);
+            while(rs.next()){
+               DAODependentes DAOdep = new DAODependentes();
+               List<EntidadeDominio> EntidadeDependencias = DAOdep.consultar(rs.getInt("mat_id"));
+               
+               List<Materia> dependencias = new ArrayList();
+               for(EntidadeDominio entidadeMateria: EntidadeDependencias){//recupera cada materia que contém a partir da entidadeDominio
+                   dependencias.add((Materia)entidadeMateria);
+               }
+               
+               Materia materia = new Materia(rs.getString("mat_nome"), rs.getString("mat_descricao"), 
+                                             rs.getInt("mat_carga_horaria"), dependencias);
+               
+               materia.setId(rs.getInt("mat_id"));
+               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+               
+               materias.add(materia);
             }
             
             return materias;
@@ -119,7 +134,7 @@ public class DAOMateria extends AbstractDAO {
         return null;
     }
     
-    public List<EntidadeDominio> consultar() {
+    public List<EntidadeDominio> consultar(){
         try {
             openConnection();
             
@@ -127,21 +142,28 @@ public class DAOMateria extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM materias");
+            sql.append("SELECT * FROM "+table);
             pst = conexao.prepareStatement(sql.toString());
- 
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
-//               Materia materia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
-//                       rs.getInt("mat_carga_horaria"),rs.getInt("pes_unome"));
-//               
-//               materia.setId(rs.getInt("mat_id"));
-//               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
-//               
-//               materias.add(materia);
+               DAODependentes DAOdep = new DAODependentes();
+               List<EntidadeDominio> EntidadeDependencias = DAOdep.consultar(rs.getInt("mat_id"));
+               
+               List<Materia> dependencias = new ArrayList();
+               for(EntidadeDominio entidadeMateria: EntidadeDependencias){//recupera cada materia que contém a partir da entidadeDominio
+                   dependencias.add((Materia)entidadeMateria);
+               }
+               
+               Materia materia = new Materia(rs.getString("mat_nome"), rs.getString("mat_descricao"), 
+                                             rs.getInt("mat_carga_horaria"), dependencias);
+               
+               materia.setId(rs.getInt("mat_id"));
+               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+               
+               materias.add(materia);
             }
             
             return materias;

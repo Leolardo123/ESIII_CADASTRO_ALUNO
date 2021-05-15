@@ -8,6 +8,8 @@ package Dao;
 
 
 import Dominio.Curso;
+import Dominio.EntidadeDominio;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,6 +45,55 @@ public class DAOCursoTest {
      * @throws java.lang.ClassNotFoundException
      * @throws java.sql.SQLException
      */
+    
+        @Test
+    public void testConsultar(){
+        int id = 1;
+        
+        DAOCurso dao = new DAOCurso();
+        List<EntidadeDominio> cursos = dao.consultar(id);
+        
+        for(int i=0;i<cursos.size();i++){
+            Curso curso = (Curso)cursos.get(i);
+            
+            System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
+                +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
+            
+            System.out.println("\n------------------------------------------------------------------------------");
+            
+        }
+    }
+    
+    @Test
+    public void testConsultarId(){;
+        int id = 1;
+        
+        DAOCurso dao = new DAOCurso();
+        Curso curso = (Curso)dao.consultar(id).get(0);
+        
+        System.out.println("\nID------------------------------------------------------------------------------");
+        System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
+                +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
+        System.out.println("\nID------------------------------------------------------------------------------");
+    }
+    
+
+    
+    @Test
+    public void testAlterar(){;
+        Curso curso;
+        curso = new Curso("Administração", "Curso de TI","Tecnologo",48, 240.00);
+        DAOCurso dao = new DAOCurso();
+        
+        dao.salvar(curso);
+        
+        curso.setId(999);
+        
+        curso.setDescricao("Curso de Humanas");
+        
+        dao.alterar(curso);
+    }
+    
     @Test
     public void testSalvar(){;
         Curso curso;
@@ -56,7 +107,7 @@ public class DAOCursoTest {
     public void testExcluir(){;
         Curso curso;
         curso = new Curso("Administração", "Curso de TI","Tecnologo",48, 240.00);
-        curso.setId(1);
+        curso.setId(999);
         
         DAOCurso dao = new DAOCurso();
         dao.excluir(curso);

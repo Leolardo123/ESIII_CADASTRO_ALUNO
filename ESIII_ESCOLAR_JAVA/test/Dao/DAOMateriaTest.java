@@ -5,7 +5,10 @@
  */
 package Dao;
 
+import Dominio.EntidadeDominio;
 import Dominio.Materia;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,9 +49,67 @@ public class DAOMateriaTest {
         DAOMateria dao = new DAOMateria();
         dao.salvar(dependencia);
         
-        Materia materia = new Materia("Matemática básica", "mab", 80,dependencia);
+        List<Materia> dependencias = new ArrayList<Materia>();
+        dependencias.add(dependencia);
+        
+        Materia materia = new Materia("Matemática básica", "mab", 80,dependencias);
    
         dao.salvar(materia);
+    }
+    
+    @Test
+    public void testConsultar() {
+        DAOMateria dao = new DAOMateria();
+        Materia materia;
+        
+        List<EntidadeDominio> entidadesMaterias = dao.consultar();
+        
+        for(EntidadeDominio entidade: entidadesMaterias){
+            materia = (Materia)entidade;
+            
+            System.out.println("---------------------------------------------------");
+            System.out.println(materia.getNome()+"\n"+materia.getDescricao()+
+                               "\n"+materia.getCarga_horaria()+"\n"+materia.getId()+"\n"+materia.getDtcadastro()+"\n");
+            
+            if(materia.getDependencias()!=null){//Exibe nome das dependencias
+                List<Materia> dependencias = materia.getDependencias();
+                
+                System.out.println("---Dependencias---");
+                for(Materia dependencia: dependencias){
+                    System.out.println(dependencia.getNome());
+                }
+            }
+            System.out.println("---------------------------------------------------");
+        }
+    }
+    
+    @Test
+    public void testConsultarId() {
+        DAOMateria dao = new DAOMateria();
+        Materia materia;
+    
+        int id = 1;
+        
+        List<EntidadeDominio> entidadesMaterias = dao.consultar(id);
+        
+        for(EntidadeDominio entidade: entidadesMaterias){
+            materia = (Materia)entidade;
+            System.out.println("---------------------------------------------------");
+            System.out.println("ID");
+            System.out.println("---------------------------------------------------");
+            System.out.println(materia.getNome()+"\n"+materia.getDescricao()+
+                               "\n"+materia.getCarga_horaria()+"\n"+materia.getId()+"\n"+materia.getDtcadastro()+"\n");
+            
+            if(materia.getDependencias()!=null){//Exibe nome das dependencias
+                List<Materia> dependencias = materia.getDependencias();
+                
+                System.out.println("---Dependencias---");
+                for(Materia dependencia: dependencias){
+                    System.out.println(dependencia.getNome());
+                }
+            }
+            System.out.println("---------------------------------------------------");
+        }
     }
 
     @Test
