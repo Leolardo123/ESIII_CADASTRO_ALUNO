@@ -21,7 +21,6 @@ public class Fachada implements IFachada {
     private Map<String, IDAO> daos;
 
     //private Map<String, List<IStrategy>> rns;
-
     public Fachada() {
         definirDAOS();
         //definirRNS();
@@ -29,7 +28,8 @@ public class Fachada implements IFachada {
     }
 
     // Strategy a ser implementado
-    private void definirRNS() {}
+    private void definirRNS() {
+    }
 
     private void definirDAOS() {
         daos = new HashMap<String, IDAO>();
@@ -44,14 +44,22 @@ public class Fachada implements IFachada {
     // Strategy a ser implementado
     @Override
     public String cadastrar(EntidadeDominio entidade) {
+        String nmClasse = entidade.getClass().getName();
+        String msg = executarRegras(entidade);
+        if (msg == null) {
+            IDAO dao = daos.get(nmClasse);
+            dao.salvar(entidade);
+        } else {
+            return msg;
+        }
         return null;
     }
 
     // Strategy a ser implementado
-	private String executarRegras(EntidadeDominio entidade) {      
-            return null;
-	}
-        
+    private String executarRegras(EntidadeDominio entidade) {
+        return null;
+    }
+
     @Override
     public String excluir(EntidadeDominio entidade) {
         // TODO Auto-generated method stub
