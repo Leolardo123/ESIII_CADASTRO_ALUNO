@@ -6,9 +6,12 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Materia;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ public class DAODependentes extends AbstractDAO {
 
     public DAODependentes() {
         table = "dependentes";
-        id_table = "dep_materia_id";
+        id_table = "dep_dependencia_id";
     }
 
     //concluido - falta testar
@@ -65,11 +68,87 @@ public class DAODependentes extends AbstractDAO {
     }
     
     public List<EntidadeDominio> consultar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * FROM "+table+" LEFT JOIN materias ON mat_id = "+id_table);
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> dependencias = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               Materia dependencia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
+                                                 rs.getInt("mat_carga_horaria"));
+               
+               dependencia.setId(rs.getInt("mat_id"));
+               dependencia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+               
+               dependencias.add(dependencia);
+            }
+            
+            return dependencias;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public List<EntidadeDominio> consultar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("SELECT * FROM "+table+" LEFT JOIN materias ON mat_id = "+id_table+" WHERE mat_id = "+id);
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> dependencias = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               Materia dependencia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
+                                                 rs.getInt("mat_carga_horaria"));
+               
+               dependencia.setId(rs.getInt("mat_id"));
+               dependencia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+               
+               dependencias.add(dependencia);
+            }
+            
+            return dependencias;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }

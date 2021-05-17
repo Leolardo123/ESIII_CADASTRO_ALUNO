@@ -32,7 +32,7 @@ public class DAOEndereco extends AbstractDAO {
             Endereco end = (Endereco) entidade;
             StringBuilder sql = new StringBuilder();
 
-            sql.append("INSERT INTO enderecos(end_cep, end_estado, end_cidade, end_numero, ");
+            sql.append("INSERT INTO "+table+"(end_cep, end_estado, end_cidade, end_numero, ");
             sql.append("end_logradouro, end_complemento)");
             sql.append(" VALUES (?, ?, ?, ?, ?,?)");
             conexao.setAutoCommit(false);
@@ -90,7 +90,7 @@ public class DAOEndereco extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM enderecos");
+            sql.append("SELECT * FROM "+table);
 
             pst = conexao.prepareStatement(sql.toString());
  
@@ -134,7 +134,7 @@ public class DAOEndereco extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM enderecos WHERE end_id = ?");
+            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();

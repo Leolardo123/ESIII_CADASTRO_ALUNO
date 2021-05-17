@@ -94,6 +94,7 @@ public class DAOMateria extends AbstractDAO {
 
             sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
             pst = conexao.prepareStatement(sql.toString());
+            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();

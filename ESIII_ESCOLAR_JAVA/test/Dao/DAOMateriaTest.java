@@ -44,16 +44,13 @@ public class DAOMateriaTest {
      */
     @Test
     public void testSalvar() {
-        Materia dependencia = new Materia("Administração", "adm", 120);
+        Materia materia = new Materia("Administração", "ADM", 120);
         
         DAOMateria dao = new DAOMateria();
-        dao.salvar(dependencia);
+        dao.salvar(materia);
         
-        List<Materia> dependencias = new ArrayList<Materia>();
-        dependencias.add(dependencia);
+        materia = new Materia("Matemagica", "MAT", 120);
         
-        Materia materia = new Materia("Matemática básica", "mab", 80,dependencias);
-   
         dao.salvar(materia);
     }
     
@@ -67,23 +64,22 @@ public class DAOMateriaTest {
         for(EntidadeDominio entidade: entidadesMaterias){
             materia = (Materia)entidade;
             
-            System.out.println("---------------------------------------------------");
             System.out.println(materia.getNome()+"\n"+materia.getDescricao()+
                                "\n"+materia.getCarga_horaria()+"\n"+materia.getId()+"\n"+materia.getDtcadastro()+"\n");
             
-            if(materia.getDependencias()!=null){//Exibe nome das dependencias
+            if(materia.getDependencias().size()>0){//Exibe nome das dependencias
                 List<Materia> dependencias = materia.getDependencias();
                 
                 System.out.println("---Dependencias---");
                 for(Materia dependencia: dependencias){
-                    System.out.println(dependencia.getNome());
+                    System.out.println(dependencia.getNome()+":"+dependencia.getId());
                 }
             }
             System.out.println("---------------------------------------------------");
         }
     }
     
-    @Test
+//    @Test
     public void testConsultarId() {
         DAOMateria dao = new DAOMateria();
         Materia materia;
@@ -100,19 +96,19 @@ public class DAOMateriaTest {
             System.out.println(materia.getNome()+"\n"+materia.getDescricao()+
                                "\n"+materia.getCarga_horaria()+"\n"+materia.getId()+"\n"+materia.getDtcadastro()+"\n");
             
-            if(materia.getDependencias()!=null){//Exibe nome das dependencias
+            if(materia.getDependencias().size()>0){//Exibe nome das dependencias
                 List<Materia> dependencias = materia.getDependencias();
                 
                 System.out.println("---Dependencias---");
                 for(Materia dependencia: dependencias){
-                    System.out.println(dependencia.getNome());
+                    System.out.println(dependencia.getNome()+":"+dependencia.getId());
                 }
             }
             System.out.println("---------------------------------------------------");
         }
     }
 
-    @Test
+//    @Test
     public void testExcluir() {
         Materia materia = new Materia("Administração", "adm", 120);
         materia.setId(1);
