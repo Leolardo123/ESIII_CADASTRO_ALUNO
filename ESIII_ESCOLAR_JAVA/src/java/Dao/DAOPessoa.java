@@ -56,10 +56,10 @@ public class DAOPessoa extends AbstractDAO {
             
             ResultSet rs = pst.getGeneratedKeys();
             
-            int id=0;
-            if(rs.next())
-                    id = rs.getInt(1);
-            pessoa.setId(id);
+            if(rs.next()){
+                pessoa.setId(rs.getInt(id_table));
+            }
+            
             
             conexao.commit();
             System.out.println("cadastrado com sucesso");
@@ -83,7 +83,48 @@ public class DAOPessoa extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Pessoa   pessoa   = (Pessoa) entidade;
+        Endereco endereco =  pessoa.getEndereco();
+
+        try {
+            openConnection();
+            DAOEndereco DAOend = new DAOEndereco();
+            DAOend.ctrlTransaction = false;
+            DAOend.alterar(endereco);
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE pessoas SET pes_pnome = ?, pes_unome = ?, ");
+            sql.append("pes_email = ?, pes_dtnascimento = ?, pes_end_id = ?, pes_id = ?  WHERE pes_id = ? ");
+
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setString(1, pessoa.getPnome());
+            pst.setString(2, pessoa.getUnome());
+            pst.setString(3, pessoa.getEmail());
+            pst.setDate(4, new java.sql.Date(pessoa.getDtNascimento().getTime()));
+            pst.setInt(5, endereco.getId());
+            pst.setInt(6, pessoa.getId());
+            pst.setInt(7, pessoa.getId());
+            pst.executeUpdate();
+            
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            if (ctrlTransaction) {
+                try {
+                    closeConnection();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public List<EntidadeDominio> consultar() {

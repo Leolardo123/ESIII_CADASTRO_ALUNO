@@ -40,26 +40,27 @@ public class DAODependentesTest {
     }
 
     /**
-     * Test of salvar method, of class DAOMateria.
+     * Test of salvar method, of class DAODependentes.
      */
     @Test
     public void testSalvar() {
-        Materia dependencia = new Materia("Calculo I", "CAL1", 120);
-        
+        Materia dependencia = new Materia("Matemática básica", "MAB", 80);
+               
         DAOMateria dao = new DAOMateria();
+        dao.ctrlTransaction = false;
         dao.salvar(dependencia);
         
         List<Materia> dependencias = new ArrayList<Materia>();
         dependencias.add(dependencia);
         
-        Materia materia = new Materia("Matemática básica", "MAB", 80,dependencias);
-   
+        Materia materia = new Materia("Calculo I", "CAL1", 120,dependencias);
+        dao.ctrlTransaction = true;
         dao.salvar(materia);
     }
     
     @Test
     public void testConsultar() {
-        DAOMateria dao = new DAOMateria();
+        DAODependentes dao = new DAODependentes();
         Materia materia;
         
         List<EntidadeDominio> entidadesMaterias = dao.consultar();
@@ -101,7 +102,7 @@ public class DAODependentesTest {
         Materia materia = new Materia("Administração", "adm", 120);
         materia.setId(1);
         
-        DAOMateria dao = new DAOMateria();
+        DAODependentes dao = new DAODependentes();
         dao.excluir(materia);
     }
 }

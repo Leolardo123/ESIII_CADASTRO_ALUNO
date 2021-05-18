@@ -64,7 +64,40 @@ public class DAOProfessor extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Professor professor = (Professor) entidade;
+        Pessoa pessoa = (Pessoa) entidade;
+
+        try {
+            openConnection();
+            conexao.setAutoCommit(false);
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.ctrlTransaction = false;
+            DAOpes.alterar(pessoa);
+
+            StringBuilder sql = new StringBuilder();
+            sql.append(" UPDATE professores SET pro_salario = ?, pro_pes_id = ? WHERE pro_pes_id = ?");
+
+            pst = conexao.prepareStatement(sql.toString());
+            pst.setDouble(1, professor.getSalario());
+            pst.setInt(2, professor.getId());
+            pst.setInt(3, professor.getId());
+            pst.executeUpdate();
+            conexao.commit();
+            System.out.println("alterado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao alterar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public List<EntidadeDominio> consultar(int id) {
@@ -87,9 +120,8 @@ public class DAOProfessor extends AbstractDAO {
                Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("pro_pes_id")).get(0);
 
                Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
-               professor.setId(rs.getInt("pro_id"));
-               professor.setDtcadastro(rs.getDate("pro_dtcadastro"));
-               
+               professor.setId(pessoa.getId());
+               professor.setDtcadastro(pessoa.getDtcadastro());
                professores.add(professor);
             }
             
@@ -110,5 +142,45 @@ public class DAOProfessor extends AbstractDAO {
         }
         return null;
     }
+    public List<EntidadeDominio> consultar() {
+        try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
 
+            sql.append("SELECT * FROM professores");
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> professores = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAOPessoa DAOpes = new DAOPessoa();
+               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("pro_pes_id")).get(0);
+
+               Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
+               professor.setId(pessoa.getId());
+               professor.setDtcadastro(pessoa.getDtcadastro());
+               professores.add(professor);
+            }
+            
+            return professores;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

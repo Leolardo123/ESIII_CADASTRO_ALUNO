@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class Professor extends Pessoa {
     private double salario;
+    
+    public Professor(){}
 
     public Professor(Pessoa pessoa,double salario) {
         super(pessoa);

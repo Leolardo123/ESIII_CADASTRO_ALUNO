@@ -63,15 +63,19 @@ public class DAOProfessorTest {
     
     @Test
     public void testConsultar() throws ParseException {
-        Pessoa pessoa = new Pessoa(); 
+        Professor professor = new Professor();
         
-        DAOPessoa DAOpes = new DAOPessoa();
-        List<EntidadeDominio> EntidadesPessoa = DAOpes.consultar();
+        DAOProfessor dao = new DAOProfessor();
+        List<EntidadeDominio> EntidadesProfessor = dao.consultar();
         System.out.println("---------------------------------------------------------------------------");
-        for(int i=0;i<EntidadesPessoa.size();i++){
-            pessoa = (Pessoa)EntidadesPessoa.get(i);
-            System.out.println(pessoa.getRg()+"\n"+pessoa.getCpf()+"\n"+pessoa.getId()+"\n"
-                +pessoa.getPnome()+"\n"+pessoa.getUnome()+"\n"+pessoa.getDtNascimento());
+        for(int i=0;i<EntidadesProfessor.size();i++){
+            professor  = (Professor)EntidadesProfessor.get(i);
+            
+            System.out.println("Professor----------");
+            System.out.println("Salario:"+professor .getSalario());
+            System.out.println("Pessoa-------------");
+            System.out.println(professor.getRg()+"\n"+professor.getCpf()+"\n"+professor.getId()+"\n"
+                +professor.getPnome()+"\n"+professor.getUnome()+"\n"+professor.getDtNascimento());
             System.out.println("---------------------------------------------------------------------------");
         }
     }
@@ -80,16 +84,20 @@ public class DAOProfessorTest {
     public void testConsultarId() throws ParseException {
         int id = 1;
         
-        Pessoa pessoa = new Pessoa(); 
+        Professor professor = new Professor();
         
-        DAOPessoa DAOend = new DAOPessoa();
-        List<EntidadeDominio> EntidadesPessoa = DAOend.consultar(id);
-        
-        for(int i=0;i<EntidadesPessoa.size();i++){
-            pessoa = (Pessoa)EntidadesPessoa.get(i);
-            System.out.println(pessoa.getRg()+"\n"+pessoa.getCpf()+"\n"+pessoa.getId()+"\n"
-                +pessoa.getPnome()+"\n"+pessoa.getUnome()+"\n"+pessoa.getDtNascimento());
-            System.out.println("id---------------------------------------------------------------------------");
+        DAOProfessor dao = new DAOProfessor();
+        List<EntidadeDominio> EntidadesProfessor = dao.consultar(id);
+        System.out.println(    "---------------------------------------------------------------------------");
+        for(int i=0;i<EntidadesProfessor.size();i++){
+            professor  = (Professor)EntidadesProfessor.get(i);
+            
+            System.out.println("Professor----------");
+            System.out.println("Salario:"+professor .getSalario());
+            System.out.println("Pessoa-------------");
+            System.out.println(professor.getRg()+"\n"+professor.getCpf()+"\n"+professor.getId()+"\n"
+                +professor.getPnome()+"\n"+professor.getUnome()+"\n"+professor.getDtNascimento());
+            System.out.println("---------------------------------------------------------------------------");
         }
     }
     

@@ -51,7 +51,7 @@ public class DAOEndereco extends AbstractDAO {
             rs = pst.getGeneratedKeys();
             int idEnd = 0;
             if (rs.next()) {
-                idEnd = rs.getInt(1);
+                idEnd = rs.getInt(id_table);
             }
             end.setId(idEnd);
 
@@ -77,7 +77,44 @@ public class DAOEndereco extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try {
+            openConnection();
+            Endereco end = (Endereco) entidade;
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("INSERT INTO "+table+"end_cep = ?, end_estado = ?, end_cidade = ?, end_numero = ?, end_logradouro = ?, end_complemento = ? WHERE end_id = ?");
+            conexao.setAutoCommit(false);
+
+            pst = conexao.prepareStatement(sql.toString());
+
+            pst.setString(1, end.getCep());
+            pst.setString(2, end.getEstado());
+            pst.setString(3, end.getCidade());
+            pst.setInt(4, end.getNumero());
+            pst.setString(5, end.getLogradouro());
+            pst.setString(6, end.getComplemento());
+            pst.setInt(7, end.getId());
+            pst.executeUpdate();
+
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            if (ctrlTransaction) {
+                try {
+                    closeConnection();
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public List<EntidadeDominio> consultar() {

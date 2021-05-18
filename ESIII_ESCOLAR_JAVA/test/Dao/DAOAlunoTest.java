@@ -9,9 +9,11 @@ package Dao;
 
 import Dominio.Aluno;
 import Dominio.Endereco;
+import Dominio.EntidadeDominio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,8 +65,15 @@ public class DAOAlunoTest {
     public void testAlterar() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
-        Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
-        Aluno aluno = new Aluno("545675677", "45645644411", "Takeshi", 
+        Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
+        Aluno aluno = new Aluno("545675677", "45645644411", "Ldwdwrdo", 
+            "Takeshi", "leo_takeshi@gmail.com", data, endereco,
+            1 , 0);
+        
+        
+        data = formato.parse("25/12/1967");
+        endereco = new Endereco("084123111", "MG","Sei la",100,"Rua Spinner Splaining");
+        aluno = new Aluno("545675677", "45645444411", "Takeshi", 
             "Lopez", "jose@gmail.com", data, endereco,
             1 , 0);
         
@@ -83,5 +92,45 @@ public class DAOAlunoTest {
         
         DAOAluno DAOalu = new DAOAluno();
         DAOalu.excluir(aluno);
+    }
+    
+    @Test
+    public void testConsultar() throws ParseException {
+        Aluno aluno = new Aluno();
+        
+        DAOAluno dao = new DAOAluno();
+        List<EntidadeDominio> EntidadesAluno = dao.consultar();
+        System.out.println(    "---------------------------------------------------------------------------");
+        for(int i=0;i<EntidadesAluno.size();i++){
+            aluno  = (Aluno)EntidadesAluno.get(i);
+            
+            System.out.println("Aluno----------");
+            System.out.println("Semestre:"+aluno .getSemestre());
+            System.out.println("Curso:"+aluno .getCurso_id());
+            System.out.println("Pessoa-------------");
+            System.out.println("RG:"+aluno.getRg()+"\nCPF:\"+"+aluno.getCpf()+"\n"+aluno.getId()+"\n"
+                +aluno.getPnome()+" "+aluno.getUnome()+"\n"+aluno.getDtNascimento());
+            System.out.println("---------------------------------------------------------------------------");
+        }
+    }
+    
+    @Test
+    public void testConsultarId() throws ParseException {
+        Aluno aluno = new Aluno();
+        
+        DAOAluno dao = new DAOAluno();
+        List<EntidadeDominio> EntidadesAluno = dao.consultar();
+        System.out.println(    "---------------------------------------------------------------------------");
+        for(int i=0;i<EntidadesAluno.size();i++){
+            aluno  = (Aluno)EntidadesAluno.get(i);
+            
+            System.out.println("Aluno----------");
+            System.out.println("Semestre:"+aluno .getSemestre());
+            System.out.println("Curso:"+aluno .getCurso_id());
+            System.out.println("Pessoa-------------");
+            System.out.println("RG:"+aluno.getRg()+"\nCPF:\"+"+aluno.getCpf()+"\n"+aluno.getId()+"\n"
+                +aluno.getPnome()+" "+aluno.getUnome()+"\n"+aluno.getDtNascimento());
+            System.out.println("---------------------------------------------------------------------------");
+        }
     }
 }

@@ -50,8 +50,8 @@ public class DAOMateriaTest {
         dao.salvar(materia);
         
         materia = new Materia("Matemagica", "MAT", 120);
-        
         dao.salvar(materia);
+        
     }
     
     @Test
@@ -62,6 +62,7 @@ public class DAOMateriaTest {
         List<EntidadeDominio> entidadesMaterias = dao.consultar();
         
         for(EntidadeDominio entidade: entidadesMaterias){
+            System.out.println("---------------------------------------------------");
             materia = (Materia)entidade;
             
             System.out.println(materia.getNome()+"\n"+materia.getDescricao()+

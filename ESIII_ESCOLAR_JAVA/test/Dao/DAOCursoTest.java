@@ -51,10 +51,10 @@ public class DAOCursoTest {
         int id = 1;
         
         DAOCurso dao = new DAOCurso();
-        List<EntidadeDominio> cursos = dao.consultar(id);
+        List<EntidadeDominio> EntidadeCursos = dao.consultar(id);
         
-        for(int i=0;i<cursos.size();i++){
-            Curso curso = (Curso)cursos.get(i);
+        for(EntidadeDominio entidade: EntidadeCursos){
+            Curso curso = (Curso)entidade;
             
             System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
                 +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
@@ -69,14 +69,18 @@ public class DAOCursoTest {
         int id = 1;
         
         DAOCurso dao = new DAOCurso();
-        Curso curso = (Curso)dao.consultar(id).get(0);
+        List<EntidadeDominio> EntidadeCursos = dao.consultar();
         
-        System.out.println("\nID------------------------------------------------------------------------------");
-        System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
+        for(EntidadeDominio entidade: EntidadeCursos){
+            Curso curso = (Curso)entidade;
+            
+            System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
                 +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
-        System.out.println("\nID------------------------------------------------------------------------------");
+            
+            System.out.println("\n------------------------------------------------------------------------------");
+            
+        }
     }
-    
 
     
     @Test

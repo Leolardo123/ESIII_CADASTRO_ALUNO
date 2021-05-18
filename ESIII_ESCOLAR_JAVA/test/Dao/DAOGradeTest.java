@@ -5,7 +5,9 @@
  */
 package Dao;
 
+import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,6 +48,28 @@ public class DAOGradeTest {
         DAOGrade dao = new DAOGrade();
         dao.salvar(grade);
     }
+    
+    @Test
+    public void testConsultar() {
+        DAOGrade dao = new DAOGrade();
+        
+        List<EntidadeDominio> entidadeGrade = dao.consultar();
+        
+        
+        for(EntidadeDominio entidade: entidadeGrade){
+            GradeCurso grade = (GradeCurso)entidade;
+            
+            System.out.println("----------------------------------------");
+            System.out.println(grade.isObrigatorio()+"\n"+grade.getDia_semana()+"\n"+grade.getTurno()+"\n"
+                    +grade.getPeriodo()+"\n"+grade.getCurso_id()+"\n"+grade.getMateria_id()+"\n"+grade.getProfessor_id());
+        }
+    }
+    
+    @Test
+    public void testConsultarId() {
+        
+    }
+    
     
     @Test
     public void testExcluir() {

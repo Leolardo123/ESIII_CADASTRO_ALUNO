@@ -32,7 +32,8 @@ public class DAOAluno extends AbstractDAO {
     public void salvar(EntidadeDominio entidade) {
         Aluno aluno = (Aluno) entidade;
         Pessoa pessoa = (Pessoa) entidade;
-
+        openConnection();
+        
         try {
             conexao.setAutoCommit(false);
             DAOPessoa DAOpes = new DAOPessoa();
@@ -69,15 +70,18 @@ public class DAOAluno extends AbstractDAO {
     public void alterar(EntidadeDominio entidade) {
         Aluno aluno = (Aluno) entidade;
         Pessoa pessoa = (Pessoa) entidade;
-
+        openConnection();
+        
         try {
             conexao.setAutoCommit(false);
             DAOPessoa DAOpes = new DAOPessoa();
             DAOpes.ctrlTransaction = false;
-            DAOpes.salvar(pessoa);
+            DAOpes.alterar(pessoa);
+            
+           
 
             StringBuilder sql = new StringBuilder();
-            sql.append("UPDATE alunos SET alu_semestre = ? alu_pes_id = ? alu_cur_id = ? WHERE alu_pes_id = ?");
+            sql.append("UPDATE alunos SET alu_semestre = ?, alu_pes_id = ?, alu_cur_id = ? WHERE alu_pes_id = ?");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, aluno.getSemestre());
@@ -86,10 +90,10 @@ public class DAOAluno extends AbstractDAO {
             pst.setInt(4, pessoa.getId());
             pst.executeUpdate();
             conexao.commit();
-            System.out.println("cadastrado com sucesso");
+            System.out.println("alterado com sucesso");
         } catch (SQLException e) {
             try {
-                System.out.println("Erro na inserção: " + e);
+                System.out.println("Erro ao alterar: " + e);
                 conexao.rollback();
             } catch (SQLException e1) {
             }
@@ -122,8 +126,8 @@ public class DAOAluno extends AbstractDAO {
                Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
 
                Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
-               aluno.setId(rs.getInt("alu_id"));
-               aluno.setDtcadastro(rs.getDate("alu_dtcadastro"));
+               aluno.setId(pessoa.getId());
+               aluno.setDtcadastro(pessoa.getDtcadastro());
                
                alunos.add(aluno);
             }
@@ -166,9 +170,8 @@ public class DAOAluno extends AbstractDAO {
                Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
 
                Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
-               aluno.setId(rs.getInt("alu_id"));
-               aluno.setDtcadastro(rs.getDate("alu_dtcadastro"));
-               
+               aluno.setId(pessoa.getId());
+               aluno.setDtcadastro(pessoa.getDtcadastro());
                alunos.add(aluno);
             }
             

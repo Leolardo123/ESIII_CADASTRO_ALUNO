@@ -52,17 +52,16 @@ public class DAOMateria extends AbstractDAO {
             ResultSet rs = pst.getGeneratedKeys();
             
             if(rs.next()){
-                int id = rs.getInt(1);
-                materia.setId(id);
+                materia.setId(rs.getInt(id_table));
             }
-                
-            
+
             if(materia.getDependencias()!=null){
                DAOdep.salvar(materia);
             }
             
             conexao.commit();
             System.out.println("cadastrado com sucesso");
+            DAOdep.ctrlTransaction = true;
         } catch (SQLException e) {
             try {
                 System.out.println("Erro na inserção: " + e);
