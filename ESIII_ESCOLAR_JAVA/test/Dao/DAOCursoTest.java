@@ -52,15 +52,16 @@ public class DAOCursoTest {
         
         DAOCurso dao = new DAOCurso();
         List<EntidadeDominio> EntidadeCursos = dao.consultar(id);
-        
-        for(EntidadeDominio entidade: EntidadeCursos){
-            Curso curso = (Curso)entidade;
-            
-            System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
-                +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
-            
-            System.out.println("\n------------------------------------------------------------------------------");
-            
+        if(EntidadeCursos!=null){
+            for(EntidadeDominio entidade: EntidadeCursos){
+                Curso curso = (Curso)entidade;
+
+                System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
+                    +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
+
+                System.out.println("\n------------------------------------------------------------------------------");
+
+            }
         }
     }
     
@@ -71,14 +72,16 @@ public class DAOCursoTest {
         DAOCurso dao = new DAOCurso();
         List<EntidadeDominio> EntidadeCursos = dao.consultar();
         
-        for(EntidadeDominio entidade: EntidadeCursos){
-            Curso curso = (Curso)entidade;
-            
-            System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
-                +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
-            
-            System.out.println("\n------------------------------------------------------------------------------");
-            
+        if(EntidadeCursos!=null){
+            for(EntidadeDominio entidade: EntidadeCursos){
+                Curso curso = (Curso)entidade;
+
+                System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
+                    +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
+
+                System.out.println("\n------------------------------------------------------------------------------");
+
+            }
         }
     }
 
@@ -86,7 +89,7 @@ public class DAOCursoTest {
     @Test
     public void testAlterar(){;
         Curso curso;
-        curso = new Curso("Administração", "Curso de TI","Tecnologo",48, 240.00);
+        curso = new Curso("ADS", "Curso de TI","Tecnologo",48, 240.00);
         DAOCurso dao = new DAOCurso();
         
         dao.salvar(curso);

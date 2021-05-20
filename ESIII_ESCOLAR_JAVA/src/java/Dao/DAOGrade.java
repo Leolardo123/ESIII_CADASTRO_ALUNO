@@ -33,6 +33,7 @@ public class DAOGrade extends AbstractDAO {
         GradeCurso grade = (GradeCurso) entidade;
 
         try {
+            openConnection();
             conexao.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
@@ -75,7 +76,52 @@ public class DAOGrade extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                GradeCurso grade = (GradeCurso) entidade;
+
+        try {
+            conexao.setAutoCommit(false);
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE grade_curso ");
+            sql.append(table);
+            sql.append("SET gra_obrigatorio, gra_turno, gra_dia_semana, ");
+            sql.append("gra_periodo, gra_cur_id, gra_mat_id, gra_pro_id");
+            sql.append("WHERE ");
+            sql.append(id_table);
+            sql.append("= ?");
+
+            pst = conexao.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
+            pst.setBoolean(1, grade.isObrigatorio());
+            pst.setInt(2, grade.getTurno());
+            pst.setInt(3, grade.getDia_semana());
+            pst.setInt(4, grade.getPeriodo());
+            pst.setInt(5, grade.getCurso_id());
+            pst.setInt(6, grade.getMateria_id());
+            pst.setInt(7, grade.getProfessor_id());
+            pst.executeUpdate();
+            
+            ResultSet rs = pst.getGeneratedKeys();
+            
+            if(rs.next()){
+                grade.setId(rs.getInt(id_table));
+            }
+
+            conexao.commit();
+            System.out.println("cadastrado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro na inserção: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public List<EntidadeDominio> consultar(int id) {

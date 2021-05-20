@@ -106,7 +106,6 @@ public class DAOCurso extends AbstractDAO {
             sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, id);
-            pst.executeUpdate();
             
             ResultSet rs = pst.executeQuery();
             
@@ -147,7 +146,6 @@ public class DAOCurso extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * FROM "+table);
             pst = conexao.prepareStatement(sql.toString());
-            pst.executeUpdate();
             
             ResultSet rs = pst.executeQuery();
             
