@@ -183,5 +183,56 @@ public class DAOMateria extends AbstractDAO {
         }
         return null;
     }
+    
+    public List<EntidadeDominio> consultaRestrita(){//Não está pronto!
+    try {
+            openConnection();
+            
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
 
+            sql.append("SELECT * FROM "+table+" LEFT JOIN grade_curso ON ");
+            sql.append("(SELECT COUNT(*) FROM dependentes WHERE dep_materia_id = ?) = ");
+            sql.append("(SELECT COUNT() FROM grade_curso LEFT JOIN dependentes ON dep_dependencia_id =  AND ) ");
+            pst = conexao.prepareStatement(sql.toString());
+            ResultSet rs = pst.executeQuery();
+            
+            List<EntidadeDominio> materias = new ArrayList<EntidadeDominio>();
+            
+            while(rs.next()){
+               DAODependentes DAOdep = new DAODependentes();
+               List<EntidadeDominio> EntidadeDependencias = DAOdep.consultar(rs.getInt("mat_id"));
+               
+               List<Materia> dependencias = new ArrayList();
+               for(EntidadeDominio entidadeMateria: EntidadeDependencias){//recupera cada materia que contém a partir da entidadeDominio
+                   dependencias.add((Materia)entidadeMateria);
+               }
+               
+               Materia materia = new Materia(rs.getString("mat_nome"), rs.getString("mat_descricao"), 
+                                             rs.getInt("mat_carga_horaria"), dependencias);
+               
+               materia.setId(rs.getInt("mat_id"));
+               materia.setDtcadastro(rs.getDate("mat_dtcadastro"));
+               
+               materias.add(materia);
+            }
+            
+            return materias;
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

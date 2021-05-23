@@ -31,7 +31,6 @@ public class Pessoa extends EntidadeDominio {
         this.unome = pessoa.getUnome();
         this.email = pessoa.getEmail();
         this.dtNascimento = pessoa.getDtNascimento();
-        
         this.endereco = pessoa.getEndereco();
     }
 

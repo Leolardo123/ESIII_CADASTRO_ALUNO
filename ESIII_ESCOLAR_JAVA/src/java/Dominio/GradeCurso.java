@@ -14,20 +14,21 @@ public class GradeCurso  extends EntidadeDominio{
     private int dia_semana;
     private int turno;
     private int periodo;
-    private int curso_id;
-    private int materia_id;
-    private int professor_id;
+    private Curso curso;
+    private Materia materia;
+    private Professor professor;
     
     public GradeCurso(){}
     
-    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo, int curso_id, int materia_id, int professor_id){
+    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo, 
+                      Curso curso, Materia materia, Professor professor){
         this.obrigatorio = obrigatorio;
         this.dia_semana = dia_semana;
         this.turno = turno;
         this.periodo = periodo;
-        this.curso_id = curso_id;
-        this.materia_id = materia_id;
-        this.professor_id = professor_id;
+        this.curso = curso;
+        this.materia = materia;
+        this.professor = professor;
     }
 
     public boolean isObrigatorio() {
@@ -62,28 +63,28 @@ public class GradeCurso  extends EntidadeDominio{
         this.periodo = periodo;
     }
 
-    public int getCurso_id() {
-        return curso_id;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setCurso_id(int curso_id) {
-        this.curso_id = curso_id;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
-    public int getMateria_id() {
-        return materia_id;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setMateria_id(int materia_id) {
-        this.materia_id = materia_id;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
-    public int getProfessor_id() {
-        return professor_id;
+    public Professor getProfessor() {
+        return professor;
     }
 
-    public void setProfessor_id(int professor_id) {
-        this.professor_id = professor_id;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
     
     

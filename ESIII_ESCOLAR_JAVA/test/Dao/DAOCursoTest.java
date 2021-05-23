@@ -60,7 +60,6 @@ public class DAOCursoTest {
                     +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());
 
                 System.out.println("\n------------------------------------------------------------------------------");
-
             }
         }
     }
@@ -93,8 +92,6 @@ public class DAOCursoTest {
         DAOCurso dao = new DAOCurso();
         
         dao.salvar(curso);
-        
-        curso.setId(999);
         
         curso.setDescricao("Curso de Humanas");
         

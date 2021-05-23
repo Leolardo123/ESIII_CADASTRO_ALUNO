@@ -7,6 +7,7 @@ package Dao;
 
 import static Dao.AbstractDAO.conexao;
 import Dominio.Aluno;
+import Dominio.Curso;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import Dominio.Materia;
@@ -46,9 +47,9 @@ public class DAOGrade extends AbstractDAO {
             pst.setInt(2, grade.getTurno());
             pst.setInt(3, grade.getDia_semana());
             pst.setInt(4, grade.getPeriodo());
-            pst.setInt(5, grade.getCurso_id());
-            pst.setInt(6, grade.getMateria_id());
-            pst.setInt(7, grade.getProfessor_id());
+            pst.setInt(5, grade.getCurso().getId());
+            pst.setInt(6, grade.getMateria().getId());
+            pst.setInt(7, grade.getProfessor().getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -95,9 +96,9 @@ public class DAOGrade extends AbstractDAO {
             pst.setInt(2, grade.getTurno());
             pst.setInt(3, grade.getDia_semana());
             pst.setInt(4, grade.getPeriodo());
-            pst.setInt(5, grade.getCurso_id());
-            pst.setInt(6, grade.getMateria_id());
-            pst.setInt(7, grade.getProfessor_id());
+            pst.setInt(5, grade.getCurso().getId());
+            pst.setInt(6, grade.getMateria().getId());
+            pst.setInt(7, grade.getProfessor().getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -140,22 +141,23 @@ public class DAOGrade extends AbstractDAO {
             
             while(rs.next()){
                DAOProfessor DAOpro = new DAOProfessor();
-               DAOAluno     DAOalu = new DAOAluno();
+               DAOCurso     DAOcur = new DAOCurso();
                DAOMateria   DAOmat = new DAOMateria();
                
                try{
                    Professor professor = (Professor)DAOpro.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Aluno     aluno     = (Aluno)  DAOalu.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Materia   materia   = (Materia)DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
+                   Curso     curso     = (Curso)    DAOcur.consultar(rs.getInt("gra_pro_id")).get(0);
+                   Materia   materia   = (Materia)  DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
+                   
+                   GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
+                   rs.getInt("gra_turno"),rs.getInt("gra_periodo"), curso, materia,
+                   professor);
+                   
+                   ListaGrade.add(grade);
+                   
                }catch(Exception ex){
                    System.out.print("Erro na consulta do item da grade_curso:"+ex);
                }
-               
-               GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
-                       rs.getInt("gra_turno"),rs.getInt("gra_periodo"), rs.getInt("gra_cur_id"), rs.getInt("gra_mat_id"),
-                       rs.getInt("gra_pro_id"));
-                       
-               ListaGrade.add(grade);
             }
             
             return ListaGrade;
@@ -192,22 +194,23 @@ public class DAOGrade extends AbstractDAO {
             
             while(rs.next()){
                DAOProfessor DAOpro = new DAOProfessor();
-               DAOAluno     DAOalu = new DAOAluno();
+               DAOCurso     DAOcur = new DAOCurso();
                DAOMateria   DAOmat = new DAOMateria();
                
                try{
                    Professor professor = (Professor)DAOpro.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Aluno     aluno     = (Aluno)  DAOalu.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Materia   materia   = (Materia)DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
+                   Curso     curso     = (Curso)    DAOcur.consultar(rs.getInt("gra_pro_id")).get(0);
+                   Materia   materia   = (Materia)  DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
+                   
+                   GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
+                   rs.getInt("gra_turno"),rs.getInt("gra_periodo"), curso, materia,
+                   professor);
+                   
+                   ListaGrade.add(grade);
+                   
                }catch(Exception ex){
                    System.out.print("Erro na consulta do item da grade_curso:"+ex);
                }
-               
-               GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
-                       rs.getInt("gra_turno"),rs.getInt("gra_periodo"), rs.getInt("gra_cur_id"), rs.getInt("gra_mat_id"),
-                       rs.getInt("gra_pro_id"));
-                       
-               ListaGrade.add(grade);
             }
             
             return ListaGrade;

@@ -5,8 +5,15 @@
  */
 package Dao;
 
+import Dominio.Curso;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
+import Dominio.Materia;
+import Dominio.Professor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -42,11 +49,41 @@ public class DAOGradeTest {
      * Test of salvar method, of class DAOGrade.
      */
     @Test
-    public void testSalvar() {
-        GradeCurso grade = new GradeCurso( true, 1, 0, 1, 0, 0 ,0);
+    public void testSalvar() throws ParseException {
+        //Carrega um curso qualquer
+        Curso curso = new Curso();
+                
+        DAOCurso daoCur = new DAOCurso();
+        List<EntidadeDominio> EntidadesCursos = daoCur.consultar();
+        if(EntidadesCursos!=null){
+            curso = (Curso)EntidadesCursos.get(0);
+        }
         
-        DAOGrade dao = new DAOGrade();
-        dao.salvar(grade);
+       //Carrega um professor qualquer
+       Professor professor = new Professor();
+        
+        DAOProfessor daoPro = new DAOProfessor();
+        List<EntidadeDominio> EntidadesProfessor = daoPro.consultar();
+        if(EntidadesProfessor!=null){
+            professor  = (Professor)EntidadesProfessor.get(0);
+        }
+        
+        DAOMateria dao = new DAOMateria();
+        Materia materia = new Materia();
+        
+        List<EntidadeDominio> entidadesMateria = dao.consultar();
+        
+        if(entidadesMateria!=null){
+            materia = (Materia)entidadesMateria.get(0);
+        }
+        
+        
+        if(materia!=null&&curso!=null&&professor!=null){
+            GradeCurso grade = new GradeCurso( true, 1, 0, 1, curso, materia ,professor);
+
+            DAOGrade daoGrade = new DAOGrade();
+            daoGrade.salvar(grade);
+        }
     }
     
     @Test
@@ -61,7 +98,7 @@ public class DAOGradeTest {
             
             System.out.println("----------------------------------------");
             System.out.println(grade.isObrigatorio()+"\n"+grade.getDia_semana()+"\n"+grade.getTurno()+"\n"
-                    +grade.getPeriodo()+"\n"+grade.getCurso_id()+"\n"+grade.getMateria_id()+"\n"+grade.getProfessor_id());
+                    +grade.getPeriodo()+"\n"+grade.getCurso()+"\n"+grade.getMateria()+"\n"+grade.getProfessor().getId());
         }
     }
     
@@ -73,7 +110,7 @@ public class DAOGradeTest {
     
     @Test
     public void testExcluir() {
-        GradeCurso grade = new GradeCurso( true, 1, 0, 1, 0, 0 ,0);
+        GradeCurso grade = new GradeCurso();
         grade.setId(1);
         
         DAOGrade dao = new DAOGrade();
