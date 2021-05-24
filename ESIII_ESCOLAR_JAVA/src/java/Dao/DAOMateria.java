@@ -58,8 +58,6 @@ public class DAOMateria extends AbstractDAO {
             if(materia.getDependencias()!=null){
                 DAOMateria daoMat = new DAOMateria();
                 
-                
-                
                 DAOdep.salvar(materia);
             }
             
