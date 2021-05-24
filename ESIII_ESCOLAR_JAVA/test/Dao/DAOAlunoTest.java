@@ -99,7 +99,7 @@ public class DAOAlunoTest {
         Aluno aluno = new Aluno();
         
         DAOAluno dao = new DAOAluno();
-        List<EntidadeDominio> EntidadesAluno = dao.consultar();
+        List<EntidadeDominio> EntidadesAluno = dao.consultar(null);
         System.out.println(    "---------------------------------------------------------------------------");
         for(int i=0;i<EntidadesAluno.size();i++){
             aluno  = (Aluno)EntidadesAluno.get(i);
@@ -117,9 +117,10 @@ public class DAOAlunoTest {
     @Test
     public void testConsultarId() throws ParseException {
         Aluno aluno = new Aluno();
+        aluno.setId(1);
         
         DAOAluno dao = new DAOAluno();
-        List<EntidadeDominio> EntidadesAluno = dao.consultar();
+        List<EntidadeDominio> EntidadesAluno = dao.consultar(aluno);
         System.out.println(    "---------------------------------------------------------------------------");
         for(int i=0;i<EntidadesAluno.size();i++){
             aluno  = (Aluno)EntidadesAluno.get(i);

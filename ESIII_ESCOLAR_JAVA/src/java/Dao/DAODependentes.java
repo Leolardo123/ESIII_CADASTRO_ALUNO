@@ -108,15 +108,19 @@ public class DAODependentes extends AbstractDAO {
         return null;
     }
 
-    public List<EntidadeDominio> consultar(int id) {
-                    try {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+        try {
             openConnection();
             
             conexao.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM "+table+" LEFT JOIN materias ON mat_id = "+id_table+" WHERE dep_materia_id = "+id);
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             

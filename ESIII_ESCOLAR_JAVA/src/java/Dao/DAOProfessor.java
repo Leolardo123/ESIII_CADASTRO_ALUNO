@@ -100,7 +100,7 @@ public class DAOProfessor extends AbstractDAO {
         }
     }
 
-    public List<EntidadeDominio> consultar(int id) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         try {
             openConnection();
             
@@ -108,16 +108,23 @@ public class DAOProfessor extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM professores WHERE pro_pes_id = ?");
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
+            
             pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, id);
+            pst.setInt(1, entidade.getId());
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> professores = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
                DAOPessoa DAOpes = new DAOPessoa();
-               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("pro_pes_id")).get(0);
+               Pessoa pessoa = new Pessoa();
+               pessoa.setId(rs.getInt("pro_pes_id"));
+               pessoa = (Pessoa)DAOpes.consultar(pessoa).get(0);
 
                Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
                professor.setId(pessoa.getId());
@@ -150,7 +157,6 @@ public class DAOProfessor extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM professores");
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             
@@ -158,7 +164,9 @@ public class DAOProfessor extends AbstractDAO {
             
             while(rs.next()){
                DAOPessoa DAOpes = new DAOPessoa();
-               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("pro_pes_id")).get(0);
+               Pessoa pessoa = new Pessoa();
+               pessoa.setId(rs.getInt("pro_pes_id"));
+               pessoa = (Pessoa)DAOpes.consultar(pessoa).get(0);
 
                Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
                professor.setId(pessoa.getId());

@@ -42,7 +42,7 @@ public class DAOMateriaTest {
     /**
      * Test of salvar method, of class DAOMateria.
      */
-    @Test
+//    @Test
     public void testSalvar() {
         Materia materia = new Materia("Administração", "ADM", 120);
         
@@ -59,7 +59,7 @@ public class DAOMateriaTest {
         DAOMateria dao = new DAOMateria();
         Materia materia;
         
-        List<EntidadeDominio> entidadesMaterias = dao.consultar();
+        List<EntidadeDominio> entidadesMaterias = dao.consultar(null);
         
         for(EntidadeDominio entidade: entidadesMaterias){
             System.out.println("---------------------------------------------------");
@@ -80,15 +80,16 @@ public class DAOMateriaTest {
         }
     }
     
-//    @Test
+    @Test
     public void testConsultarId() {
         DAOMateria dao = new DAOMateria();
-        Materia materia;
+        Materia materia = new Materia();
     
-        int id = 1;
+        materia.setNome("Calculo I");
         
-        List<EntidadeDominio> entidadesMaterias = dao.consultar(id);
+        List<EntidadeDominio> entidadesMaterias = dao.consultar(materia);
         
+        if(entidadesMaterias==null)return;
         for(EntidadeDominio entidade: entidadesMaterias){
             materia = (Materia)entidade;
             System.out.println("---------------------------------------------------");

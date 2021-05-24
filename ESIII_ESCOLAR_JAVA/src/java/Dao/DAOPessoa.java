@@ -126,54 +126,8 @@ public class DAOPessoa extends AbstractDAO {
             }
         }
     }
-
-    public List<EntidadeDominio> consultar() {
-        try {
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * FROM pessoas");
-            pst = conexao.prepareStatement(sql.toString());
- 
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> pessoas = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-               DAOEndereco DAOend = new DAOEndereco();
-               Endereco endereco = (Endereco)DAOend.consultar(rs.getInt("pes_end_id")).get(0);
-               
-               Pessoa pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
-                       rs.getString("pes_unome"),rs.getString("pes_email"),rs.getDate("pes_dtnascimento"),endereco);
-               
-               pessoa.setId(rs.getInt("pes_id"));
-               pessoa.setDtcadastro(rs.getDate("pes_dtcadastro"));
-               
-               pessoas.add(pessoa);
-            }
-            
-            return pessoas;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
     
-    public List<EntidadeDominio> consultar(int id){
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade){
         try {
             openConnection();
             
@@ -181,16 +135,22 @@ public class DAOPessoa extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM pessoas WHERE pes_id = ?");
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
+            
             pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> pessoas = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
                DAOEndereco DAOend = new DAOEndereco();
-               Endereco endereco = (Endereco)DAOend.consultar(rs.getInt("pes_end_id")).get(0);
+               Endereco endereco = new Endereco();
+               endereco.setId(rs.getInt("pes_end_id"));
+               endereco =(Endereco)DAOend.consultar(endereco).get(0);
                
                Pessoa pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
                        rs.getString("pes_unome"),rs.getString("pes_email"),rs.getDate("pes_dtnascimento"),endereco);

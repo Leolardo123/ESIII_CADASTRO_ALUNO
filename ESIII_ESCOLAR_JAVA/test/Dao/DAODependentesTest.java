@@ -47,15 +47,42 @@ public class DAODependentesTest {
         Materia dependencia = new Materia("Matemática básica", "MAB", 80);
                
         DAOMateria dao = new DAOMateria();
-        dao.ctrlTransaction = false;
+        dao.ctrlTransaction = false;//Impede o fechamento prematuro da conexão
         dao.salvar(dependencia);
         
         List<Materia> dependencias = new ArrayList<Materia>();
         dependencias.add(dependencia);
         
-        Materia materia = new Materia("Calculo I", "CAL1", 120,dependencias);
-        dao.ctrlTransaction = true;
-        dao.salvar(materia);
+        Materia materia1 = new Materia("Calculo I", "CAL1", 1200,dependencias);
+        dao.salvar(materia1);
+        
+        Materia materia2 = new Materia("Fisica I", "FIS1", 1200,dependencias);
+        dao.salvar(materia2);
+        
+        Materia materia3 = new Materia("Estatistica I", "EST1", 1200,dependencias);
+        dao.salvar(materia3);
+        
+        dependencias = new ArrayList<Materia>();
+        dependencias.add(materia1);//calculo 1
+        
+        Materia materia4 = new Materia("Calculo II", "CAL2", 800,dependencias);
+        dao.salvar(materia4);
+        
+        dependencias = new ArrayList<Materia>();
+        dependencias.add(materia2);//Fisica 1
+        dependencias.add(materia3);//Estatistica 1
+        dependencias.add(materia4);//Calculo 2
+        
+        Materia materia5 = new Materia("Resistência dos Materiais I", "RESMAT1", 3600,dependencias);
+        
+        dao.ctrlTransaction = true;//autoriza o fechamento da conexão
+        
+        dao.salvar(materia5);
+        
+        
+        
+        //DEPENDENCIAS:
+        //RESMAT -> EST1,FIS1,(CAL2->CAL1)
     }
     
     @Test
@@ -79,11 +106,10 @@ public class DAODependentesTest {
     @Test
     public void testConsultarId() {
         DAODependentes dao = new DAODependentes();
-        Materia materia;
-    
-        int id = 1;
+        Materia materia = new Materia();
+        materia.setId(1);
         
-        List<EntidadeDominio> entidadesMaterias = dao.consultar(id);
+        List<EntidadeDominio> entidadesMaterias = dao.consultar(materia);
         
         for(EntidadeDominio entidade: entidadesMaterias){
             materia = (Materia)entidade;

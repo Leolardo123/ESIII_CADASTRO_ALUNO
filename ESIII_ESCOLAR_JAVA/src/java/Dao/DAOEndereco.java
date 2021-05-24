@@ -116,54 +116,8 @@ public class DAOEndereco extends AbstractDAO {
             }
         }
     }
-
-    public List<EntidadeDominio> consultar() {
-
-        try {
-            
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * FROM "+table);
-
-            pst = conexao.prepareStatement(sql.toString());
- 
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-               Endereco endereco = new Endereco(rs.getString("end_cep"),rs.getString("end_estado"),
-               rs.getString("end_cidade"),rs.getInt("end_numero"),rs.getString("end_logradouro"));
-               
-               endereco.setId(rs.getInt("end_id"));
-               endereco.setDtcadastro(rs.getDate("end_dtcadastro"));
-               
-               enderecos.add(endereco);
-            }
-            
-            return enderecos;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
     
-    public List<EntidadeDominio> consultar(int id){
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade){
         try {
             openConnection();
             
@@ -171,9 +125,12 @@ public class DAOEndereco extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
             pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> enderecos = new ArrayList<EntidadeDominio>();

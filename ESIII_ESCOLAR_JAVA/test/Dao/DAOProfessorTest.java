@@ -82,12 +82,12 @@ public class DAOProfessorTest {
     
     @Test
     public void testConsultarId() throws ParseException {
-        int id = 1;
-        
         Professor professor = new Professor();
         
+        professor.setId(1);
+        
         DAOProfessor dao = new DAOProfessor();
-        List<EntidadeDominio> EntidadesProfessor = dao.consultar(id);
+        List<EntidadeDominio> EntidadesProfessor = dao.consultar(professor);
         System.out.println(    "---------------------------------------------------------------------------");
         for(int i=0;i<EntidadesProfessor.size();i++){
             professor  = (Professor)EntidadesProfessor.get(i);

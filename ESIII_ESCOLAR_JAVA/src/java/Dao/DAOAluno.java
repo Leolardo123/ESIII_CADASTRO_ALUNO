@@ -107,15 +107,20 @@ public class DAOAluno extends AbstractDAO {
         }
     }
     
-        public List<EntidadeDominio> consultar() {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
                 try {
             openConnection();
             
             conexao.setAutoCommit(false);
             
-            StringBuilder sql = new StringBuilder();
+                        StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT * FROM alunos");
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
+            
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             
@@ -123,51 +128,9 @@ public class DAOAluno extends AbstractDAO {
             
             while(rs.next()){
                DAOPessoa DAOpes = new DAOPessoa();
-               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
-
-               Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
-               aluno.setId(pessoa.getId());
-               aluno.setDtcadastro(pessoa.getDtcadastro());
-               
-               alunos.add(aluno);
-            }
-            
-            return alunos;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public List<EntidadeDominio> consultar(int id) {
-                try {
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
-            pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> alunos = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-               DAOPessoa DAOpes = new DAOPessoa();
-               Pessoa pessoa = (Pessoa)DAOpes.consultar(rs.getInt("alu_pes_id")).get(0);
+               Pessoa pessoa = new Pessoa();
+               pessoa.setId(rs.getInt("alu_pes_id"));
+               pessoa = (Pessoa)DAOpes.consultar(pessoa).get(0);
 
                Aluno aluno = new Aluno(pessoa,rs.getInt("alu_semestre"),rs.getInt("alu_cur_id"));
                aluno.setId(pessoa.getId());

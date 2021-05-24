@@ -63,7 +63,7 @@ public class DAOEnderecoTest {
         Endereco endereco = new Endereco();
         
         DAOEndereco DAOend = new DAOEndereco();
-        List<EntidadeDominio> EntidadesEndereco = DAOend.consultar();
+        List<EntidadeDominio> EntidadesEndereco = DAOend.consultar(null);
         
         for(int i=0;i<EntidadesEndereco.size();i++){
             endereco = (Endereco)EntidadesEndereco.get(i);
@@ -75,12 +75,11 @@ public class DAOEnderecoTest {
     
     @Test
     public void testConsultarId() throws ParseException {
-        int id = 1;
-        
         Endereco endereco = new Endereco();
+        endereco.setId(1);
         
         DAOEndereco DAOend = new DAOEndereco();
-        List<EntidadeDominio> EntidadesEndereco = DAOend.consultar(id);
+        List<EntidadeDominio> EntidadesEndereco = DAOend.consultar(endereco);
         
         for(int i=0;i<EntidadesEndereco.size();i++){
             endereco = (Endereco)EntidadesEndereco.get(i);

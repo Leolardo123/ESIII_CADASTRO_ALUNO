@@ -39,19 +39,11 @@ public class DAOCursoTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of salvar method, of class DAOCurso.
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
-     */
     
-        @Test
+    @Test
     public void testConsultar(){
-        int id = 1;
-        
         DAOCurso dao = new DAOCurso();
-        List<EntidadeDominio> EntidadeCursos = dao.consultar(id);
+        List<EntidadeDominio> EntidadeCursos = dao.consultar(null);
         if(EntidadeCursos!=null){
             for(EntidadeDominio entidade: EntidadeCursos){
                 Curso curso = (Curso)entidade;
@@ -66,14 +58,15 @@ public class DAOCursoTest {
     
     @Test
     public void testConsultarId(){;
-        int id = 1;
+        Curso curso = new Curso();
+        curso.setId(1);
         
         DAOCurso dao = new DAOCurso();
-        List<EntidadeDominio> EntidadeCursos = dao.consultar();
+        List<EntidadeDominio> EntidadeCursos = dao.consultar(curso);
         
         if(EntidadeCursos!=null){
             for(EntidadeDominio entidade: EntidadeCursos){
-                Curso curso = (Curso)entidade;
+                curso = (Curso)entidade;
 
                 System.out.println(curso.getId()+"\n"+curso.getNome()+"\n"+curso.getDescricao()+"\n"+curso.getDtcadastro()+"\n"
                     +curso.getMensalidade()+"\n"+curso.getDuracao()+"\n"+curso.getNivel());

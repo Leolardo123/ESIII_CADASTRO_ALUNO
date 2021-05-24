@@ -125,15 +125,20 @@ public class DAOGrade extends AbstractDAO {
         }
     }
 
-    public List<EntidadeDominio> consultar(int id) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
          try {
             openConnection();
             
             conexao.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * FROM "+table+"WHERE "+id_table+" = ?");
+            
+           if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
+            
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
           
@@ -145,9 +150,17 @@ public class DAOGrade extends AbstractDAO {
                DAOMateria   DAOmat = new DAOMateria();
                
                try{
-                   Professor professor = (Professor)DAOpro.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Curso     curso     = (Curso)    DAOcur.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Materia   materia   = (Materia)  DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
+                   Professor professor = new Professor();
+                   Curso     curso     = new Curso();
+                   Materia   materia   = new Materia();
+                   
+                   professor.setId(rs.getInt("gra_pro_id"));
+                   curso.setId(rs.getInt("gra_cur_id"));
+                   materia.setId(rs.getInt("gra_mat_id"));
+                   
+                   professor = (Professor)DAOpro.consultar(professor).get(0);
+                   curso     = (Curso)    DAOcur.consultar(curso).get(0);
+                   materia   = (Materia)  DAOmat.consultar(materia).get(0);
                    
                    GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
                    rs.getInt("gra_turno"),rs.getInt("gra_periodo"), curso, materia,
@@ -178,57 +191,4 @@ public class DAOGrade extends AbstractDAO {
         return null;
     }
     
-    public List<EntidadeDominio> consultar() {
-         try {
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("SELECT * FROM "+table);
-            pst = conexao.prepareStatement(sql.toString());
-            ResultSet rs = pst.executeQuery();
-          
-            List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>(); 
-            
-            while(rs.next()){
-               DAOProfessor DAOpro = new DAOProfessor();
-               DAOCurso     DAOcur = new DAOCurso();
-               DAOMateria   DAOmat = new DAOMateria();
-               
-               try{
-                   Professor professor = (Professor)DAOpro.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Curso     curso     = (Curso)    DAOcur.consultar(rs.getInt("gra_pro_id")).get(0);
-                   Materia   materia   = (Materia)  DAOmat.consultar(rs.getInt("gra_pro_id")).get(0);
-                   
-                   GradeCurso grade = new GradeCurso(rs.getBoolean("gra_obrigatorio"),rs.getInt("gra_dia_semana"),
-                   rs.getInt("gra_turno"),rs.getInt("gra_periodo"), curso, materia,
-                   professor);
-                   
-                   ListaGrade.add(grade);
-                   
-               }catch(Exception ex){
-                   System.out.print("Erro na consulta do item da grade_curso:"+ex);
-               }
-            }
-            
-            return ListaGrade;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
 }

@@ -71,7 +71,7 @@ public class DAOPessoaTest {
         Pessoa pessoa = new Pessoa(); 
         
         DAOPessoa DAOpes = new DAOPessoa();
-        List<EntidadeDominio> EntidadesPessoa = DAOpes.consultar();
+        List<EntidadeDominio> EntidadesPessoa = DAOpes.consultar(null);
         System.out.println("---------------------------------------------------------------------------");
         for(int i=0;i<EntidadesPessoa.size();i++){
             pessoa = (Pessoa)EntidadesPessoa.get(i);
@@ -83,12 +83,12 @@ public class DAOPessoaTest {
     
     @Test
     public void testConsultarId() throws ParseException {
-        int id = 1;
-        
         Pessoa pessoa = new Pessoa(); 
         
+        pessoa.setId(1);
+        
         DAOPessoa DAOend = new DAOPessoa();
-        List<EntidadeDominio> EntidadesPessoa = DAOend.consultar(id);
+        List<EntidadeDominio> EntidadesPessoa = DAOend.consultar(pessoa);
         
         for(int i=0;i<EntidadesPessoa.size();i++){
             pessoa = (Pessoa)EntidadesPessoa.get(i);

@@ -97,16 +97,21 @@ public class DAOCurso extends AbstractDAO {
         }
     }
 
-    public List<EntidadeDominio> consultar(int id) {
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         try {
             openConnection();
             
             conexao.setAutoCommit(false);
-            StringBuilder sql = new StringBuilder();
-            sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = ?");
-            pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, id);
             
+            StringBuilder sql = new StringBuilder();
+            
+            if (entidade == null || entidade.getId() == 0) {
+                sql.append("SELECT * FROM "+table);
+            } else {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            }
+            
+            pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> cursos = new ArrayList<EntidadeDominio>();
@@ -137,44 +142,4 @@ public class DAOCurso extends AbstractDAO {
         return null;
     }
     
-    
-    public List<EntidadeDominio> consultar() {
-        try {
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            StringBuilder sql = new StringBuilder();
-            sql.append("SELECT * FROM "+table);
-            pst = conexao.prepareStatement(sql.toString());
-            
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> cursos = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-                Curso curso = new Curso(rs.getString("cur_nome"),rs.getString("cur_descricao"),
-                        rs.getString("cur_nivel"),rs.getInt("cur_duracao"), rs.getDouble("cur_mensalidade"));
-                
-                curso.setId(rs.getInt(id_table));
-                curso.setDtcadastro(rs.getDate("cur_dtcadastro"));
-                
-                cursos.add(curso);
-            }
-           
-            return cursos;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro na listagem: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-            }
-        }
-        return null;
-    }
-
 }
