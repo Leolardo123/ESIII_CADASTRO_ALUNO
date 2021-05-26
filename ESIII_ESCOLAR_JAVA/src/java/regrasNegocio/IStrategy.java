@@ -5,10 +5,12 @@
  */
 package regrasNegocio;
 
+import Dominio.EntidadeDominio;
+
 /**
  *
  * @author 55119
  */
-public class IStrategy {
-    
+public interface IStrategy {
+    public String processar(EntidadeDominio entidade);
 }

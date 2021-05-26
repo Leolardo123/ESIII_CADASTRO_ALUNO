@@ -54,16 +54,9 @@ public class DAOMateria extends AbstractDAO {
             if(rs.next()){
                 materia.setId(rs.getInt(id_table));
             }
-            System.out.println(id_table+":"+materia.getId());
-            if(materia.getDependencias()!=null){
-                DAOMateria daoMat = new DAOMateria();
-                
-                DAOdep.salvar(materia);
-            }
             
             conexao.commit();
             System.out.println("cadastrado com sucesso");
-            DAOdep.ctrlTransaction = true;
         } catch (SQLException e) {
             try {
                 System.out.println("Erro na inserção: " + e);
@@ -110,8 +103,6 @@ public class DAOMateria extends AbstractDAO {
             System.out.println(id_table+":"+materia.getId());
             if(materia.getDependencias()!=null){
                 DAOMateria daoMat = new DAOMateria();
-                
-                
                 
                 DAOdep.salvar(materia);
             }

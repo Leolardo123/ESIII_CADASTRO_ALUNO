@@ -79,8 +79,6 @@ public class DAODependentesTest {
         
         dao.salvar(materia5);
         
-        
-        
         //DEPENDENCIAS:
         //RESMAT -> EST1,FIS1,(CAL2->CAL1)
     }
