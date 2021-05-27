@@ -88,15 +88,14 @@ public class DAODependentesTest {
         DAODependentes dao = new DAODependentes();
         Materia materia;
         
-        List<EntidadeDominio> entidadesMaterias = dao.consultar();
+        List<EntidadeDominio> entidadesMaterias = dao.consultar(null);
         
         for(EntidadeDominio entidade: entidadesMaterias){
             materia = (Materia)entidade;
             
             System.out.println("---------------------------------------------------");
-            System.out.println(materia.getNome()+"\n"+materia.getDescricao()+
+            System.out.println(materia.getId()+"\n"+materia.getNome()+"\n"+materia.getDescricao()+
                                "\n"+materia.getCarga_horaria()+"\n"+materia.getId()+"\n"+materia.getDtcadastro()+"\n");
-            
             System.out.println("---------------------------------------------------");
         }
     }
@@ -105,7 +104,7 @@ public class DAODependentesTest {
     public void testConsultarId() {
         DAODependentes dao = new DAODependentes();
         Materia materia = new Materia();
-        materia.setId(1);
+        materia.setId(114);
         
         List<EntidadeDominio> entidadesMaterias = dao.consultar(materia);
         

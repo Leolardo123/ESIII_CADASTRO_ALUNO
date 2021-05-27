@@ -18,9 +18,6 @@ public class GradeCurso  extends EntidadeDominio{
     private Curso curso;
     private Materia materia;
     private Professor professor;
-    private final String[] dias_validos = {null,"Segunda","Terça","Quarta","Quinta","Sexta","Sabado"};
-    private final String[] periodos_validos = {null,"Manhã","Tarde","Noite"};
-    private final String[] turnos_validos = {null,"primeiro","segundo"};
     
     public GradeCurso(){}
     
@@ -98,19 +95,4 @@ public class GradeCurso  extends EntidadeDominio{
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
-
-    public String[] getDias_validos() {
-        return dias_validos;
-    }
-
-    public String[] getPeriodos_validos() {
-        return periodos_validos;
-    }
-
-    public String[] getTurnos_validos() {
-        return turnos_validos;
-    }
-    
-    
-    
 }

@@ -59,13 +59,22 @@ public class DAOPessoaTest {
         DAOPessoa DAOpes = new DAOPessoa();
         DAOpes.salvar(pessoa);
     }
-//    @Test
-//    public void testAlterar() throws ParseException {
-//        Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
-//        
-//        DAOEndereco DAOend = new DAOEndereco();
-//        DAOend.alterar(endereco);
-//    }
+    @Test
+    public void testAlterar() throws ParseException {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = formato.parse("25/12/1967");
+        Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
+        Pessoa pessoa = new Pessoa("545615677", "45635644411", "Leonardo", 
+            "Takeshi", "leo_takeshi@gmail.com", data, endereco);
+        
+        DAOPessoa DAOpes = new DAOPessoa();
+        DAOpes.salvar(pessoa);
+        
+        pessoa = new Pessoa("545615677", "455633344411", "Leonardo", 
+            "Souza", "leo_leo@gmail.com", data, endereco);
+        
+        DAOpes.alterar(pessoa);
+    }
     @Test
     public void testConsultar() throws ParseException {
         Pessoa pessoa = new Pessoa(); 

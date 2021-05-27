@@ -69,34 +69,35 @@ public class DAODependentes extends AbstractDAO {
     }
 
     public void alterar(EntidadeDominio entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public List<EntidadeDominio> consultar() {
-            try {
+                
+        try {
             openConnection();
+            Materia materia = (Materia) entidade;
             
-            StringBuilder sql = new StringBuilder();
+            conexao.setAutoCommit(false);
+            
+            if(materia.getDependencias()!=null){
+                for(Materia dependencia:materia.getDependencias()){
+                    StringBuilder sql = new StringBuilder();
+                    sql.append("UPDATE "+table+" SET dep_dependencia_id = ?");
+                    sql.append(" VALUES (?,?)");
 
-            sql.append("SELECT * FROM "+table+" LEFT JOIN materias ON mat_id = "+id_table);
-            pst = conexao.prepareStatement(sql.toString());
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> dependencias = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-               Materia dependencia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
-                                                 rs.getInt("mat_carga_horaria"));
-               
-               dependencia.setId(rs.getInt("mat_id"));
-               dependencia.setDtcadastro(rs.getDate("mat_dtcadastro"));
-               
-               dependencias.add(dependencia);
+                    pst = conexao.prepareStatement(sql.toString());
+                    pst.setInt(1, dependencia.getId());
+                    pst.executeUpdate();
+                }
             }
+
+            conexao.commit();
             
-            return dependencias;
+            System.out.println("alterado com sucesso");
         } catch (SQLException e) {
-            System.out.println("Erro ao recuperar: " + e);
+            try {
+                System.out.println("Erro na alteração: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             try {
@@ -105,7 +106,6 @@ public class DAODependentes extends AbstractDAO {
                 e.printStackTrace();
             }
         }
-        return null;
     }
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
@@ -117,17 +117,19 @@ public class DAODependentes extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade == null || entidade.getId() == 0) {
-                sql.append("SELECT * FROM "+table);
+                sql.append("SELECT * FROM "+table+" LEFT JOIN materias ");
+                sql.append("ON "+id_table+" = mat_id");
             } else {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+                sql.append("SELECT * FROM "+table+" LEFT JOIN materias ");
+                sql.append("ON "+id_table+" = mat_id  WHERE "+id_table+" = "+ entidade.getId());
             }
+            
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> dependencias = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
-                
                Materia dependencia = new Materia(rs.getString("mat_nome"),rs.getString("mat_descricao"),
                                                  rs.getInt("mat_carga_horaria"));
                
@@ -135,8 +137,6 @@ public class DAODependentes extends AbstractDAO {
                dependencia.setDtcadastro(rs.getDate("mat_dtcadastro"));
                
                dependencias.add(dependencia);
-               
-               System.out.println("DEP_DEPENDENCIA_ID:"+dependencia.getId());
             }
             
             return dependencias;

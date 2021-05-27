@@ -17,11 +17,15 @@ public class ValidarRG implements IStrategy {
     
         @Override
 	public String processar(EntidadeDominio entidade) {
-            Pessoa pessoa = (Pessoa)entidade;
-            if(pessoa.getRg().length()==9){
-                return null;
+            if(entidade instanceof Pessoa){
+                Pessoa pessoa = (Pessoa)entidade;
+                if(pessoa.getRg().length()==9){
+                    return null;
+                }else{
+                    return "RG tem tamanho inválido!";
+                }
             }else{
-                return "RG tem tamanho inválido!";
+                 return "Entidade recebida Inválida, esperava Pessoa(RG)";
             }
         }  
 }

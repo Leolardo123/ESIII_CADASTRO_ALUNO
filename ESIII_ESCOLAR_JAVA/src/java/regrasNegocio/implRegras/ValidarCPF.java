@@ -17,13 +17,15 @@ public class ValidarCPF implements IStrategy{
     
     	@Override
 	public String processar(EntidadeDominio entidade) {
-            Pessoa pessoa = (Pessoa)entidade;
-            if(pessoa.getCpf().length()==11){
-                return null;
+            if(entidade instanceof Pessoa){
+                Pessoa pessoa = (Pessoa)entidade;
+                if(pessoa.getCpf().length()==11){
+                    return null;
+                }else{
+                    return "CPF tem tamanho inválido!";
+                }
             }else{
-                return "CPF tem tamanho inválido!";
+                 return "Entidade recebida Inválida, esperava Pessoa(CPF)";
             }
-            
-        }    
-
-}
+        }  
+}  

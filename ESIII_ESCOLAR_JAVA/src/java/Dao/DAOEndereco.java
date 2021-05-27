@@ -82,7 +82,11 @@ public class DAOEndereco extends AbstractDAO {
             Endereco end = (Endereco) entidade;
             StringBuilder sql = new StringBuilder();
 
-            sql.append("INSERT INTO "+table+"end_cep = ?, end_estado = ?, end_cidade = ?, end_numero = ?, end_logradouro = ?, end_complemento = ? WHERE end_id = ?");
+            sql.append("UPDATE ");
+            sql.append(table);
+            sql.append(" SET end_cep = ?, end_estado = ?, end_cidade = ?,");
+            sql.append(" end_numero = ?, end_logradouro = ?, end_complemento = ? ");
+            sql.append(" WHERE end_id = ?");
             conexao.setAutoCommit(false);
 
             pst = conexao.prepareStatement(sql.toString());

@@ -75,12 +75,11 @@ public class DAOProfessor extends AbstractDAO {
             DAOpes.alterar(pessoa);
 
             StringBuilder sql = new StringBuilder();
-            sql.append(" UPDATE professores SET pro_salario = ?, pro_pes_id = ? WHERE pro_pes_id = ?");
+            sql.append(" UPDATE professores SET pro_salario = ? WHERE pro_pes_id = ?");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setDouble(1, professor.getSalario());
             pst.setInt(2, professor.getId());
-            pst.setInt(3, professor.getId());
             pst.executeUpdate();
             conexao.commit();
             System.out.println("alterado com sucesso");
@@ -115,7 +114,6 @@ public class DAOProfessor extends AbstractDAO {
             }
             
             pst = conexao.prepareStatement(sql.toString());
-            pst.setInt(1, entidade.getId());
             ResultSet rs = pst.executeQuery();
             
             List<EntidadeDominio> professores = new ArrayList<EntidadeDominio>();

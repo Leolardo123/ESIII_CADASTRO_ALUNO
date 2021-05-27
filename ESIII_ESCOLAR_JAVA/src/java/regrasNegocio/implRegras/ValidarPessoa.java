@@ -7,12 +7,14 @@ package regrasNegocio.implRegras;
 
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
+import regrasNegocio.IStrategy;
 
 /**
  *
  * @author 55119
  */
-public class ValidarPessoa {
+public class ValidarPessoa implements IStrategy{
+     @Override
      public String processar(EntidadeDominio entidade){
          Pessoa pessoa;
          if(entidade instanceof Pessoa){

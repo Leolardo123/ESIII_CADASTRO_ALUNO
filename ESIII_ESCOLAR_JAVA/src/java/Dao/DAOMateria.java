@@ -55,6 +55,10 @@ public class DAOMateria extends AbstractDAO {
                 materia.setId(rs.getInt(id_table));
             }
             
+            if(materia.getDependencias().size()>0){
+                DAOdep.salvar(materia);
+            }
+            
             conexao.commit();
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
@@ -100,15 +104,9 @@ public class DAOMateria extends AbstractDAO {
             if(rs.next()){
                 materia.setId(rs.getInt(id_table));
             }
-            System.out.println(id_table+":"+materia.getId());
-            if(materia.getDependencias()!=null){
-                DAOMateria daoMat = new DAOMateria();
-                
-                DAOdep.salvar(materia);
-            }
             
             conexao.commit();
-            System.out.println("cadastrado com sucesso");
+            System.out.println("alterado com sucesso");
             DAOdep.ctrlTransaction = true;
         } catch (SQLException e) {
             try {
@@ -194,7 +192,9 @@ public class DAOMateria extends AbstractDAO {
 
             sql.append("SELECT * FROM "+table+" LEFT JOIN grade_curso ON ");
             sql.append("(SELECT COUNT(*) FROM dependentes WHERE dep_materia_id = ?) = ");
-            sql.append("(SELECT COUNT() FROM grade_curso LEFT JOIN dependentes ON dep_dependencia_id =  AND ) ");
+            sql.append("(SELECT COUNT(*) FROM grade_curso LEFT JOIN dependentes ");
+            sql.append(" ON dep_dependencia_id =  gra_mat_id WHERE dep_materia_id = ? )");
+            sql.append("WHERE gra_semestre < ?");
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             

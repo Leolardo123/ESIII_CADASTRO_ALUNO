@@ -5,8 +5,8 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAODependentes;
 import Dominio.EntidadeDominio;
-import Dominio.GradeCurso;
 import Dominio.Materia;
 import regrasNegocio.IStrategy;
 
@@ -14,26 +14,26 @@ import regrasNegocio.IStrategy;
  *
  * @author 55119
  */
-public class ValidarMateria implements IStrategy{
+public class ValidarDependencias implements IStrategy{
     @Override
     public String processar(EntidadeDominio entidade) {
-            if(entidade instanceof Materia){
+        if(entidade instanceof Materia){
                 StringBuilder sb = new StringBuilder();
-                Materia materia = (Materia)entidade;
+                Materia dependencia = (Materia)entidade;
                 
-                if(materia.getNome()==null){
-                    sb.append("Falta Nome na Materia!");
-                }
-                if(materia.getDescricao()==null){
-                    sb.append("Falta Descricao na Grade!");
+                if(dependencia.getId()==0){
+                    return "Dependencia sem id, verifique se ela existe!";
                 }
                 
-                ValidarDependencias valDep = new ValidarDependencias();
-                for(Materia dependencia:materia.getDependencias()){
-                    String msgDep = valDep.processar(dependencia);
-                    if(msgDep!=null)return msgDep;
-                }
+                DAODependentes dao = new DAODependentes();
+                dao.consultar(dependencia);
                 
+                if(dependencia.getNome()==null){
+                    sb.append("Falta Nome na Dependencia!");
+                }
+                if(dependencia.getDescricao()==null){
+                    sb.append("Falta Descricao na Dependencia!");
+                }
                 if(sb.length()>0)return sb.toString();
             }else{
                 return "Entidade recebida Inválida, esperava Matéria";
