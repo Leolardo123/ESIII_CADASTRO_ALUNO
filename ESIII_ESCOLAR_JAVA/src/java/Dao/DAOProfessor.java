@@ -21,7 +21,8 @@ public class DAOProfessor extends AbstractDAO {
 
     public DAOProfessor() {
         table = "professores";
-        id_table = "pro_pes_id";
+        prefixo ="pro_";
+        id_table = prefixo+"id";
     }
 
     //concluido - falta testar
@@ -113,48 +114,6 @@ public class DAOProfessor extends AbstractDAO {
                 sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
             }
             
-            pst = conexao.prepareStatement(sql.toString());
-            ResultSet rs = pst.executeQuery();
-            
-            List<EntidadeDominio> professores = new ArrayList<EntidadeDominio>();
-            
-            while(rs.next()){
-               DAOPessoa DAOpes = new DAOPessoa();
-               Pessoa pessoa = new Pessoa();
-               pessoa.setId(rs.getInt("pro_pes_id"));
-               pessoa = (Pessoa)DAOpes.consultar(pessoa).get(0);
-
-               Professor professor = new Professor(pessoa,rs.getFloat("pro_salario"));
-               professor.setId(pessoa.getId());
-               professor.setDtcadastro(pessoa.getDtcadastro());
-               professores.add(professor);
-            }
-            
-            return professores;
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                closeConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-    public List<EntidadeDominio> consultar() {
-        try {
-            openConnection();
-            
-            conexao.setAutoCommit(false);
-            
-            StringBuilder sql = new StringBuilder();
-
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
             

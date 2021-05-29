@@ -21,7 +21,8 @@ public class DAOEndereco extends AbstractDAO {
 
     public DAOEndereco() {
         table = "enderecos";
-        id_table = "end_id";
+        prefixo ="end_";
+        id_table = prefixo+"id";
     }
 
     //concluido - falta testar

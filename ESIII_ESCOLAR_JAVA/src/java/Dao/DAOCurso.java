@@ -20,8 +20,9 @@ import java.util.List;
 public class DAOCurso extends AbstractDAO {
 
     public DAOCurso() {
+        prefixo = "cur_";
         table = "cursos";
-        id_table = "cur_id";
+        id_table = prefixo+"id";
     }
 
     //Concluido - falta testar

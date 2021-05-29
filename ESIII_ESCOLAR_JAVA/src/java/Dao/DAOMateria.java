@@ -23,7 +23,8 @@ public class DAOMateria extends AbstractDAO {
 
     public DAOMateria() {
         table = "materias";
-        id_table = "mat_id";
+        prefixo ="mat_";
+        id_table = prefixo+"id";
     }
 
     //concluido - falta testar
@@ -184,6 +185,7 @@ public class DAOMateria extends AbstractDAO {
     
     public List<EntidadeDominio> consultaRestrita(EntidadeDominio entidade){//Não está pronto!
     try {
+            String getCountDependencias = "SELECT COUNT(*),mat_id,mat_nome FROM dependentes LEFT JOIN materias ON dep_materia_id = mat_id GROUP BY mat_id";
             openConnection();
             
             conexao.setAutoCommit(false);
@@ -191,7 +193,7 @@ public class DAOMateria extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             sql.append("SELECT * FROM "+table+" LEFT JOIN grade_curso ON ");
-            sql.append("(SELECT COUNT(*) FROM dependentes WHERE dep_materia_id = ?) = ");
+            sql.append("(SELECT COUNT(*) FROM dependentes LEFT JOIN materias ON dep_materia_id = materia_id) = ");
             sql.append("(SELECT COUNT(*) FROM grade_curso LEFT JOIN dependentes ");
             sql.append(" ON dep_dependencia_id =  gra_mat_id WHERE dep_materia_id = ? )");
             sql.append("WHERE gra_semestre < ?");

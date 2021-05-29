@@ -24,7 +24,8 @@ public class DAOPessoa extends AbstractDAO {
 
     public DAOPessoa() {
         table = "pessoas";
-        id_table = "pes_id";
+        prefixo ="pes_";
+        id_table = prefixo+"id";
     }
 
     //concluido - falta testar

@@ -66,7 +66,7 @@ public class DAOProfessorTest {
         Professor professor = new Professor();
         
         DAOProfessor dao = new DAOProfessor();
-        List<EntidadeDominio> EntidadesProfessor = dao.consultar();
+        List<EntidadeDominio> EntidadesProfessor = dao.consultar(null);
         System.out.println("---------------------------------------------------------------------------");
         for(int i=0;i<EntidadesProfessor.size();i++){
             professor  = (Professor)EntidadesProfessor.get(i);

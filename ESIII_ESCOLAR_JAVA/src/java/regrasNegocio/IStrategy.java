@@ -6,6 +6,7 @@
 package regrasNegocio;
 
 import Dominio.EntidadeDominio;
+import java.util.List;
 
 /**
  *

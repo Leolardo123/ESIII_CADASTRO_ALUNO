@@ -12,7 +12,6 @@ import Dominio.EntidadeDominio;
  * @author Eu
  */
 public class AlterarCommand extends AbstractCommand {
-
     @Override
     public String execute(EntidadeDominio entidade) {
         return fachada.cadastrar(entidade);

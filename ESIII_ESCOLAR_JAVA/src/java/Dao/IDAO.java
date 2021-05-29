@@ -13,8 +13,9 @@ import java.util.List;
  * @author Eu
  */
 public interface IDAO {
+    public List<String> getColunas(EntidadeDominio entidade);
     public void salvar(EntidadeDominio entidade);
     public void alterar(EntidadeDominio entidade);
     public void excluir(EntidadeDominio entidade);
-//    public List<EntidadeDominio> consultar(EntidadeDominio entidade);//corrigir tipo da lista (erro nos DAO's que a herdam)
+    public List<EntidadeDominio> consultar(EntidadeDominio entidade);//corrigir tipo da lista (erro nos DAO's que a herdam)
 }

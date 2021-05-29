@@ -10,8 +10,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
+import regrasNegocio.implRegras.GetTabela;
 /**
  *
  * @author Eu
@@ -24,6 +27,7 @@ public abstract class AbstractDAO implements IDAO {
     protected boolean ctrlTransaction = true;
     protected String table;
     protected String id_table;
+    protected String prefixo;
 
     protected void conectar() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
@@ -42,6 +46,46 @@ public abstract class AbstractDAO implements IDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public List<String> getColunas(EntidadeDominio entidade){
+        ArrayList<String> colunas = new ArrayList<String>();
+        GetTabela getTabela = new GetTabela();
+        String tb_name = getTabela.processar(entidade);
+        if (tb_name != null) {
+            try {
+                pst = conexao.prepareStatement("SELECT * FROM " + tb_name);
+                ResultSet rs = pst.executeQuery();
+
+                ResultSetMetaData metadata = rs.getMetaData();
+                int columnCount = metadata.getColumnCount();
+
+                for (int i = 1; i < columnCount; i++) {
+                    String columnName = metadata.getColumnName(i);
+                    colunas.add(columnName);
+                }
+            } catch (SQLException e) {
+                try {
+                    System.out.println("Erro ao selecionar colunas: " + e);
+                    conexao.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                e.printStackTrace();
+            } finally {
+                try {
+                    pst.close();
+                    if (ctrlTransaction) {
+                        conexao.close();
+                    }
+                    return colunas;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
     protected static void closeConnection() throws SQLException {

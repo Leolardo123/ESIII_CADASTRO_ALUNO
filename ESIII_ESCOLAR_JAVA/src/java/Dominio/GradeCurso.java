@@ -5,71 +5,36 @@
  */
 package Dominio;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author 55119
  */
 public class GradeCurso  extends EntidadeDominio{
-    private boolean obrigatorio;
-    private int dia_semana;
-    private int turno;
-    private int periodo;
-    private int semestre;
+    private List<ItemGrade> itensGrade;
     private Curso curso;
-    private Materia materia;
-    private Professor professor;
+    private int semestre;
     
     public GradeCurso(){}
     
-    public GradeCurso(boolean obrigatorio,int dia_semana,int turno,int periodo, 
-                      Curso curso, Materia materia, Professor professor){
-        this.obrigatorio = obrigatorio;
-        this.dia_semana = dia_semana;
-        this.turno = turno;
-        this.periodo = periodo;
+    public GradeCurso(List<ItemGrade> itensGrade,Curso curso,int semestre){
+        this.itensGrade = itensGrade;
         this.curso = curso;
-        this.materia = materia;
-        this.professor = professor;
-    }
-
-    public boolean isObrigatorio() {
-        return obrigatorio;
-    }
-
-    public void setObrigatorio(boolean obrigatorio) {
-        this.obrigatorio = obrigatorio;
-    }
-
-    public int getDia_semana() {
-        return dia_semana;
-    }
-
-    public void setDia_semana(int dia_semana) {
-        this.dia_semana = dia_semana;
-    }
-
-    public int getTurno() {
-        return turno;
-    }
-
-    public void setTurno(int turno) {
-        this.turno = turno;
-    }
-
-    public int getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(int periodo) {
-        this.periodo = periodo;
+        this.semestre = semestre;
     }
     
-    public int getSemestre() {
-        return semestre;
+    public void AddItem(ItemGrade itemGrade){
+        this.itensGrade.add(itemGrade);
     }
 
-    public void setCurso(int semestre) {
-        this.semestre = semestre;
+    public List<ItemGrade> getItens() {
+        return itensGrade;
+    }
+
+    public void setItens(List<ItemGrade> itensGrade) {
+        this.itensGrade = itensGrade;
     }
 
     public Curso getCurso() {
@@ -80,19 +45,20 @@ public class GradeCurso  extends EntidadeDominio{
         this.curso = curso;
     }
 
-    public Materia getMateria() {
-        return materia;
+    public List<ItemGrade> getItensGrade() {
+        return itensGrade;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setItensGrade(List<ItemGrade> itensGrade) {
+        this.itensGrade = itensGrade;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public int getSemestre() {
+        return semestre;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
+    
 }

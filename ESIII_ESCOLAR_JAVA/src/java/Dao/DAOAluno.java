@@ -23,8 +23,9 @@ import java.util.List;
 public class DAOAluno extends AbstractDAO {
 
     public DAOAluno() {
+        prefixo = "alu_";
         table = "alunos";
-        id_table = "alu_pes_id";
+        id_table = prefixo+"id";
     }
 
     //concluido - falta testar

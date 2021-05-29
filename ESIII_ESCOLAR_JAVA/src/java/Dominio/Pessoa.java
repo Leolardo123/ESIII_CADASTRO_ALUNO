@@ -61,6 +61,10 @@ public class Pessoa extends EntidadeDominio {
     public void setUnome(String unome) {
         this.unome = unome;
     }
+    
+    public String getNome() {
+        return pnome+" "+unome;
+    }
 
     public String getEmail() {
         return email;

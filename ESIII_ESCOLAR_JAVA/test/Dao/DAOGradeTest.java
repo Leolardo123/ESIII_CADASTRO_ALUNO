@@ -9,10 +9,12 @@ import Dominio.Curso;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
+import Dominio.ItemGrade;
 import Dominio.Materia;
 import Dominio.Professor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
@@ -63,9 +65,10 @@ public class DAOGradeTest {
        Professor professor = new Professor();
         
         DAOProfessor daoPro = new DAOProfessor();
-        List<EntidadeDominio> EntidadesProfessor = daoPro.consultar();
+        List<EntidadeDominio> EntidadesProfessor = daoPro.consultar(null);
         if(EntidadesProfessor!=null){
             professor  = (Professor)EntidadesProfessor.get(0);
+            System.out.println(professor.getId());
         }
         
         DAOMateria dao = new DAOMateria();
@@ -75,12 +78,16 @@ public class DAOGradeTest {
         
         if(entidadesMateria!=null){
             materia = (Materia)entidadesMateria.get(0);
+            System.out.println(materia.getId());
         }
         
-        
         if(materia!=null&&curso!=null&&professor!=null){
-            GradeCurso grade = new GradeCurso( true, 1, 0, 1, curso, materia ,professor);
-
+            ItemGrade item = new ItemGrade(true, 1, 1, 1, materia ,professor); 
+            List<ItemGrade> itemList = new ArrayList<ItemGrade>();
+            itemList.add(item);
+            
+            GradeCurso grade = new GradeCurso(itemList,curso,1);
+            
             DAOGrade daoGrade = new DAOGrade();
             daoGrade.salvar(grade);
         }
@@ -88,17 +95,22 @@ public class DAOGradeTest {
     
     @Test
     public void testConsultar() {
+        GradeCurso grade = new GradeCurso();
+        
         DAOGrade dao = new DAOGrade();
         
         List<EntidadeDominio> entidadeGrade = dao.consultar(null);
         
-        
         for(EntidadeDominio entidade: entidadeGrade){
-            GradeCurso grade = (GradeCurso)entidade;
-            
+            grade = (GradeCurso)entidade;
             System.out.println("----------------------------------------");
-            System.out.println(grade.isObrigatorio()+"\n"+grade.getDia_semana()+"\n"+grade.getTurno()+"\n"
-                    +grade.getPeriodo()+"\n"+grade.getCurso()+"\n"+grade.getMateria()+"\n"+grade.getProfessor().getId());
+            System.out.println(grade.getCurso().getNome()+"\n"+grade.getCurso().getNivel()+"\n"+grade.getCurso().getDuracao()+"\n");
+            System.out.println("ITENS:");
+            for(ItemGrade item: grade.getItens()){
+                 System.out.println(item.isObrigatorio()+"\n"+item.getDia_semana()+"\n"+item.getTurno()+"\n"
+                    +item.getPeriodo()+"\n"+grade.getCurso()+"\n"+item.getMateria().getNome()+"\n"+item.getProfessor().getId());
+                System.out.println("----------------------------------------");
+            }
         }
     }
     
@@ -111,13 +123,16 @@ public class DAOGradeTest {
         
         List<EntidadeDominio> entidadeGrade = dao.consultar(grade);
         
-        
         for(EntidadeDominio entidade: entidadeGrade){
             grade = (GradeCurso)entidade;
-            
             System.out.println("----------------------------------------");
-            System.out.println(grade.isObrigatorio()+"\n"+grade.getDia_semana()+"\n"+grade.getTurno()+"\n"
-                    +grade.getPeriodo()+"\n"+grade.getCurso()+"\n"+grade.getMateria()+"\n"+grade.getProfessor().getId());
+            System.out.println(grade.getCurso().getNome()+"\n"+grade.getCurso().getNivel()+"\n"+grade.getCurso().getDuracao()+"\n");
+            System.out.println("ITENS:");
+            for(ItemGrade item: grade.getItens()){
+                 System.out.println(item.isObrigatorio()+"\n"+item.getDia_semana()+"\n"+item.getTurno()+"\n"
+                    +item.getPeriodo()+"\n"+grade.getCurso()+"\n"+item.getMateria().getNome()+"\n"+item.getProfessor().getId());
+                System.out.println("----------------------------------------");
+            }
         }
     }
     

@@ -22,7 +22,8 @@ public class DAODependentes extends AbstractDAO {
 
     public DAODependentes() {
         table = "dependentes";
-        id_table = "dep_dependencia_id";
+        prefixo ="dep_";
+        id_table = prefixo+"dependencia_id";
     }
 
     //concluido - falta testar

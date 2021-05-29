@@ -6,6 +6,7 @@
 package Dominio;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Curso extends EntidadeDominio{
     private String nivel;
     private int duracao;
     private double mensalidade;
+    private List<GradeCurso> gradeCurso;
     
     public Curso(){}
     
@@ -28,6 +30,7 @@ public class Curso extends EntidadeDominio{
         this.mensalidade = mensalidade;
     }
 
+    
     public String getNome() {
         return nome;
     }
@@ -67,5 +70,4 @@ public class Curso extends EntidadeDominio{
     public void setMensalidade(double mensalidade) {
         this.mensalidade = mensalidade;
     }
-    
 }
