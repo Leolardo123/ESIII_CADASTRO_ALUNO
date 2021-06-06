@@ -14,7 +14,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import regrasNegocio.implRegras.GetTabela;
 /**
  *
  * @author Eu
@@ -47,46 +46,6 @@ public abstract class AbstractDAO implements IDAO {
             e.printStackTrace();
         }
     }
-    
-    @Override
-    public List<String> getColunas(EntidadeDominio entidade){
-        ArrayList<String> colunas = new ArrayList<String>();
-        GetTabela getTabela = new GetTabela();
-        String tb_name = getTabela.processar(entidade);
-        if (tb_name != null) {
-            try {
-                pst = conexao.prepareStatement("SELECT * FROM " + tb_name);
-                ResultSet rs = pst.executeQuery();
-
-                ResultSetMetaData metadata = rs.getMetaData();
-                int columnCount = metadata.getColumnCount();
-
-                for (int i = 1; i < columnCount; i++) {
-                    String columnName = metadata.getColumnName(i);
-                    colunas.add(columnName);
-                }
-            } catch (SQLException e) {
-                try {
-                    System.out.println("Erro ao selecionar colunas: " + e);
-                    conexao.rollback();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-                e.printStackTrace();
-            } finally {
-                try {
-                    pst.close();
-                    if (ctrlTransaction) {
-                        conexao.close();
-                    }
-                    return colunas;
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
 
     protected static void closeConnection() throws SQLException {
         if (conexao != null) {
@@ -109,8 +68,8 @@ public abstract class AbstractDAO implements IDAO {
         sql.append(table);
         sql.append(" WHERE ");
         sql.append(id_table);
-        sql.append("=");
-        sql.append("?");
+        sql.append(" = ");
+        sql.append(" ? ");
         try {
             conexao.setAutoCommit(false);
             pst = conexao.prepareStatement(sql.toString());

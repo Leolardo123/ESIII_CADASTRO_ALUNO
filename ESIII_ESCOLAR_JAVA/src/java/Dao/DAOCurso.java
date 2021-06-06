@@ -143,4 +143,7 @@ public class DAOCurso extends AbstractDAO {
         return null;
     }
     
+    @Override
+    public void excluir(EntidadeDominio entidade){
+    }
 }

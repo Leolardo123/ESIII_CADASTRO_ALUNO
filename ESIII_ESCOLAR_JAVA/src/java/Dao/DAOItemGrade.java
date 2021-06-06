@@ -29,6 +29,7 @@ public class DAOItemGrade extends AbstractDAO{
     public DAOItemGrade() {
         table = "grade_itens";
         prefixo = "gri_";
+        id_table = prefixo+"gra_id";
     }
 
     //concluido - falta testar
@@ -62,7 +63,6 @@ public class DAOItemGrade extends AbstractDAO{
                     grade.setId(rs.getInt(id_table));
                 }
 
-                conexao.commit();
                 System.out.println("cadastrado com sucesso");
             } catch (SQLException e) {
                 try {
@@ -139,16 +139,23 @@ public class DAOItemGrade extends AbstractDAO{
             StringBuilder sql = new StringBuilder();
             
             if (grade == null || grade.getCurso() == null|| grade.getCurso().getId() == 0) {
-                sql.append("SELECT * FROM "+table);
+                sql.append("SELECT * FROM ");
+                sql.append(table);
+                sql.append(" ORDER BY ");
+                sql.append(id_table);
             } else if(grade.getId()!=0) {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + grade.getCurso().getId() + "");
+                sql.append("SELECT * FROM ");
+                sql.append(table);
+                sql.append(" WHERE ");
+                sql.append(id_table);
+                sql.append(" = ");
+                sql.append(grade.getId());
             }
             
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
           
             List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>(); 
-            HashMap<Integer,GradeCurso> organizaGrade = new HashMap<Integer,GradeCurso>();
             
             while(rs.next()){
                DAOProfessor DAOpro = new DAOProfessor();
@@ -161,23 +168,18 @@ public class DAOItemGrade extends AbstractDAO{
                    Materia   materia   = new Materia();
                    
                    professor.setId(rs.getInt("gri_pro_id"));
-                   curso.setId(rs.getInt("gri_cur_id"));
                    materia.setId(rs.getInt("gri_mat_id"));
                    
                    professor = (Professor)DAOpro.consultar(professor).get(0);
-                   curso     = (Curso)    DAOcur.consultar(curso).get(0);
                    materia   = (Materia)  DAOmat.consultar(materia).get(0);
                    
                    ItemGrade item = new ItemGrade(rs.getBoolean("gri_obrigatorio"),rs.getInt("gri_dia_semana"),
                    rs.getInt("gri_turno"),rs.getInt("gri_periodo"), materia, professor);
                    
+                   ListaGrade.add(item);
                }catch(Exception ex){
-                   System.out.print("Erro na consulta do item da grade_curso:"+ex);
+                   System.out.print("Erro na construção do item da grade_curso durante a consulta:"+ex);
                }
-            }
-            
-            for(Map.Entry<Integer,GradeCurso> gradeCurso:organizaGrade.entrySet()){
-                ListaGrade.add(gradeCurso.getValue());
             }
             
             return ListaGrade;

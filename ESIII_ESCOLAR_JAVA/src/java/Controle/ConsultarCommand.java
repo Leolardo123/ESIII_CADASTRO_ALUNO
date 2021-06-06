@@ -6,6 +6,7 @@
 package Controle;
 
 import Dominio.EntidadeDominio;
+import java.util.List;
 
 /**
  *
@@ -14,8 +15,7 @@ import Dominio.EntidadeDominio;
 public class ConsultarCommand extends AbstractCommand {
 
     @Override
-    public String execute(EntidadeDominio entidade) {
-        return fachada.cadastrar(entidade);
+    public List<EntidadeDominio> execute(EntidadeDominio entidade) {
+        return fachada.consultar(entidade);
     }
-
 }

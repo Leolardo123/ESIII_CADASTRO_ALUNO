@@ -8,6 +8,7 @@ package Dao;
 
 
 import Dominio.Aluno;
+import Dominio.Curso;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import java.text.ParseException;
@@ -53,9 +54,11 @@ public class DAOAlunoTest {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
         Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
+        Curso cur = new Curso();
+        cur.setId(1);
         Aluno aluno = new Aluno("545675677", "45645644411", "Leonardo", 
             "Takeshi", "leo_takeshi@gmail.com", data, endereco,
-            1 , 0);
+            1 , cur);
         
         DAOAluno DAOalu = new DAOAluno();
         DAOalu.salvar(aluno);
@@ -65,17 +68,19 @@ public class DAOAlunoTest {
     public void testAlterar() throws ParseException {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
+        Curso cur = new Curso();
+        cur.setId(1);
         Endereco endereco = new Endereco("08990320", "SP","Moji das Cruzes",100,"Rua Leonardo Fabricio Lopes");
         Aluno aluno = new Aluno("545675677", "45645644411", "Ldwdwrdo", 
             "Takeshi", "leo_takeshi@gmail.com", data, endereco,
-            1 , 0);
+            1 , cur);
         
         
         data = formato.parse("25/12/1967");
         endereco = new Endereco("084123111", "MG","Sei la",100,"Rua Spinner Splaining");
         aluno = new Aluno("545675677", "45645444411", "Takeshi", 
             "Lopez", "jose@gmail.com", data, endereco,
-            1 , 0);
+            1 , cur);
         
         DAOAluno DAOalu = new DAOAluno();
         DAOalu.alterar(aluno);
@@ -86,9 +91,11 @@ public class DAOAlunoTest {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = formato.parse("25/12/1967");
         Endereco endereco = new Endereco("08440111", "MG","Sei la",100,"Rua Spinner Splaining");
+        Curso cur = new Curso();
+        cur.setId(1);
         Aluno aluno = new Aluno("545675677", "45645644411", "Takeshi", 
             "Lopez", "jose@gmail.com", data, endereco,
-            1 , 0);
+            1 , cur);
         
         DAOAluno DAOalu = new DAOAluno();
         DAOalu.excluir(aluno);
@@ -106,7 +113,7 @@ public class DAOAlunoTest {
             
             System.out.println("Aluno----------");
             System.out.println("Semestre:"+aluno .getSemestre());
-            System.out.println("Curso:"+aluno .getCurso_id());
+            System.out.println("Curso:"+aluno.getCurso().getNome());
             System.out.println("Pessoa-------------");
             System.out.println("RG:"+aluno.getRg()+"\nCPF:\"+"+aluno.getCpf()+"\n"+aluno.getId()+"\n"
                 +aluno.getPnome()+" "+aluno.getUnome()+"\n"+aluno.getDtNascimento());
@@ -127,7 +134,7 @@ public class DAOAlunoTest {
             
             System.out.println("Aluno----------");
             System.out.println("Semestre:"+aluno .getSemestre());
-            System.out.println("Curso:"+aluno .getCurso_id());
+            System.out.println("Curso:"+aluno.getCurso().getNome());
             System.out.println("Pessoa-------------");
             System.out.println("RG:"+aluno.getRg()+"\nCPF:\"+"+aluno.getCpf()+"\n"+aluno.getId()+"\n"
                 +aluno.getPnome()+" "+aluno.getUnome()+"\n"+aluno.getDtNascimento());

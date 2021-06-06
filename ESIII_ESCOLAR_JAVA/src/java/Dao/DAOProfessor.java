@@ -6,6 +6,7 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
+import Dominio.Aluno;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import Dominio.Professor;
@@ -22,7 +23,7 @@ public class DAOProfessor extends AbstractDAO {
     public DAOProfessor() {
         table = "professores";
         prefixo ="pro_";
-        id_table = prefixo+"id";
+        id_table = prefixo+"pes_id";
     }
 
     //concluido - falta testar
@@ -147,5 +148,38 @@ public class DAOProfessor extends AbstractDAO {
             }
         }
         return null;
+    }
+     @Override
+    public void excluir(EntidadeDominio entidade) {
+        try {
+            openConnection();
+
+            conexao.setAutoCommit(false);
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("DELETE FROM " + table + " WHERE ");
+            sql.append(id_table);
+            sql.append(" = ");
+            sql.append(entidade.getId());
+            pst = conexao.prepareStatement(sql.toString());
+            pst.executeUpdate();
+            
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.excluir((Pessoa)entidade);
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

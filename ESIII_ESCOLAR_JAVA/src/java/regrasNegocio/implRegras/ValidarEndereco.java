@@ -5,6 +5,7 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOEndereco;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import regrasNegocio.IStrategy;
@@ -20,6 +21,9 @@ public class ValidarEndereco implements IStrategy{
                 StringBuilder sb = new StringBuilder();
                 Endereco endereco = (Endereco)entidade;
                 
+                DAOEndereco DAOend = new DAOEndereco();
+                endereco = new Endereco((Endereco)DAOend.consultar(endereco).get(0));
+                
                 if(endereco.getCep()==null){
                     sb.append("Falta CEP do Endereco!");
                 }
@@ -34,6 +38,9 @@ public class ValidarEndereco implements IStrategy{
                 }
                 if(endereco.getNumero()<=0){
                     sb.append("Número do endereco é inválido!");
+                }
+                if(endereco.getNumero()>999999){
+                    sb.append("Número do endereco é maior que o limite de 6 dígitos!");
                 }
                 if(sb.length()>0)return sb.toString();
             }else{

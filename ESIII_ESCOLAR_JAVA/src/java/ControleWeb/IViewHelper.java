@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controle.ControleWeb;
+package ControleWeb;
 
 import Dominio.EntidadeDominio;
 import javax.servlet.ServletException;
@@ -19,6 +19,6 @@ public interface IViewHelper {
     public EntidadeDominio getEntidade(HttpServletRequest request);
 
     public void setView(Object resultado, 
-                    HttpServletRequest request, HttpServletResponse response)throws ServletException;
+                    HttpServletRequest request, HttpServletResponse response, EntidadeDominio entidade)throws ServletException;
     
 }

@@ -27,11 +27,11 @@ public class ValidarCurso implements IStrategy{
             if(curso.getDescricao()==null){
                 sb.append("Descricao está faltando!");
             }
-            if(curso.getDuracao()==0){
-                sb.append("Duração está faltando!");
+            if(curso.getDuracao()<=0){
+                sb.append("Duração está faltando ou é invalida!");
             }
-            if(curso.getMensalidade()==0){
-                sb.append("Mensalidade faltando!");
+            if(curso.getMensalidade()<=0){
+                sb.append("Mensalidade faltando ou é invalida!");
             }
             
             if(sb.length()>0){

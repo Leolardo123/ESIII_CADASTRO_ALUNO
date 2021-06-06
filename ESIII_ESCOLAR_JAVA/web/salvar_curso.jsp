@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE jsp>
 <jsp lang="en">
 <head>
@@ -17,33 +19,37 @@
     
     <div class="container my-5">
 
-        <!-- Formulário -->
-        <form class="row" action="SalvarCurso" method="get">
+        <!-- FormulÃ¡rio -->
+        <form class="row" action="SalvarCurso" method="post">
+            
+            <%
+                String niveis[] = {"Tecnologo","Bacharelado","Doutorado","Licenciatura","Graduação","Pós-Graduação","Mestrado"} ;
+            %>
 
             <!-- Curso -->
             <div class="col-sm-6 my-2"><input class="form-control" type="text" name="nome_curso" placeholder="Nome do Curso" required></div>
-            <div class="col-sm-2 my-2"><input class="form-control" type="number" min="1" max="9999" name="duracao" placeholder="Dura��o" required></div>
+            <div class="col-sm-2 my-2"><input class="form-control" type="number" min="1" max="9999" name="duracao" placeholder="Duração" required></div>
             <div class="col-sm-2 my-2"><input class="form-control" type="number" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0.00" name="mensalidade" placeholder="Mensalidade" required></div>
             <div class="col-sm-2 my-2">
                 <select class="form-select" name="nivel">
-                    <option value="Tecnologo">Tecnologo</option>
-                    <option value="Bacharelado">Bacharelado</option>
-                    <option value="Doutorado">Doutorado</option>
+                    <%
+                        for(String nivel : niveis) {
+                    %>
+                    <option value="<%=nivel%>"><%=nivel%></option>
+                    <%}%>
                 </select>
             </div>
-            <div class="col-sm-12"><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descri��o" required></textarea></div>
+            <div class="col-sm-12"><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descrição" required></textarea></div>
             <!-- Curso -->
 
             <div class="col-sm-12">
                 <input type="hidden" name="operacao" value="SALVAR" >
-                <button type="submit" class="btn btn-primary p-2 m-2">Enviar</button>
-                <a class="btn btn-secondary p-2 m-2" href="./curso.jsp">Voltar</a>
+                <button type="submit" class="btn btn-p p-2 m-2">Enviar</button>
+                <a class="btn btn-s p-2 m-2" href="./ListarCurso?operacao=CONSULTAR">Voltar</a>
             </div>
         </form>
-        <!-- Formulário -->
+        <!-- FormulÃ¡rio -->
 
     </div>
-
-    <%@include file="./componentes/footer.jsp" %>
 </body>
 </jsp>

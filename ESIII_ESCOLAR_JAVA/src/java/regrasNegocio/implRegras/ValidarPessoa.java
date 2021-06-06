@@ -5,8 +5,10 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOPessoa;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
+import java.util.List;
 import regrasNegocio.IStrategy;
 
 /**
@@ -31,15 +33,36 @@ public class ValidarPessoa implements IStrategy{
             
             ValidarRG valRg = new ValidarRG();
             String msgRG = valRg.processar(pessoa);
-            
 
             if(msgRG!=null){
                 sb.append(msgRG);
             }
             
+            DAOPessoa DAOpes = new DAOPessoa();
+            List<EntidadeDominio> temppessoa = DAOpes.consultar(pessoa);
+            
+            if(temppessoa!=null&&temppessoa.size()>0){
+                pessoa = (Pessoa)temppessoa.get(0);
+                sb.append("Pessoa já existe!");
+            }
+                    
+            if(pessoa.getPnome()==null){
+                sb.append("Primeiro nome é obrigatório!");
+            }
+            if(pessoa.getPnome().length()>34){
+                sb.append("Primeiro nome ultrapassa o limite de caracteres!");
+            }
+            if(pessoa.getUnome()==null){
+                sb.append("Ultímo nome é obrigatório");
+            }
+            if(pessoa.getUnome().length()>254){
+                sb.append("Ultímo nome ultrapassa o limite de caracteres!");
+            }
+            
+            if(sb.length()>0)return sb.toString();
             //resto das validações
          }else{
-             return "Entidade recebida Inválida, esperava Pessoa";
+            return "Entidade recebida Inválida, esperava Pessoa";
          }
          return null;
      }

@@ -20,16 +20,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-        <script>
-            <%
-                String msg;
-                if (request.getAttribute("msg_success") != null) {
-                    msg = (String) request.getAttribute("msg_success");%>
-            alert("<%=msg%>");
-            <%}%>
-        </script>
     </head>
-    <% ValidarItemGrade vG = new ValidarItemGrade();
+    <% 
+        GradeCurso grade = request.getParameter("grade");
+        
+        ValidarItemGrade vG = new ValidarItemGrade();
 
         DAOProfessor daoPro = new DAOProfessor();
         List<EntidadeDominio> professores = daoPro.consultar(null);
@@ -47,7 +42,7 @@
 
 
         <!-- Formulário -->
-        <form class="row justify-content-center align-items-center" action="SalvarGradeCurso">
+        <form class="row justify-content-center align-items-center" action="">
 
             <div class="row">
                 <div class="col-sm-9">
@@ -96,7 +91,7 @@
                                 <% for (int j = 1; j < vG.periodos_validos.length; j++) {%>
                                 <% for (int k = 1; k < vG.turnos_validos.length; k++) {%>
                                 <td class="grade-form-td-values">
-                                    <select class="form-select" name="materias[]" >
+                                    <select class="form-select" name="materias[<%=count%>]" >
                                         <option value="">-</option>
                                         <%for (EntidadeDominio entidade : materias) {
                                                 Materia materia = (Materia) entidade;
@@ -104,8 +99,7 @@
                                         <option value="<%=materia.getId()%>"><%=materia.getNome()%></option>
                                         <%}%>
                                     </select>
-                                    <select class="form-select" name="professores[]" >
-                                        <option value="">-</option>
+                                    <select class="form-select" name="professores[<%=count%>]" >
                                         <%for (EntidadeDominio entidade : professores) {
                                                 Professor professor = (Professor) entidade;
                                         %>
@@ -113,12 +107,11 @@
                                         <%}%>
                                     </select>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="obrigatorio[]" >
+                                        <input class="form-check-input" type="checkbox" name="obrigatorio[<%=count%>]" >
                                         <label class="form-check-label" >Obrigat�rio</label>
                                     </div>
                                 </td>
-                                <%count++;
-                                    }%>
+                                <%count++;}%>
                                 <%}%>
                             </tr>
                             <%}%>
@@ -130,11 +123,13 @@
                 <div class="col-sm-12">
                     <button class="btn btn-primary p-2 m-2">Enviar</button>
                     <a class="btn btn-secondary p-2 m-2" href="./curso.jsp">Voltar</a>
-                    <input type="hidden" name="operacao" value="SALVAR">
                 </div>
         </form>
         <!-- Formulário -->
 
         </div>
+
+
+        <%@include file="./componentes/footer.jsp" %>
     </body>
 </jsp>

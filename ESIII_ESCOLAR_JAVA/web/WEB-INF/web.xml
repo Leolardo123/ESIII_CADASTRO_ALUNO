@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+    <display-name>ProjetoESIII_Aluno</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+  
+    <servlet>
+        <description></description>
+        <display-name>Controle</display-name>
+        <servlet-name>Controle</servlet-name>
+        <servlet-class>ControleWeb.Controle</servlet-class>
+    </servlet>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/Controle</url-pattern>
+    </servlet-mapping>
+    
+    <!--Forms-->
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/FormEditarAluno</url-pattern>
+    </servlet-mapping>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/FormEditarProfessor</url-pattern>
+    </servlet-mapping>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/FormEditarCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/FormEditarMateria</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/FormEditarGradeCurso</url-pattern>
+    </servlet-mapping>
+    
+    <!--forms-->
+    
+    <!--Salvar-->
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/SalvarAluno</url-pattern>
+    </servlet-mapping>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/SalvarProfessor</url-pattern>
+    </servlet-mapping>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/SalvarCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/SalvarMateria</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/SalvarGradeCurso</url-pattern>
+    </servlet-mapping>
+    
+    <!--Salvar-->
+    
+    <!--Editar-->
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/EditarAluno</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/EditarProfessor</url-pattern>
+    </servlet-mapping>
+  
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/EditarCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/EditarMateria</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/EditarGradeCurso</url-pattern>
+    </servlet-mapping>
+    
+    <!--Editar-->
+  
+    <!--Listar-->
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ListarAluno</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ListarProfessor</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ListarMateria</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ListarCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ListarGradeCurso</url-pattern>
+    </servlet-mapping>
+    
+    <!--Listar-->
+    
+    <!--Excluir-->
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ExcluirAluno</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ExcluirProfessor</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ExcluirCurso</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ExcluirMateria</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Controle</servlet-name>
+        <url-pattern>/ExcluirGradeCurso</url-pattern>
+    </servlet-mapping>
+    
+    <!--Excluir-->
+  
+</web-app>

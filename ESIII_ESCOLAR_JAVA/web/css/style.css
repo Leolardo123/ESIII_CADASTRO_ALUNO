@@ -1,3 +1,25 @@
+body{
+    background-color: #4F4F4F!important;
+}
+
+.dinamic_field{
+    display:inline-block;
+}
+.msg-warning-deps{
+    color:red;
+    background-color: white;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+.dinamic_field span{
+    align-self: center;
+}
+
+header{
+    box-shadow: 0px 0px 15px 0px #000000;
+    background-color: #D2691E;
+}
+
 label{
     font-size: 12px;
 }
@@ -6,18 +28,79 @@ form{
     margin: 100px 0px!important;
 }
 
-/* Table */
+p,a,span{font-size: 1.0em;}
 
-/* Grade */
-.grade-form-thead tr th, .grade-form-td-values{
-    border: 1px solid black;
+h1{font-size: 1.8}
+
+h2{font-size: 1.7}
+
+h3{font-size: 1.6}
+
+h4{font-size: 1.5}
+
+h5{font-size: 1.4}
+
+h6{font-size: 1.3}
+
+ul{
+    list-style: none;
 }
 
-.grade-form-td-title{
+a{
+    color: #1C1C1C!important;
+    text-decoration: none!important;
+}
+
+a:hover{
+    color: #363636!important;
+}
+
+table {
+    margin-top: 15px;
+    width: 100%;
     text-align: center;
-    border: 1px solid black;
+    overflow:hidden;
+    border-collapse:separate;
+    border: solid #ccc 1px;
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    background-color: #696969;
+    padding: 10px;
 }
 
-/* Grade */
+tbody, td, tfoot, th, thead, tr{
+    border-style: groove!important;
+}
 
-/* Table */
+th{
+    padding: 5px;
+    color: #e9e9e9;
+    border: none;
+    padding: 5px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+td{
+    padding: 5px;
+    color: #e9e9e9;
+    font-size: 1.0em;
+}
+
+.overflow-auto{
+    overflow: no-content;
+    height: 8vmin;
+}
+
+.btn-p{
+    background-color: #e9e9e9!important;
+}
+
+.btn-s{
+    background-color: #e9e9e9!important;
+}
+
+.btn-d{
+    background-color: #e9e9e9!important;
+}

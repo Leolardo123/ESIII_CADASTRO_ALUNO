@@ -12,24 +12,28 @@ import java.util.Date;
  * @author 55119
  */
 public class Aluno extends Pessoa{
-    private int semestre;
-    private int curso_id;
+       private int semestre;
+    private Curso curso;
     
     public Aluno() {}
     
-    public Aluno(Pessoa pessoa,int semestre, int curso_id) {
+    public Aluno (Pessoa pessoa){
+        super(pessoa);
+    }
+    
+    public Aluno(Pessoa pessoa,int semestre, Curso curso) {
         super(pessoa);
         this.semestre = semestre;
-        this.curso_id = curso_id;
+        this.curso = curso;
     }
     
     public Aluno(String rg, String cpf, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco,
-            int semestre, int curso_id){
+            int semestre, Curso curso){
         
         super(rg, cpf, pnome, unome, email, dtNascimento, endereco);
         this.semestre = semestre;
-        this.curso_id = curso_id;
+        this.curso = curso;
     }
 
     public int getSemestre() {
@@ -40,12 +44,11 @@ public class Aluno extends Pessoa{
         this.semestre = semestre;
     }
 
-    public int getCurso_id() {
-        return curso_id;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setCurso_id(int curso_id) {
-        this.curso_id = curso_id;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
-    
 }

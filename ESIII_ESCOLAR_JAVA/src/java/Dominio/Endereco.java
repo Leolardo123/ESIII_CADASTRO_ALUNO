@@ -26,6 +26,15 @@ public class Endereco extends EntidadeDominio{
         this.numero = numero;
         this.logradouro = logradouro;
     }
+    
+    public Endereco(Endereco endereco){
+        this.cep = endereco.cep;
+        this.estado = endereco.estado;
+        this.cidade = endereco.cidade;
+        this.numero = endereco.numero;
+        this.logradouro = endereco.logradouro;
+        this.complemento = endereco.complemento;
+    }
 
     public String getCep() {
         return cep;

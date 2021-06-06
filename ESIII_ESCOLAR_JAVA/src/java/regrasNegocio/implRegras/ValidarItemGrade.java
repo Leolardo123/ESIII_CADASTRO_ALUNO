@@ -5,6 +5,7 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOItemGrade;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import Dominio.ItemGrade;
@@ -23,21 +24,21 @@ public class ValidarItemGrade  implements IStrategy{
     public String processar(EntidadeDominio entidade) {
             if(entidade instanceof ItemGrade){
                 StringBuilder sb = new StringBuilder();
-                ItemGrade grade = (ItemGrade)entidade;
+                ItemGrade item = (ItemGrade)entidade;
                 
-                if(grade.getMateria()==null){
+                if(item.getMateria()==null){
                     sb.append("Falta Materia no Item Grade!");
                 }
-                if(grade.getProfessor()==null){
+                if(item.getProfessor()==null){
                     sb.append("Falta Professor no Item Grade!");
                 }
-                if(grade.getDia_semana()<1 && grade.getDia_semana()>dias_validos.length-1){
+                if(item.getDia_semana()<1 && item.getDia_semana()>dias_validos.length-1){
                     sb.append("Dia da Semana do Item Grade é inválido!");
                 }
-                if(grade.getPeriodo()<1 && grade.getPeriodo()>periodos_validos.length-1){
+                if(item.getPeriodo()<1 && item.getPeriodo()>periodos_validos.length-1){
                     sb.append("Período do Item Grade é inválido!");
                 }
-                if(grade.getTurno()<1 && grade.getTurno()>turnos_validos.length-1){
+                if(item.getTurno()<1 && item.getTurno()>turnos_validos.length-1){
                     sb.append("Turno do Item Grade é inválido!");
                 }
                 

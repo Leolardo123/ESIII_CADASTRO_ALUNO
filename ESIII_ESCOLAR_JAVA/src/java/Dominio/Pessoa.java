@@ -32,9 +32,11 @@ public class Pessoa extends EntidadeDominio {
         this.email = pessoa.getEmail();
         this.dtNascimento = pessoa.getDtNascimento();
         this.endereco = pessoa.getEndereco();
+        this.setId(pessoa.getId());
+        this.setDtcadastro(pessoa.getDtcadastro());
     }
 
-    public Pessoa(String rg, String cpf, String pnome, 
+    public Pessoa(String cpf, String rg, String pnome, 
             String unome, String email, Date dtNascimento, Endereco endereco) {
         this.cpf = cpf;
         this.rg = rg;

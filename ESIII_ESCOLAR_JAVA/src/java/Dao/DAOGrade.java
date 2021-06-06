@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  *
  * @author Eu
@@ -28,8 +29,8 @@ public class DAOGrade extends AbstractDAO {
 
     public DAOGrade() {
         table = "grade_curso";
-        prefixo ="gra_";
-        id_table = prefixo+"id";
+        prefixo = "gra_";
+        id_table = prefixo + "id";
     }
 
     //concluido - falta testar
@@ -57,9 +58,9 @@ public class DAOGrade extends AbstractDAO {
             if (rs.next()) {
                 grade.setId(rs.getInt(id_table));
             }
-            
+
             daoItem.salvar(grade);
-                
+
             daoItem.ctrlTransaction = true;
             conexao.commit();
             System.out.println("cadastrado com sucesso");
@@ -83,7 +84,7 @@ public class DAOGrade extends AbstractDAO {
         GradeCurso grade = (GradeCurso) entidade;
 
         this.ctrlTransaction = false;
-        for(ItemGrade itemGrade:grade.getItens()){
+        for (ItemGrade itemGrade : grade.getItens()) {
             try {
                 conexao.setAutoCommit(false);
 
@@ -129,44 +130,53 @@ public class DAOGrade extends AbstractDAO {
     }
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        GradeCurso grade = (GradeCurso)entidade;
-        DAOItemGrade daoItem = new DAOItemGrade();;
+        GradeCurso grade = (GradeCurso) entidade;
+        DAOItemGrade daoItem = new DAOItemGrade();
 
-         try {
+        try {
             openConnection();
-            
+
             conexao.setAutoCommit(false);
-            
+
             StringBuilder sql = new StringBuilder();
-            
-            if (grade != null && grade.getCurso() != null &&  grade.getCurso().getId()!=0) {
-                sql.append("SELECT * FROM "+table+" WHERE gra_cur_id   = " + grade.getCurso().getId() + "");
-            } else if(grade != null && grade.getId()!=0) {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+
+            if (grade != null && grade.getCurso() != null && grade.getCurso().getId() != 0) {
+                sql.append("SELECT * FROM " + table + " WHERE gra_cur_id   = " + grade.getCurso().getId() + " ORDER BY " + id_table);
+            } else if (grade.getId() != 0) {
+                sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + " ORDER BY " + id_table);
             } else {
-                sql.append("SELECT * FROM "+table);
+                sql.append("SELECT * FROM " + table + " ORDER BY " + id_table);
             }
-            
+
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
-          
-            List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>(); 
-            HashMap<Integer,GradeCurso> organizaGrade = new HashMap<Integer,GradeCurso>();
-            
-             while (rs.next()) {
-                 List<EntidadeDominio> entidadesItem = daoItem.consultar(grade);
 
-                 for (EntidadeDominio entidadeItem : entidadesItem) {
-                     grade.AddItem((ItemGrade)entidadeItem);
-                 }
-                 
-                 organizaGrade.put(grade.getId(), grade);
-             }
-            
-            for(Map.Entry<Integer,GradeCurso> gradeCurso:organizaGrade.entrySet()){
-                ListaGrade.add(gradeCurso.getValue());
+            List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>();
+
+            while (rs.next()) {
+                Curso curso = new Curso();
+
+                DAOCurso DAOcur = new DAOCurso();
+                curso = (Curso) DAOcur.consultar(curso).get(0);
+                grade.setId(rs.getInt("gra_id"));
+
+                List<EntidadeDominio> entidadeItens = daoItem.consultar(grade);
+                List<ItemGrade> itens = new ArrayList<ItemGrade>();
+
+                if (entidadeItens != null) {
+                    for (EntidadeDominio entidadeItem : entidadeItens) {
+                        itens.add((ItemGrade) entidadeItem);
+                    }
+                }
+
+                grade = new GradeCurso(itens, curso, rs.getInt("gra_semestre"));
+
+                grade.setId(rs.getInt("gra_id"));
+                curso.setId(rs.getInt("gra_cur_id"));
+
+                ListaGrade.add(grade);
             }
-            
+
             return ListaGrade;
         } catch (SQLException e) {
             try {
@@ -184,5 +194,5 @@ public class DAOGrade extends AbstractDAO {
         }
         return null;
     }
-    
+
 }

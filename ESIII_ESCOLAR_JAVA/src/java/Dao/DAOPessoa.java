@@ -28,7 +28,6 @@ public class DAOPessoa extends AbstractDAO {
         id_table = prefixo+"id";
     }
 
-    //concluido - falta testar
     @Override
     public void salvar(EntidadeDominio entidade) {
         Pessoa   pessoa   = (Pessoa) entidade;
@@ -41,7 +40,7 @@ public class DAOPessoa extends AbstractDAO {
             DAOend.salvar(endereco);
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO pessoas(pes_pnome, pes_unome, pes_cpf, pes_rg, ");
+            sql.append("INSERT INTO pessoas(pes_pnome, pes_unome,  pes_cpf, pes_rg, ");
             sql.append("pes_email, pes_dtnascimento, pes_end_id)");
             sql.append(" VALUES (?,?,?,?,?,?,?)");
 
@@ -61,8 +60,6 @@ public class DAOPessoa extends AbstractDAO {
                 pessoa.setId(rs.getInt(id_table));
             }
             
-            
-            conexao.commit();
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {
@@ -129,17 +126,24 @@ public class DAOPessoa extends AbstractDAO {
     }
     
     public List<EntidadeDominio> consultar(EntidadeDominio entidade){
+        Pessoa pessoa = (Pessoa)entidade;
         try {
             openConnection();
-            
             conexao.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-
-            if (entidade == null || entidade.getId() == 0) {
+            if ((entidade == null || entidade.getId() == 0) && (pessoa.getCpf() == null && pessoa.getRg() == null)) {
                 sql.append("SELECT * FROM "+table);
-            } else {
+            } else if(pessoa.getCpf() == null && pessoa.getRg() == null) {
                 sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+            } else if(pessoa.getCpf() != null && pessoa.getRg() != null){
+                sql.append("SELECT * FROM " + table + " WHERE pes_rg = '");
+                sql.append(pessoa.getRg());
+                sql.append("' OR pes_cpf = '");
+                sql.append(pessoa.getCpf());
+                sql.append("'");
+            }else{
+                return null;
             }
             
             pst = conexao.prepareStatement(sql.toString());
@@ -153,7 +157,7 @@ public class DAOPessoa extends AbstractDAO {
                endereco.setId(rs.getInt("pes_end_id"));
                endereco =(Endereco)DAOend.consultar(endereco).get(0);
                
-               Pessoa pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
+                pessoa = new Pessoa(rs.getString("pes_cpf"),rs.getString("pes_rg"),rs.getString("pes_pnome"),
                        rs.getString("pes_unome"),rs.getString("pes_email"),rs.getDate("pes_dtnascimento"),endereco);
                
                pessoa.setId(rs.getInt("pes_id"));

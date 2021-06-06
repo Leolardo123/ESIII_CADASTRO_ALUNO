@@ -18,7 +18,7 @@
     </head>
     <body>
         <%@include file = "./componentes/header.jsp"%>
-        <%List<Materia> materias = (List<Materia>) request.getAttribute("materias");%>
+        <%Materia materias = (Materia)request.getAttribute("materia");%>
         <div class="container my-5">
 
             <!-- FormulÃ¡rio -->
@@ -36,6 +36,7 @@
                         <div class="dep-item">
                             <hr>
                             <div class="input-group mb-3">
+                                for()
                                 <select onchange="" class="form-control dep-item-select" name="dependencia[]">
                                     <option value="0">-</option>
                                     <%for (Materia materia : materias) {%><option value="<%=materia.getId()%>"><%=materia.getNome()%></option><%}%>
@@ -61,4 +62,3 @@
         <%@include file="./componentes/materiaFormHandler.jsp" %>
     </body>
 </jsp>
-

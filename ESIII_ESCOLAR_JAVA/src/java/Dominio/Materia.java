@@ -5,6 +5,7 @@
  */
 package Dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,15 @@ public class Materia extends EntidadeDominio{
         this.descricao = descricao;
         this.carga_horaria = carga_horaria;
         this.dependencia = dependencia;
+    }
+
+    public Materia(Materia materia) {
+        this.nome = materia.nome;
+        this.descricao = materia.descricao;
+        this.carga_horaria = materia.carga_horaria;
+        this.dependencia = materia.dependencia;
+        this.setId(materia.getId());
+        this.setDtcadastro(materia.getDtcadastro());
     }
 
     public String getNome() {
@@ -60,7 +70,14 @@ public class Materia extends EntidadeDominio{
         return dependencia;
     }
 
-    public void setDependencias(List<Materia> dependencia) {
-        this.dependencia = dependencia;
+    public void setDependencias(List<Materia> dependencias) {
+        this.dependencia = dependencias;
+    }
+    
+    public void setDependenciasFromEntidade(List<EntidadeDominio> dependencias) {
+        List<Materia> deps =  new ArrayList<Materia>();
+        for(EntidadeDominio dep:dependencias){
+            deps.add((Materia)dep);
+        }
     }
 }
