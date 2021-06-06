@@ -63,7 +63,8 @@ public class VhGradeCurso implements IViewHelper {
             grade.setSemestre(semestre);
 
             for (int i = 0; i < professores.length; i++) {
-                if (professores[i].equals("")&&materias[i].equals("")) {
+                if (professores[i].equals("")&&materias[i].equals("")&&
+                        professores[i].equals("0")&&materias[i].equals("0")) {
                 }else{
                     materia_id = Integer.parseInt(materias[i]);
                     if (materia_id != 0) {

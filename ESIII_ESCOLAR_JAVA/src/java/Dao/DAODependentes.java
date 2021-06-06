@@ -159,7 +159,6 @@ public class DAODependentes extends AbstractDAO {
     public List<EntidadeDominio> consultarTodos(EntidadeDominio entidade) {//retorna todas as dependencias diretas e indiretas da materia selecionada, também quem depende da materia
         //Esse método serve para ajudar a validar a lógica de dependencias de uma determinada materia
         Materia materia = (Materia) entidade;
-        materia.setDependenciasFromEntidade(this.consultar(materia));
         if (materia.getId() == 0) {
             return null;
         }
@@ -172,7 +171,7 @@ public class DAODependentes extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade != null || entidade.getId() != 0) {
-                sql.append("SELECT mat_id,id_materia,mat_nome,mat_descricao,mat_carga_horaria,mat_dtcadastro FROM(");
+                sql.append("SELECT DISTINCT(mat_id),mat_nome,mat_descricao,mat_carga_horaria,mat_dtcadastro FROM(");
                 sql.append("WITH RECURSIVE sub_dep AS(");
                 sql.append(" SELECT mat_nome nome_materia,mat_id id_materia,dep_dependencia_id id_dependencia FROM dependentes");
                 sql.append(" LEFT JOIN materias ON dep_materia_id = mat_id WHERE mat_id = ");

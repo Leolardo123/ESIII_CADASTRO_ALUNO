@@ -29,24 +29,13 @@
                 <div class="dinamic_field">
                     <tr>
                     <div class="col-sm-6 my-2">Dependencias:</div>
-                    <div class="col-sm-6 my-2"><span type="button" class="addDep btn btn-success">Add</span></div>
+                    <div class="col-sm-6 my-2"><span type="button" id="addDep" class="btn btn-success">Add</span></div>
                     <div class="msg-warning-deps"></div>
                     </tr>
                     <div class="dinamic_item" id="deps">
-                        <div class="dep-item">
-                            <hr>
-                            <div class="input-group mb-3">
-                                <select onchange="" class="form-control dep-item-select" name="dependencia[]">
-                                    <option value="0">-</option>
-                                    <%for (Materia materia : materias) {%><option value="<%=materia.getId()%>"><%=materia.getNome()%></option><%}%>
-                                </select>
-                                <div class="input-group-prepend">
-                                    <span type="button" class="rmDep btn btn-danger">Delete</span>
-                                </div>
-                            </div>
-                            <div class="subdeps input-group mb-3">
-                        </div>
+                        <hr>
                     </div>
+                    <hr>
                 </div>
                 <div class="col-sm-12">Descricão<hr><br><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descrição" required></textarea></div>
                 <div class="col-sm-12">
