@@ -18,38 +18,28 @@
     </head>
     <body>
         <%@include file = "./componentes/header.jsp"%>
-        <%Materia materias = (Materia)request.getAttribute("materia");%>
+        <%List<Materia> materias = (List<Materia>) request.getAttribute("materia");
+            Materia materia = (Materia)materias.get(0);
+        %>
         <div class="container my-5">
 
             <!-- FormulÃ¡rio -->
             <form class="row" action="SalvarMateria" method="post">
 
-                <div class="col-sm-6 my-2"><input class="form-control" type="text" name="nome_materia" placeholder="Nome da Matéria" required></div>
-                <div class="col-sm-6 my-2"><input class="form-control" type="number" min="1" max="999999" pattern="\d*" name="carga_horaria" placeholder="Carga Horária" required></div>
+                <div class="col-sm-6 my-2"><input class="form-control" type="text" name="nome_materia" placeholder="Nome da Matéria" required><%=materia.getNome()%></div>
+                <div class="col-sm-6 my-2"><input class="form-control" type="number" min="1" max="999999" pattern="\d*" name="carga_horaria" placeholder="Carga Horária" required><%=materia.getCarga_horaria()%></div>
                 <div class="dinamic_field">
                     <tr>
                     <div class="col-sm-6 my-2">Dependencias:</div>
-                    <div class="col-sm-6 my-2"><span type="button" class="addDep btn btn-success">Add</span></div>
+                    <div class="col-sm-6 my-2"><span type="button" id="addDep" class="btn btn-success">Add</span></div>
                     <div class="msg-warning-deps"></div>
                     </tr>
                     <div class="dinamic_item" id="deps">
-                        <div class="dep-item">
-                            <hr>
-                            <div class="input-group mb-3">
-                                for()
-                                <select onchange="" class="form-control dep-item-select" name="dependencia[]">
-                                    <option value="0">-</option>
-                                    <%for (Materia materia : materias) {%><option value="<%=materia.getId()%>"><%=materia.getNome()%></option><%}%>
-                                </select>
-                                <div class="input-group-prepend">
-                                    <span type="button" class="rmDep btn btn-danger">Delete</span>
-                                </div>
-                            </div>
-                            <div class="subdeps input-group mb-3">
-                        </div>
+                        <hr>
                     </div>
+                    <hr>
                 </div>
-                <div class="col-sm-12">Descricão<hr><br><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descrição" required></textarea></div>
+                <div class="col-sm-12">Descricão<hr><br><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descrição" required><%=materia.getDescricao()%></textarea></div>
                 <div class="col-sm-12">
                     <input type="hidden" name="operacao" value="SALVAR" >
                     <button type="submit" class="btn btn-p p-2 m-2">Enviar</button>
@@ -62,3 +52,4 @@
         <%@include file="./componentes/materiaFormHandler.jsp" %>
     </body>
 </jsp>
+
