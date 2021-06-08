@@ -5,7 +5,9 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOEndereco;
 import Dao.DAOPessoa;
+import Dominio.Endereco;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import java.util.List;
@@ -38,12 +40,32 @@ public class ValidarPessoa implements IStrategy{
                 sb.append(msgRG);
             }
             
+            if(pessoa.getEndereco()!=null){
+                DAOEndereco DAOEnd = new DAOEndereco();
+                if(pessoa.getEndereco().getId()!=0){    
+                    Endereco tempEnd = (Endereco)DAOEnd.consultar(pessoa.getEndereco()).get(0);
+                    if(tempEnd!=null&&tempEnd.getId()!=0){
+                        pessoa.setEndereco(tempEnd);
+                    }else{
+                        sb.append("Endereco da pessoa não foi encontrado!");
+                    }
+                }   
+                   
+                ValidarEndereco valEnd = new ValidarEndereco();
+                String msgEnd = valEnd.processar(pessoa.getEndereco());
+                
+                if(msgEnd!=null){
+                    sb.append(msgEnd);
+                }
+            }else{
+                sb.append("Endereco da pessoa está vazio!");
+            }
+            
             DAOPessoa DAOpes = new DAOPessoa();
             List<EntidadeDominio> temppessoa = DAOpes.consultar(pessoa);
             
             if(temppessoa!=null&&temppessoa.size()>0){
                 pessoa = (Pessoa)temppessoa.get(0);
-                sb.append("Pessoa já existe!");
             }
                     
             if(pessoa.getPnome()==null){

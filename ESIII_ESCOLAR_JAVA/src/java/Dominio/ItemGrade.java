@@ -13,7 +13,6 @@ import java.util.List;
  * @author 55119
  */
 public class ItemGrade extends EntidadeDominio{
-    private boolean obrigatorio;
     private int dia_semana;
     private int turno;
     private int periodo;
@@ -22,21 +21,12 @@ public class ItemGrade extends EntidadeDominio{
     
     public ItemGrade() {}
 
-    public ItemGrade(boolean obrigatorio, int dia_semana, int turno, int periodo, Materia materia, Professor professor) {
-        this.obrigatorio = obrigatorio;
+    public ItemGrade(int dia_semana, int turno, int periodo, Materia materia, Professor professor) {
         this.dia_semana = dia_semana;
         this.turno = turno;
         this.periodo = periodo;
         this.materia = materia;
         this.professor = professor;
-    }
-
-    public boolean isObrigatorio() {
-        return obrigatorio;
-    }
-
-    public void setObrigatorio(boolean obrigatorio) {
-        this.obrigatorio = obrigatorio;
     }
 
     public int getDia_semana() {
@@ -79,5 +69,7 @@ public class ItemGrade extends EntidadeDominio{
         this.professor = professor;
     }
     
-    
+    public String getChave() {
+        return turno+"-"+periodo+"-"+dia_semana;
+    }
 }

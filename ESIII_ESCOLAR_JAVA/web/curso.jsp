@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="modal-body">
                                         {!}Se você continuar todas as grades do curso serão apagadas!
-                                        <br>{!}e todos os itens das grades serão removidos!
+                                        <br>{!}Todos os itens das grades serão removidos!
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

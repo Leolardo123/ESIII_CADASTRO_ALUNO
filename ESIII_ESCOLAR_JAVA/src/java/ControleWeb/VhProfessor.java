@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Eu
  */
-public class VhProfessor implements IViewHelper{
+public class VhProfessor implements IViewHelper {
 
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
@@ -62,52 +62,18 @@ public class VhProfessor implements IViewHelper{
                 professor.setUnome(ultimo_nome);
                 professor.setEmail(email);
                 professor.setDtNascimento(data_nascimento);
-                professor.setEndereco(endereco);
                 professor.setSalario(salario);
-                return professor;
-            }
-            if ("ALTERAR".equals(request.getParameter("operacao"))) {
-                SimpleDateFormat date_format = new SimpleDateFormat("dd-MM-yyyy");
-
-                int id = Integer.parseInt(request.getParameter("id"));
-                String primeiro_nome = request.getParameter("primeiro_nome");
-                String ultimo_nome = request.getParameter("ultimo_nome");
-                String rg = request.getParameter("rg");
-                String cpf = request.getParameter("cpf");
-                String email = request.getParameter("email");
-                Date data_nascimento = date_format.parse(request.getParameter("data_nascimento"));
-                double salario = Double.parseDouble(request.getParameter("salario"));
-
-                int endereco_id = Integer.parseInt(request.getParameter("endereco_id"));
-                String logradouro = request.getParameter("logradouro");
-                int numero = Integer.parseInt(request.getParameter("numero"));
-                String complemento = request.getParameter("complemento");
-                String cidade = request.getParameter("cidade");
-                String estado = request.getParameter("estado");
-                String cep = request.getParameter("cep");
-
-                endereco.setId(endereco_id);
-                endereco.setCep(cep);
-                endereco.setEstado(estado);
-                endereco.setCidade(cidade);
-                endereco.setNumero(numero);
-                endereco.setLogradouro(logradouro);
-
-                if (complemento != null) {
-                    endereco.setComplemento(complemento);
+                
+                if ("ALTERAR".equals(request.getParameter("operacao"))) {
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    int end_id = Integer.parseInt(request.getParameter("endereco_id"));
+                    endereco.setId(end_id);
+                    professor.setId(id);
                 }
-
-                professor.setId(id);
-                professor.setRg(rg);
-                professor.setCpf(cpf);
-                professor.setPnome(primeiro_nome);
-                professor.setUnome(ultimo_nome);
-                professor.setEmail(email);
-                professor.setDtNascimento(data_nascimento);
                 professor.setEndereco(endereco);
-                professor.setSalario(salario);
                 return professor;
             }
+
             if ("CONSULTAR".equals(request.getParameter("operacao"))) {
                 return professor;
             }
@@ -136,12 +102,12 @@ public class VhProfessor implements IViewHelper{
             out = response.getWriter();
             if (resultado != null) {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
-                    msg = "ERRO NO CADASTRO: "+(String)resultado;
+                    msg = "ERRO NO CADASTRO: " + (String) resultado;
                     request.setAttribute("msg_error", msg);
                     request.getRequestDispatcher("./ListarProfessor?operacao=CONSULTAR").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
-                    msg = "ERRO AO ALTERAR: "+(String)resultado;
+                    msg = "ERRO AO ALTERAR: " + (String) resultado;
                     request.setAttribute("msg_error", msg);
                     request.getRequestDispatcher("./ListarProfessor?operacao=CONSULTAR").forward(request, response);
                 }
@@ -175,5 +141,5 @@ public class VhProfessor implements IViewHelper{
             e.printStackTrace();
         }
     }
-    
+
 }

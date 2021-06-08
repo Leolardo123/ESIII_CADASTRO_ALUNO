@@ -70,4 +70,14 @@ public class Curso extends EntidadeDominio{
     public void setMensalidade(double mensalidade) {
         this.mensalidade = mensalidade;
     }
+
+    public List<GradeCurso> getGradeCurso() {
+        return gradeCurso;
+    }
+
+    public void setGradeCurso(List<GradeCurso> gradeCurso) {
+        this.gradeCurso = gradeCurso;
+    }
+    
+    
 }

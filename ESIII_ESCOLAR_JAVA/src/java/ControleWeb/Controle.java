@@ -67,7 +67,7 @@ public class Controle extends HttpServlet {
         
         //Operaçoes Especificas
         commands.put("CONSULTARDEP", new ConsultarCommand());
-        vhs.put("/ESIII_ESCOLAR_JAVA/CONSULTARDEPMateria", new VhMateria());
+        vhs.put("/ESIII_ESCOLAR_JAVA/ListarMateria", new VhMateria());
         
     }
 
@@ -89,6 +89,7 @@ public class Controle extends HttpServlet {
 
         if (entidade != null) {
             Object msg = cmd.execute(entidade);
+            System.out.println(request);
             vh.setView(msg, request, response, entidade);
         }
     }

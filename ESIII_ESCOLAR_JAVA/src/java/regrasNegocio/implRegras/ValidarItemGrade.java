@@ -26,12 +26,30 @@ public class ValidarItemGrade  implements IStrategy{
                 StringBuilder sb = new StringBuilder();
                 ItemGrade item = (ItemGrade)entidade;
                 
+                ValidarMateria valMat = new ValidarMateria();
+                ValidarProfessor valPro = new ValidarProfessor();
+                String err;
+                
                 if(item.getMateria()==null){
                     sb.append("Falta Materia no Item Grade!");
+                }else{
+                    err = valMat.processar(item.getMateria());
+                    
+                    if(err!=null){
+                        sb.append(err);
+                    }
                 }
+                
                 if(item.getProfessor()==null){
                     sb.append("Falta Professor no Item Grade!");
+                }else{
+                    err = valPro.processar(item.getProfessor());
+                    
+                    if(err!=null){
+                        sb.append(err);
+                    }
                 }
+                
                 if(item.getDia_semana()<1 && item.getDia_semana()>dias_validos.length-1){
                     sb.append("Dia da Semana do Item Grade é inválido!");
                 }

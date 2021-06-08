@@ -9,6 +9,7 @@ import Dao.DAOMateria;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import Dominio.Materia;
+import java.util.List;
 import regrasNegocio.IStrategy;
 
 /**
@@ -22,16 +23,13 @@ public class ValidarMateria implements IStrategy{
                 StringBuilder sb = new StringBuilder();
                 Materia materia = (Materia)entidade;
                 
-                
-
                 DAOMateria DAOmat = new DAOMateria();
-                Materia consmateria = new Materia((Materia) DAOmat.consultar(materia).get(0));
+                List<EntidadeDominio> checkExists =  DAOmat.consultar(materia);
 
-                if (consmateria != null) {
-                    materia = consmateria;
-                    sb.append("Materia já existe!");
+                if (checkExists != null && checkExists.size()>0) {
+                    materia = (Materia)checkExists.get(0);
                 }
-
+                
                 if(materia.getNome()==null){
                     sb.append("Falta Nome na Materia!");
                 }
@@ -54,10 +52,6 @@ public class ValidarMateria implements IStrategy{
                     if (msgDep != null) {
                         sb.append(msgDep);
                     }
-                }
-
-                if (sb.length() > 0) {
-                    return sb.toString();
                 }
                 
                 if(sb.length()>0)return sb.toString();

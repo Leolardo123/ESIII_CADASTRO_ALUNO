@@ -73,12 +73,6 @@ public class VhMateria implements IViewHelper {
             if ("CONSULTARTODOSDEP".equals(request.getParameter("operacao"))) {
                 return materia;
             }
-            if ("CONSULTARDEPENDENTES".equals(request.getParameter("operacao"))) {
-                return materia;
-            }
-            if ("CONSULTARDEPENDENCIAS".equals(request.getParameter("operacao"))) {
-                return materia;
-            }
             if ("EXCLUIR".equals(request.getParameter("operacao"))) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 materia.setId(id);
@@ -122,10 +116,8 @@ public class VhMateria implements IViewHelper {
                     }
                 }
                 if ("CONSULTARID".equals(request.getParameter("operacao"))) {
-                    if (request.getRequestURI().equals("/ESIII_ESCOLAR_JAVA/FormEditarMateria")) {
-                        request.setAttribute("materia", resultado);
-                        request.getRequestDispatcher("/editar_materia.jsp").forward(request, response);
-                    }
+                    request.setAttribute("materia", resultado);
+                    request.getRequestDispatcher("/editar_materia.jsp").forward(request, response);
                 }
             } else {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {

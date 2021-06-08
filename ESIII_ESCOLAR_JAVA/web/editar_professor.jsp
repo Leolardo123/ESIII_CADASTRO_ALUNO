@@ -21,7 +21,7 @@
     <div class="container my-5">
         
         <!-- FormulÃ¡rio -->
-        <form class="row justify-content-center align-items-center" action="Editarprofessor" method="post">
+        <form class="row justify-content-center align-items-center" action="EditarProfessor" method="post">
             
             <%
                 List<Professor> professores = (List<Professor>)request.getAttribute("professor");   
@@ -71,7 +71,7 @@
                 <input type="hidden" name="endereco_id" value="<%=professor.getEndereco().getId()%>" >
                 <input type="hidden" name="operacao" value="ALTERAR" >
                 <button class="col-sm-2 btn btn-p" type="submit">Enviar</button>
-                <a class="col-sm-2 btn btn-s" href="./ListarAluno?operacao=CONSULTAR">Voltar</a>
+                <a class="col-sm-2 btn btn-s" href="./ListarProfessor?operacao=CONSULTAR">Voltar</a>
             </div>
              <!-- BotÃ£o de Envio -->
 

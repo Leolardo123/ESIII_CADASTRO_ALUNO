@@ -40,7 +40,6 @@ public class VhGradeCurso implements IViewHelper {
         if ("SALVAR".equals(request.getParameter("operacao")) || "ALTERAR".equals(request.getParameter("operacao"))) {
             String[] materias = request.getParameterValues("materias[]");
             String[] professores = request.getParameterValues("professores[]");
-            String[] obrigatorio = request.getParameterValues("obrigatorio[]");
             int semestre = Integer.parseInt(request.getParameter("semestre"));
             int curso_id = Integer.parseInt(request.getParameter("curso"));
 
@@ -79,7 +78,7 @@ public class VhGradeCurso implements IViewHelper {
                         professor.setId(professor_id);
 
                         List<ItemGrade> itens = new ArrayList<ItemGrade>();
-                        item = new ItemGrade(obrigatorio_val, dia, turno, periodo, materia, professor);
+                        item = new ItemGrade(dia, turno, periodo, materia, professor);
                         itens.add(item);
                     }
                     turno++;
@@ -128,12 +127,13 @@ public class VhGradeCurso implements IViewHelper {
     @Override
     public void setView(Object resultado, HttpServletRequest request, HttpServletResponse response, EntidadeDominio entidade) throws ServletException {
         PrintWriter out;
+        try{
         try {
             String msg = "";
             out = response.getWriter();
             if (resultado != null) {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
-                    msg = "ERRO AO ALTERAR: " + (String) resultado;
+                    msg = "ERRO AO SALVAR: " + (String) resultado;
                     request.setAttribute("msg_error", msg);
                     request.getRequestDispatcher("./ListarGradeCurso?operacao=CONSULTAR").forward(request, response);
                 }
@@ -147,7 +147,7 @@ public class VhGradeCurso implements IViewHelper {
                     request.getRequestDispatcher("/grade.jsp").forward(request, response);
                 }
                 if ("CONSULTARID".equals(request.getParameter("operacao"))) {
-                    request.setAttribute("grades", resultado);
+                    request.setAttribute("grade", resultado);
                     request.getRequestDispatcher("/editar_grade.jsp").forward(request, response);
                 }
             } else {
@@ -169,6 +169,9 @@ public class VhGradeCurso implements IViewHelper {
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        }catch(NullPointerException e){
             e.printStackTrace();
         }
     }

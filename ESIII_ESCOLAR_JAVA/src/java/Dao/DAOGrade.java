@@ -73,7 +73,7 @@ public class DAOGrade extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -83,7 +83,32 @@ public class DAOGrade extends AbstractDAO {
     public void alterar(EntidadeDominio entidade) {
         GradeCurso grade = (GradeCurso) entidade;
 
-        this.ctrlTransaction = false;
+        DAOItemGrade DAOIgd = new DAOItemGrade();
+        
+        DAOIgd.ctrlTransaction = false;
+
+        List<EntidadeDominio> existsItens = DAOIgd.consultar(grade);
+        List<EntidadeDominio> itensRemovidos = new ArrayList<EntidadeDominio>();
+
+        if (existsItens != null) {
+            for (EntidadeDominio entidadeItem : existsItens) {
+                ItemGrade novoItem = new ItemGrade();
+                boolean exists = false;
+                for (ItemGrade itemGrade : grade.getItens()) {
+                    if (entidadeItem.getId() == itemGrade.getId()) {
+                        novoItem = null;
+                        exists = true;
+                    }else{
+                        novoItem = itemGrade;
+                    }
+                }
+                if (exists == false) {
+                    DAOIgd.excluir(entidadeItem);
+                    DAOIgd.salvar(novoItem);
+                }
+            }
+        }
+        
         for (ItemGrade itemGrade : grade.getItens()) {
             try {
                 conexao.setAutoCommit(false);
@@ -91,21 +116,15 @@ public class DAOGrade extends AbstractDAO {
                 StringBuilder sql = new StringBuilder();
                 sql.append("UPDATE grade_curso ");
                 sql.append(table);
-                sql.append("SET gra_obrigatorio = ?, gra_turno = ?, gra_dia_semana = ?, gra_semestre = ?,");
-                sql.append("gra_periodo, gra_cur_id = ?, gra_mat_id = ?, gra_pro_id = ? ");
+                sql.append("SET gra_semestre = ?,");
+                sql.append("gra_cur_id = ?");
                 sql.append("WHERE ");
                 sql.append(id_table);
                 sql.append("= ?");
 
                 pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
-                pst.setBoolean(1, itemGrade.isObrigatorio());
-                pst.setInt(2, itemGrade.getTurno());
-                pst.setInt(3, itemGrade.getDia_semana());
-                pst.setInt(4, grade.getSemestre());
-                pst.setInt(5, itemGrade.getPeriodo());
-                pst.setInt(6, grade.getCurso().getId());
-                pst.setInt(7, itemGrade.getMateria().getId());
-                pst.setInt(8, itemGrade.getProfessor().getId());
+                pst.setInt(1, grade.getSemestre());
+                pst.setInt(2, grade.getCurso().getId());
                 pst.executeUpdate();
 
                 ResultSet rs = pst.getGeneratedKeys();
@@ -121,7 +140,7 @@ public class DAOGrade extends AbstractDAO {
                 e.printStackTrace();
             } finally {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -130,9 +149,15 @@ public class DAOGrade extends AbstractDAO {
     }
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        GradeCurso grade = (GradeCurso) entidade;
+        Curso curso = new Curso();
+        GradeCurso grade = new GradeCurso();
+        if(entidade instanceof GradeCurso){
+            grade = (GradeCurso) entidade;
+        }
+        if(entidade instanceof Curso){
+            curso = (Curso) entidade;
+        }
         DAOItemGrade daoItem = new DAOItemGrade();
-
         try {
             openConnection();
 
@@ -140,9 +165,9 @@ public class DAOGrade extends AbstractDAO {
 
             StringBuilder sql = new StringBuilder();
 
-            if (grade != null && grade.getCurso() != null && grade.getCurso().getId() != 0) {
-                sql.append("SELECT * FROM " + table + " WHERE gra_cur_id   = " + grade.getCurso().getId() + " ORDER BY " + id_table);
-            } else if (grade.getId() != 0) {
+            if (curso != null && curso.getId() != 0) {
+                sql.append("SELECT * FROM " + table + " WHERE gra_cur_id   = " + curso.getId() + " ORDER BY " + id_table);
+            } else if (grade != null && grade.getId() != 0) {
                 sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + " ORDER BY " + id_table);
             } else {
                 sql.append("SELECT * FROM " + table + " ORDER BY " + id_table);
@@ -154,10 +179,20 @@ public class DAOGrade extends AbstractDAO {
             List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>();
 
             while (rs.next()) {
-                Curso curso = new Curso();
-
-                DAOCurso DAOcur = new DAOCurso();
-                curso = (Curso) DAOcur.consultar(curso).get(0);
+                grade = new GradeCurso();
+                
+                if(entidade instanceof Curso){
+                    grade.setCurso(curso);
+                }else{
+                    DAOCurso DAOcur = new DAOCurso();
+                    curso = new Curso();
+                    
+                    curso.setId(rs.getInt("gra_cur_id"));
+                    curso = (Curso) DAOcur.consultar(curso).get(0);
+                } 
+    
+                grade.setCurso(curso);
+                grade.setSemestre(rs.getInt("gra_semestre"));
                 grade.setId(rs.getInt("gra_id"));
 
                 List<EntidadeDominio> entidadeItens = daoItem.consultar(grade);
@@ -169,10 +204,7 @@ public class DAOGrade extends AbstractDAO {
                     }
                 }
 
-                grade = new GradeCurso(itens, curso, rs.getInt("gra_semestre"));
-
-                grade.setId(rs.getInt("gra_id"));
-                curso.setId(rs.getInt("gra_cur_id"));
+                grade.setItens(itens);
 
                 ListaGrade.add(grade);
             }
@@ -187,7 +219,7 @@ public class DAOGrade extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

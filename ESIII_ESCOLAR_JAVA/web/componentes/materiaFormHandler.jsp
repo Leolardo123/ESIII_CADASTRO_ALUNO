@@ -1,10 +1,17 @@
+<%@page import="Dao.DAOMateria"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Dao.DAODependentes"%>
 <%@page import="Dominio.Materia"%>
 <%@page import="Dominio.EntidadeDominio"%>
 <%@page import="java.util.List"%>
 <script>
-    <%List<Materia> handmaterias = (List<Materia>) request.getAttribute("materias");
+    <%
+      DAOMateria DAOmat = new DAOMateria();
+      List<EntidadeDominio> entidadehandmaterias = (List<EntidadeDominio>) DAOmat.consultar(null);
+      List<Materia> handmaterias = new ArrayList<Materia>();
+      for(EntidadeDominio entidadeMateria:entidadehandmaterias){
+          handmaterias.add((Materia)entidadeMateria);
+      }
       DAODependentes DAOdep = new DAODependentes();
       for(Materia loadTodos:handmaterias){
           List<EntidadeDominio> todasDependencias = DAOdep.consultarTodos(loadTodos);
@@ -130,5 +137,6 @@
             add_dep()
         });
         addevent_all();
+        get_subdeps();
     });
 </script>

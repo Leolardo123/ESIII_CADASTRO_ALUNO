@@ -64,7 +64,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -102,7 +102,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -118,7 +118,7 @@ public class DAOAluno extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade == null || entidade.getId() == 0) {
-                sql.append("SELECT * FROM " + table);
+                sql.append("SELECT * FROM " + table+" ORDER BY alu_pes_id");
             } else {
                 sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + "");
             }
@@ -134,7 +134,7 @@ public class DAOAluno extends AbstractDAO {
 
                 Curso curso = new Curso();
                 curso.setId(rs.getInt("alu_cur_id"));
-                curso = (Curso) DAOcur.consultar(entidade).get(0);
+                curso = (Curso) DAOcur.consultar(curso).get(0);
 
                 Pessoa pessoa = new Pessoa();
                 pessoa.setId(rs.getInt("alu_pes_id"));
@@ -156,7 +156,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -191,7 +191,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

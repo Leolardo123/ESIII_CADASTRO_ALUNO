@@ -58,7 +58,7 @@ public class DAOProfessor extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -94,7 +94,7 @@ public class DAOProfessor extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -110,9 +110,9 @@ public class DAOProfessor extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade == null || entidade.getId() == 0) {
-                sql.append("SELECT * FROM "+table);
+                sql.append("SELECT * FROM "+table+" ORDER BY pro_pes_id");
             } else {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + " ");
             }
             
             pst = conexao.prepareStatement(sql.toString());
@@ -142,7 +142,7 @@ public class DAOProfessor extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -176,7 +176,7 @@ public class DAOProfessor extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

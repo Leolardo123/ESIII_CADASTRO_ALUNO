@@ -69,14 +69,17 @@ public class VhAluno implements IViewHelper {
                 aluno.setUnome(ultimo_nome);
                 aluno.setEmail(email);
                 aluno.setDtNascimento(data_nascimento);
-                aluno.setEndereco(endereco);
                 aluno.setSemestre(1);
                 aluno.setCurso(curso);
                 
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     int id = Integer.parseInt(request.getParameter("id"));
+                    int end_id = Integer.parseInt(request.getParameter("endereco_id"));
+                    endereco.setId(end_id);
                     aluno.setId(id);
                 }
+                
+                aluno.setEndereco(endereco);
                 
                 return aluno;
             }else

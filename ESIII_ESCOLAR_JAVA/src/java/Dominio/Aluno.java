@@ -12,7 +12,7 @@ import java.util.Date;
  * @author 55119
  */
 public class Aluno extends Pessoa{
-       private int semestre;
+    private int semestre;
     private Curso curso;
     
     public Aluno() {}

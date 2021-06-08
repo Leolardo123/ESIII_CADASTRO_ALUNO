@@ -43,18 +43,17 @@ public class DAOItemGrade extends AbstractDAO{
                 conexao.setAutoCommit(false);
 
                 StringBuilder sql = new StringBuilder();
-                sql.append("INSERT INTO grade_itens(gra_obrigatorio, gra_turno, gra_dia_semana,");
-                sql.append("gra_periodo, gra_cur_id, gra_mat_id, gra_pro_id)");
+                sql.append("INSERT INTO grade_itens(gri_turno, gri_dia_semana,");
+                sql.append("gri_periodo, gri_cur_id, gri_mat_id, gri_pro_id)");
                 sql.append(" VALUES (?,?,?,?,?,?,?)");
 
                 pst = conexao.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
-                pst.setBoolean(1, itemGrade.isObrigatorio());
-                pst.setInt(2, itemGrade.getTurno());
-                pst.setInt(3, itemGrade.getDia_semana());
-                pst.setInt(4, itemGrade.getPeriodo());
-                pst.setInt(5, grade.getCurso().getId());
-                pst.setInt(6, itemGrade.getMateria().getId());
-                pst.setInt(7, itemGrade.getProfessor().getId());
+                pst.setInt(1, itemGrade.getTurno());
+                pst.setInt(2, itemGrade.getDia_semana());
+                pst.setInt(3, itemGrade.getPeriodo());
+                pst.setInt(4, grade.getCurso().getId());
+                pst.setInt(5, itemGrade.getMateria().getId());
+                pst.setInt(6, itemGrade.getProfessor().getId());
                 pst.executeUpdate();
 
                 ResultSet rs = pst.getGeneratedKeys();
@@ -73,7 +72,7 @@ public class DAOItemGrade extends AbstractDAO{
                 e.printStackTrace();
             } finally {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -92,20 +91,19 @@ public class DAOItemGrade extends AbstractDAO{
                 StringBuilder sql = new StringBuilder();
                 sql.append("UPDATE ");
                 sql.append(table);
-                sql.append(" SET gri_obrigatorio = ?, gri_turno = ?, gri_dia_semana = ?, gri_semestre = ?,");
+                sql.append(" SET gri_turno = ?, gri_dia_semana = ?, gri_semestre = ?,");
                 sql.append("gri_periodo, gri_cur_id = ?, gri_mat_id = ?, gri_pro_id = ? ");
                 sql.append("WHERE ");
                 sql.append("gri_cur_id = ?, gri_mat_id = ?");
 
                 pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
-                pst.setBoolean(1, itemGrade.isObrigatorio());
-                pst.setInt(2, itemGrade.getTurno());
-                pst.setInt(3, itemGrade.getDia_semana());
-                pst.setInt(4, grade.getSemestre());
-                pst.setInt(5, itemGrade.getPeriodo());
-                pst.setInt(6, grade.getCurso().getId());
-                pst.setInt(7, itemGrade.getMateria().getId());
-                pst.setInt(8, itemGrade.getProfessor().getId());
+                pst.setInt(1, itemGrade.getTurno());
+                pst.setInt(2, itemGrade.getDia_semana());
+                pst.setInt(3, grade.getSemestre());
+                pst.setInt(4, itemGrade.getPeriodo());
+                pst.setInt(5, grade.getCurso().getId());
+                pst.setInt(6, itemGrade.getMateria().getId());
+                pst.setInt(7, itemGrade.getProfessor().getId());
                 pst.executeUpdate();
 
                 ResultSet rs = pst.getGeneratedKeys();
@@ -121,7 +119,7 @@ public class DAOItemGrade extends AbstractDAO{
                 e.printStackTrace();
             } finally {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -173,7 +171,7 @@ public class DAOItemGrade extends AbstractDAO{
                    professor = (Professor)DAOpro.consultar(professor).get(0);
                    materia   = (Materia)  DAOmat.consultar(materia).get(0);
                    
-                   ItemGrade item = new ItemGrade(rs.getBoolean("gri_obrigatorio"),rs.getInt("gri_dia_semana"),
+                   ItemGrade item = new ItemGrade(rs.getInt("gri_dia_semana"),
                    rs.getInt("gri_turno"),rs.getInt("gri_periodo"), materia, professor);
                    
                    ListaGrade.add(item);
@@ -192,7 +190,7 @@ public class DAOItemGrade extends AbstractDAO{
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

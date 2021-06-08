@@ -68,7 +68,7 @@ public class DAOEndereco extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -113,7 +113,7 @@ public class DAOEndereco extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -147,6 +147,10 @@ public class DAOEndereco extends AbstractDAO {
                endereco.setId(rs.getInt("end_id"));
                endereco.setDtcadastro(rs.getDate("end_dtcadastro"));
                
+               if(rs.getString("end_complemento")!=null){
+                endereco.setComplemento(rs.getString("end_complemento"));
+               }
+               
                enderecos.add(endereco);
             }
             
@@ -160,7 +164,7 @@ public class DAOEndereco extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

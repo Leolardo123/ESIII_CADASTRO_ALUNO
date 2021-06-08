@@ -81,6 +81,10 @@ public class Fachada implements IFachada {
     public String cadastrar(EntidadeDominio entidade) {
         String nmClasse = entidade.getClass().getName();
         String msg = executarRegras(entidade);
+        if (entidade.getId()!=0){//verifica se as validações encontraram um item já existente
+            nmClasse.replace("Dominio.","");
+            return msg+nmClasse+" já existe!";
+        }
         if (msg == null) {
             IDAO dao = daos.get(nmClasse);
             dao.salvar(entidade);
@@ -127,7 +131,7 @@ public class Fachada implements IFachada {
     public String alterar(EntidadeDominio entidade) {
         String nmClasse = entidade.getClass().getName();
         String msg = executarRegras(entidade);
-        if (msg.equals(nmClasse+" já existe!")) {
+        if (msg == null) {
             IDAO dao = daos.get(nmClasse);
             dao.alterar(entidade);
         } else {

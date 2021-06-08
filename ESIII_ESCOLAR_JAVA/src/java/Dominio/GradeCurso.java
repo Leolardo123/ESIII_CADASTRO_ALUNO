@@ -41,14 +41,6 @@ public class GradeCurso  extends EntidadeDominio{
         this.curso = curso;
     }
 
-    public List<ItemGrade> getItensGrade() {
-        return itensGrade;
-    }
-
-    public void setItensGrade(List<ItemGrade> itensGrade) {
-        this.itensGrade = itensGrade;
-    }
-
     public int getSemestre() {
         return semestre;
     }

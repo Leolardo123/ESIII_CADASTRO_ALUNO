@@ -43,7 +43,7 @@
     %>
     <body>
         <%@include file="./componentes/header.jsp" %>
-
+        <%@include file="./componentes/modalErrorMsg.jsp" %>
 
 
         <!-- Formulário -->
@@ -59,7 +59,11 @@
                         <%}%>
                     </select>
                 </div>
-                <div class="col-sm-3"><input type="number" min="1" max="999" pattern="\d*" class="form-control" name="semestre" placeholder="Semestre"></div>
+                    <div class="col-sm-3">
+                        <select class="form-select" name="semestre">
+                            
+                        </select>
+                    </div>
             </div>
 
             <div class="table-responsive">
@@ -112,10 +116,6 @@
                                         <option value="<%=professor.getId()%>"><%=professor.getNome()%></option>
                                         <%}%>
                                     </select>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="obrigatorio[]" >
-                                        <label class="form-check-label" >Obrigat�rio</label>
-                                    </div>
                                 </td>
                                 <%count++;
                                     }%>
@@ -134,7 +134,8 @@
                 </div>
         </form>
         <!-- Formulário -->
-
+        
         </div>
+        <%@include file="./componentes/gradeFormHandler.jsp" %>
     </body>
 </jsp>

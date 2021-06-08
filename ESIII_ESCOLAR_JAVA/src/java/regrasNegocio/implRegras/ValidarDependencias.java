@@ -18,6 +18,7 @@ import regrasNegocio.IStrategy;
  * @author 55119
  */
 public class ValidarDependencias implements IStrategy {
+
     public static final String repeat_matdep = "Materia não pode depender dela mesma!";
 
     @Override
@@ -26,27 +27,22 @@ public class ValidarDependencias implements IStrategy {
             StringBuilder sb = new StringBuilder();
             Materia materia = (Materia) entidade;
 
-            DAODependentes dao = new DAODependentes();
-
-            List<EntidadeDominio> listDeps;
-
             if (materia.getId() != 0) {
-                listDeps = dao.consultarTodos(materia);
-                if(listDeps!=null){
-                    List<Materia> dependencias = new ArrayList<Materia>();
-                    for(EntidadeDominio dep:listDeps){
-                        dependencias.add((Materia)dep);
-                    }
-                    materia.setDependencias(dependencias);
+                DAOMateria DAOmat = new DAOMateria();
+                Materia tempmateria = (Materia) DAOmat.consultar(materia).get(0);
+
+                if (tempmateria != null && tempmateria.getId() != 0) {
+                    materia = tempmateria;
+                    DAODependentes DAOdep = new DAODependentes();
+                }else{
+                    sb.append("Materia não foi encontrada!");
                 }
             }
 
             for (Materia dependencia : materia.getDependencias()) {
-                if (dependencia.getId() == materia.getId()) {
-                    return repeat_matdep;
-                }
+
                 if (dependencia.getId() == 0) {
-                    return "Dependencia sem id, verifique se ela existe!";
+                    return "Dependencia:"+dependencia.getNome()+" sem id, verifique se ela existe!";
                 }
 
                 DAOMateria DAOMat = new DAOMateria();
@@ -61,10 +57,13 @@ public class ValidarDependencias implements IStrategy {
                 }
 
                 if (sb.length() > 0) {
-                    return sb.toString();
+                    sb.insert(0, dependencia.getId() + "-" + dependencia.getNome() + "!");
                 }
             }
 
+            if (sb.length() > 0) {
+                return sb.toString();
+            }
         } else {
             return "Entidade recebida Inválida, esperava Matéria(Dependencias)";
         }

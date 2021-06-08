@@ -8,6 +8,7 @@ package Dao;
 import static Dao.AbstractDAO.conexao;
 import Dominio.Curso;
 import Dominio.EntidadeDominio;
+import Dominio.GradeCurso;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,7 +57,7 @@ public class DAOCurso extends AbstractDAO {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }
@@ -92,14 +93,17 @@ public class DAOCurso extends AbstractDAO {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }
     }
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+        Curso curso = (Curso)entidade;
         try {
+            DAOGrade DAOgra = new DAOGrade();
+            
             openConnection();
             
             conexao.setAutoCommit(false);
@@ -118,11 +122,22 @@ public class DAOCurso extends AbstractDAO {
             List<EntidadeDominio> cursos = new ArrayList<EntidadeDominio>();
             
             while(rs.next()){
-                Curso curso = new Curso(rs.getString("cur_nome"),rs.getString("cur_descricao"),
+                curso = new Curso(rs.getString("cur_nome"),rs.getString("cur_descricao"),
                         rs.getString("cur_nivel"),rs.getInt("cur_duracao"), rs.getDouble("cur_mensalidade"));
                 
                 curso.setId(rs.getInt(id_table));
                 curso.setDtcadastro(rs.getDate("cur_dtcadastro"));
+                
+                List<EntidadeDominio> entidadeGrades = DAOgra.consultar(curso);
+                List<GradeCurso> grades = new ArrayList<GradeCurso>();
+                
+                if(entidadeGrades!=null){
+                    for(EntidadeDominio entidadeGrade:entidadeGrades){
+                        grades.add((GradeCurso)entidadeGrade);
+                    }
+                    curso.setGradeCurso(grades);
+                }
+                
                 
                 cursos.add(curso);
             }
@@ -136,7 +151,7 @@ public class DAOCurso extends AbstractDAO {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }

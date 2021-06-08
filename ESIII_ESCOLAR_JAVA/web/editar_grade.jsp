@@ -1,3 +1,6 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="Dominio.ItemGrade"%>
+<%@page import="Dominio.GradeCurso"%>
 <%@page import="Dao.DAOMateria"%>
 <%@page import="Dao.DAOCurso"%>
 <%@page import="Dominio.EntidadeDominio"%>
@@ -22,10 +25,21 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     </head>
     <% 
-        GradeCurso grade = request.getParameter("grade");
+        List<GradeCurso> grades = (List<GradeCurso>)request.getAttribute("grade");
+        GradeCurso grade = grades.get(0);
+        
+        List<ItemGrade> itensGrade = grade.getItens();
         
         ValidarItemGrade vG = new ValidarItemGrade();
+        
+        HashMap<String,ItemGrade> gradeDeItens = new HashMap<String,ItemGrade>();
+        //formato da chave: turno-periodo-diaSemana
 
+        for(ItemGrade item:itensGrade){
+            String chave = item.getChave();
+            gradeDeItens.put(chave,item);
+        }
+                
         DAOProfessor daoPro = new DAOProfessor();
         List<EntidadeDominio> professores = daoPro.consultar(null);
 
@@ -38,8 +52,7 @@
     %>
     <body>
         <%@include file="./componentes/header.jsp" %>
-
-
+        <%@include file="./componentes/modalErrorMsg.jsp" %>
 
         <!-- FormulÃ¡rio -->
         <form class="row justify-content-center align-items-center" action="">
@@ -47,14 +60,14 @@
             <div class="row">
                 <div class="col-sm-9">
                     <select class="form-select" name="curso">
-                        <%for (EntidadeDominio entidade : cursos) {
-                                Curso curso = (Curso) entidade;
-                        %>
-                        <option value="<%=curso.getId()%>"><%=curso.getNome()%></option>
-                        <%}%>
+                        <option value="<%=grade.getCurso().getId()%>"><%=grade.getCurso().getNome()%></option>
                     </select>
                 </div>
-                <div class="col-sm-3"><input type="number" min="1" max="999" pattern="\d*" class="form-control" name="semestre" placeholder="Semestre"></div>
+                <div class="col-sm-3">
+                    <select class="form-select" name="semestre">
+                            
+                    </select>
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -78,8 +91,6 @@
                                     <%}%>
                                     <%}%>
                             </tr>
-                            <!-- Turnos -->
-
                         </thead>
                         <tbody>
 
@@ -89,27 +100,36 @@
                             <tr>
                                 <td class="grade-form-td-title"><%=vG.dias_validos[i]%></td>
                                 <% for (int j = 1; j < vG.periodos_validos.length; j++) {%>
-                                <% for (int k = 1; k < vG.turnos_validos.length; k++) {%>
+                                <% for (int k = 1; k < vG.turnos_validos.length; k++) {
+                                    String chave = i+"-"+j+"-"+k;
+                                %>
                                 <td class="grade-form-td-values">
-                                    <select class="form-select" name="materias[<%=count%>]" >
-                                        <option value="">-</option>
+                                    <select class="form-select" name="materias[]" >
+                                        <%if(gradeDeItens.get(chave)!=null){%>
+                                            <option value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                            <%=gradeDeItens.get(chave).getMateria().getId()%></option>
+                                        <%}%>
+                                        <!-- Opções Padrao -->    
+                                        <option value="-1">-</option>
                                         <%for (EntidadeDominio entidade : materias) {
                                                 Materia materia = (Materia) entidade;
                                         %>
                                         <option value="<%=materia.getId()%>"><%=materia.getNome()%></option>
                                         <%}%>
                                     </select>
-                                    <select class="form-select" name="professores[<%=count%>]" >
+                                    <select class="form-select" name="professores[]" >
+                                        <%if(gradeDeItens.get(chave)!=null){%>
+                                            <option value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                                <%=gradeDeItens.get(chave).getProfessor().getNome()%></option>
+                                        <%}%>
+                                        <!-- Opções Padrao -->   
+                                        <option value="-1">-</option>
                                         <%for (EntidadeDominio entidade : professores) {
                                                 Professor professor = (Professor) entidade;
                                         %>
                                         <option value="<%=professor.getId()%>"><%=professor.getNome()%></option>
                                         <%}%>
                                     </select>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="obrigatorio[<%=count%>]" >
-                                        <label class="form-check-label" >Obrigatório</label>
-                                    </div>
                                 </td>
                                 <%count++;}%>
                                 <%}%>
@@ -124,12 +144,13 @@
                     <button class="btn btn-primary p-2 m-2">Enviar</button>
                     <a class="btn btn-secondary p-2 m-2" href="./curso.jsp">Voltar</a>
                 </div>
+                            
+                <!-- Valores para referencia do item no Banco de dados -->
+                <input type="hidden" min="1" max="999" pattern="\d*" class="form-control" name="id" value="<%=grade.getId()%>">
+                
         </form>
         <!-- FormulÃ¡rio -->
-
+        <%@include file="./componentes/gradeFormHandler.jsp"%>
         </div>
-
-
-        <%@include file="./componentes/footer.jsp" %>
     </body>
 </jsp>
