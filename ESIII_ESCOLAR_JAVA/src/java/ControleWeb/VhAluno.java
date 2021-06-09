@@ -61,8 +61,9 @@ public class VhAluno implements IViewHelper {
                 }
                 
                 Curso curso = new Curso();
+    
                 curso.setId(curso_id);
-
+                System.out.println(curso_id);
                 aluno.setRg(rg);
                 aluno.setCpf(cpf);
                 aluno.setPnome(primeiro_nome);

@@ -89,7 +89,6 @@ public class Controle extends HttpServlet {
 
         if (entidade != null) {
             Object msg = cmd.execute(entidade);
-            System.out.println(request);
             vh.setView(msg, request, response, entidade);
         }
     }

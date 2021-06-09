@@ -5,6 +5,7 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOCurso;
 import Dominio.Curso;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
@@ -20,6 +21,14 @@ public class ValidarCurso implements IStrategy{
         if(entidade instanceof Curso){
             StringBuilder sb = new StringBuilder();
             Curso curso = (Curso)entidade;
+            
+            DAOCurso DAOcur = new DAOCurso();
+            Curso tempcurso = (Curso)DAOcur.consultar(curso).get(0);
+            
+            if(tempcurso!=null&&tempcurso.getId()!=0){
+                curso = tempcurso;
+            }
+            
             
             if(curso.getNome()==null){
                 sb.append("Nome está faltando!");

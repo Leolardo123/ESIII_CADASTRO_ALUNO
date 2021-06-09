@@ -129,13 +129,14 @@
 
                 <div class="col-sm-12">
                     <button class="btn btn-primary p-2 m-2">Enviar</button>
-                    <a class="btn btn-secondary p-2 m-2" href="./curso.jsp">Voltar</a>
+                    <a class="btn btn-secondary p-2 m-2" href="./ListarGradeCurso?operacao=CONSULTAR">Voltar</a>
                     <input type="hidden" name="operacao" value="SALVAR">
                 </div>
         </form>
         <!-- Formulário -->
         
         </div>
+                            
         <%@include file="./componentes/gradeFormHandler.jsp" %>
     </body>
 </jsp>

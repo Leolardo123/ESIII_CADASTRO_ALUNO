@@ -27,7 +27,6 @@
     <body>
         <%@include file="./componentes/header.jsp" %>
         <%@include file="./componentes/modalErrorMsg.jsp" %>
-        <%@include file="./componentes/materiaFormHandler.jsp" %>
         <div class="container my-5">
             <div class="row table-responsive">
                 <div class="col-sm-12">
@@ -69,7 +68,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    {!}Se você continuar todas as relaçoes de dependencia daquelas que dependem desta serão removidas!
+                                    {!}Se você continuar todas as relaçoes de dependencia daquelas que dependem desta materia serão removidas!
                                     <br>{!}Itens de grades que necessitam da materia também serão removidos!
                                 </div>
                                 <div class="modal-footer">

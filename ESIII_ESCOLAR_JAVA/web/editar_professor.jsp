@@ -26,7 +26,7 @@
             <%
                 List<Professor> professores = (List<Professor>)request.getAttribute("professor");   
                 Professor professor = (Professor)professores.get(0);
-                String paises[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
+                String estados[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
                     "AC","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ",
                     "RN","RS","RO","RR","SC","SP","SE","TO"};
             %>
@@ -52,10 +52,10 @@
                 <div class="col-sm-4">
                     <select class="form-select" name="estado" required>
                         <option value="<%=professor.getEndereco().getEstado()%>"><%=professor.getEndereco().getEstado()%></option>
-                        <% for(String pais : paises){
-                            if(pais != professor.getEndereco().getEstado()){
+                        <% for(String estado : estados){
+                            if(estado != professor.getEndereco().getEstado()){
                         %>
-                        <option value="<%=pais%>"><%=pais%></option>
+                        <option value="<%=estado%>"><%=estado%></option>
                         <%}
                         }
                         %>

@@ -37,9 +37,11 @@ public class DAOGrade extends AbstractDAO {
     @Override
     public void salvar(EntidadeDominio entidade) {
         GradeCurso grade = (GradeCurso) entidade;
+
         try {
             DAOItemGrade daoItem = new DAOItemGrade();
             daoItem.ctrlTransaction = false;
+            this.ctrlTransaction = false;
 
             openConnection();
             conexao.setAutoCommit(false);
@@ -50,7 +52,7 @@ public class DAOGrade extends AbstractDAO {
 
             pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1, grade.getSemestre());
-            pst.setInt(2, grade.getCurso().getId());
+            pst.setInt(2, grade.getCurso_id());
             pst.executeUpdate();
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -59,10 +61,11 @@ public class DAOGrade extends AbstractDAO {
                 grade.setId(rs.getInt(id_table));
             }
 
-            daoItem.salvar(grade);
-
             daoItem.ctrlTransaction = true;
             conexao.commit();
+            daoItem.salvar(grade);
+
+            
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
             try {
@@ -73,104 +76,126 @@ public class DAOGrade extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                if(this.ctrlTransaction)closeConnection();
+                if (this.ctrlTransaction) {
+                    closeConnection();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     public void alterar(EntidadeDominio entidade) {
         GradeCurso grade = (GradeCurso) entidade;
 
-        DAOItemGrade DAOIgd = new DAOItemGrade();
-        
-        DAOIgd.ctrlTransaction = false;
+        try {
+            this.ctrlTransaction = false;
+            
+            openConnection();
+            conexao.setAutoCommit(false);
+            
+            DAOItemGrade DAOigd = new DAOItemGrade();
+            DAOigd.ctrlTransaction = false;
 
-        List<EntidadeDominio> existsItens = DAOIgd.consultar(grade);
-        List<EntidadeDominio> itensRemovidos = new ArrayList<EntidadeDominio>();
-
-        if (existsItens != null) {
-            for (EntidadeDominio entidadeItem : existsItens) {
-                ItemGrade novoItem = new ItemGrade();
-                boolean exists = false;
-                for (ItemGrade itemGrade : grade.getItens()) {
-                    if (entidadeItem.getId() == itemGrade.getId()) {
-                        novoItem = null;
-                        exists = true;
-                    }else{
-                        novoItem = itemGrade;
-                    }
-                }
-                if (exists == false) {
-                    DAOIgd.excluir(entidadeItem);
-                    DAOIgd.salvar(novoItem);
+            List<EntidadeDominio> listItens = DAOigd.consultar(grade);
+            List<ItemGrade> tempListItem    = grade.getItens();
+            List<ItemGrade> existsItens     = new ArrayList<ItemGrade>();
+            
+            for(EntidadeDominio entidadeItem:listItens){
+                existsItens.add((ItemGrade)entidadeItem);
+            }
+            
+            existsItens.removeAll(tempListItem);//Conj B - Conj A
+            grade.setItens(existsItens);
+            DAOigd.excluir(grade);
+            
+            for(EntidadeDominio entidadeItem:listItens){
+                existsItens.add((ItemGrade)entidadeItem);
+            }
+            
+            tempListItem.removeAll(existsItens);//Conj A - Conj B
+            grade.setItens(tempListItem);
+            DAOigd.salvar(grade);
+            
+            conexao.commit();
+            
+            List<EntidadeDominio> entidadeGrade = this.consultar(grade);
+            GradeCurso tempGrade = new GradeCurso();
+            
+            openConnection();
+            conexao.setAutoCommit(false);
+            
+            boolean alter = true;
+            if(entidadeGrade!=null){
+                tempGrade = (GradeCurso)entidadeGrade.get(0);
+                if(tempGrade.equals(grade)){
+                    alter =false;
                 }
             }
-        }
-        
-        for (ItemGrade itemGrade : grade.getItens()) {
-            try {
-                conexao.setAutoCommit(false);
 
+            if(alter == true){
                 StringBuilder sql = new StringBuilder();
                 sql.append("UPDATE grade_curso ");
                 sql.append(table);
-                sql.append("SET gra_semestre = ?,");
-                sql.append("gra_cur_id = ?");
-                sql.append("WHERE ");
-                sql.append(id_table);
-                sql.append("= ?");
-
-                pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
+                sql.append(" SET gra_semestre = ?, gra_cur_id = ? ");
+                sql.append(" WHERE ");
+                sql.append(" gra_id = ?");
+                
+                pst = conexao.prepareStatement(sql.toString());
                 pst.setInt(1, grade.getSemestre());
-                pst.setInt(2, grade.getCurso().getId());
+                pst.setInt(2, grade.getCurso_id());
+                pst.setInt(3, grade.getId());
                 pst.executeUpdate();
-
-                ResultSet rs = pst.getGeneratedKeys();
-
-                conexao.commit();
-                System.out.println("cadastrado com sucesso");
+            }
+            
+            conexao.commit();
+            
+            this.ctrlTransaction = true;
+            System.out.println("alterado com sucesso");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro na alteração: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (this.ctrlTransaction) {
+                    closeConnection();
+                }
             } catch (SQLException e) {
-                try {
-                    System.out.println("Erro na inserção: " + e);
-                    conexao.rollback();
-                } catch (SQLException e1) {
-                }
                 e.printStackTrace();
-            } finally {
-                try {
-                    if(this.ctrlTransaction)closeConnection();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
         }
     }
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
-        Curso curso = new Curso();
-        GradeCurso grade = new GradeCurso();
-        if(entidade instanceof GradeCurso){
-            grade = (GradeCurso) entidade;
-        }
-        if(entidade instanceof Curso){
-            curso = (Curso) entidade;
-        }
-        DAOItemGrade daoItem = new DAOItemGrade();
         try {
+            this.ctrlTransaction = false;
+                    
             openConnection();
+
+            DAOItemGrade DAOigd = new DAOItemGrade();
+            DAOigd.ctrlTransaction = false;
 
             conexao.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
-
-            if (curso != null && curso.getId() != 0) {
-                sql.append("SELECT * FROM " + table + " WHERE gra_cur_id   = " + curso.getId() + " ORDER BY " + id_table);
-            } else if (grade != null && grade.getId() != 0) {
-                sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + " ORDER BY " + id_table);
+            if (entidade != null && entidade.getId() != 0) {
+                if (entidade instanceof Curso) {
+                    sql.append("SELECT * FROM " + table + " WHERE gra_cur_id   = " + entidade.getId() + " ORDER BY gra_cur_id ");
+                } else if (entidade instanceof GradeCurso) {
+                    GradeCurso grade = (GradeCurso) entidade;
+                    if (grade.getSemestre() > 0 && grade.getCurso_id() != 0) {
+                        sql.append("SELECT * FROM " + table + " WHERE gra_semestre = " + grade.getSemestre() + " AND gra_cur_id = " + grade.getCurso_id() +" ORDER BY gra_cur_id");
+                    } else {
+                        sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + " ORDER BY gra_semestre");
+                    }
+                }
             } else {
-                sql.append("SELECT * FROM " + table + " ORDER BY " + id_table);
+                sql.append("SELECT * FROM " + table + " ORDER BY gra_cur_id");
             }
 
             pst = conexao.prepareStatement(sql.toString());
@@ -179,23 +204,13 @@ public class DAOGrade extends AbstractDAO {
             List<EntidadeDominio> ListaGrade = new ArrayList<EntidadeDominio>();
 
             while (rs.next()) {
-                grade = new GradeCurso();
-                
-                if(entidade instanceof Curso){
-                    grade.setCurso(curso);
-                }else{
-                    DAOCurso DAOcur = new DAOCurso();
-                    curso = new Curso();
-                    
-                    curso.setId(rs.getInt("gra_cur_id"));
-                    curso = (Curso) DAOcur.consultar(curso).get(0);
-                } 
-    
-                grade.setCurso(curso);
+                Curso curso = new Curso();
+                GradeCurso grade = new GradeCurso();
+
                 grade.setSemestre(rs.getInt("gra_semestre"));
                 grade.setId(rs.getInt("gra_id"));
 
-                List<EntidadeDominio> entidadeItens = daoItem.consultar(grade);
+                List<EntidadeDominio> entidadeItens = DAOigd.consultar(grade);
                 List<ItemGrade> itens = new ArrayList<ItemGrade>();
 
                 if (entidadeItens != null) {
@@ -205,6 +220,7 @@ public class DAOGrade extends AbstractDAO {
                 }
 
                 grade.setItens(itens);
+                grade.setCurso_id(rs.getInt("gra_cur_id"));
 
                 ListaGrade.add(grade);
             }
@@ -219,12 +235,13 @@ public class DAOGrade extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                if(this.ctrlTransaction)closeConnection();
+                if (this.ctrlTransaction) {
+                    closeConnection();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return null;
     }
-
 }

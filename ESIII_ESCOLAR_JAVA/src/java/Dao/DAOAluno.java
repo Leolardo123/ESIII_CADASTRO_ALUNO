@@ -131,17 +131,19 @@ public class DAOAluno extends AbstractDAO {
             while (rs.next()) {
                 DAOCurso DAOcur = new DAOCurso();
                 DAOPessoa DAOpes = new DAOPessoa();
-
-                Curso curso = new Curso();
-                curso.setId(rs.getInt("alu_cur_id"));
-                curso = (Curso) DAOcur.consultar(curso).get(0);
-
+                
                 Pessoa pessoa = new Pessoa();
                 pessoa.setId(rs.getInt("alu_pes_id"));
                 pessoa = (Pessoa) DAOpes.consultar(pessoa).get(0);
+                
+                Aluno aluno = new Aluno(pessoa, rs.getInt("alu_semestre"), null);
 
-                Aluno aluno = new Aluno(pessoa, rs.getInt("alu_semestre"), curso);
+                Curso curso = new Curso();
+                curso.setId(rs.getInt("alu_cur_id"));
+                curso = (Curso) DAOcur.consultar(aluno).get(0);
+                
                 aluno.setId(pessoa.getId());
+                aluno.setCurso(curso);
                 aluno.setDtcadastro(pessoa.getDtcadastro());
                 alunos.add(aluno);
             }

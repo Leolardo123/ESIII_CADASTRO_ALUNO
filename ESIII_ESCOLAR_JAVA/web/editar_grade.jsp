@@ -47,20 +47,23 @@
         List<EntidadeDominio> materias = daoMat.consultar(null);
 
         DAOCurso daoCur = new DAOCurso();
-        List<EntidadeDominio> cursos = daoCur.consultar(null);
-
+        List<EntidadeDominio> cursos = daoCur.consultar(grade);
+        
+        Curso cursoGrade = new Curso();
+        if(cursos!=null&&cursos.size()>0){
+            cursoGrade = (Curso)cursos.get(0);
+        }
     %>
     <body>
         <%@include file="./componentes/header.jsp" %>
         <%@include file="./componentes/modalErrorMsg.jsp" %>
 
         <!-- FormulÃ¡rio -->
-        <form class="row justify-content-center align-items-center" action="">
-
+        <form class="row justify-content-center align-items-center" action="EditarGradeCurso">
             <div class="row">
                 <div class="col-sm-9">
                     <select class="form-select" name="curso">
-                        <option value="<%=grade.getCurso().getId()%>"><%=grade.getCurso().getNome()%></option>
+                        <option value="<%=cursoGrade.getId()%>"><%=cursoGrade.getNome()%></option>
                     </select>
                 </div>
                 <div class="col-sm-3">
@@ -101,13 +104,13 @@
                                 <td class="grade-form-td-title"><%=vG.dias_validos[i]%></td>
                                 <% for (int j = 1; j < vG.periodos_validos.length; j++) {%>
                                 <% for (int k = 1; k < vG.turnos_validos.length; k++) {
-                                    String chave = i+"-"+j+"-"+k;
+                                    String chave = k+"-"+j+"-"+i;
                                 %>
                                 <td class="grade-form-td-values">
                                     <select class="form-select" name="materias[]" >
                                         <%if(gradeDeItens.get(chave)!=null){%>
-                                            <option value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
-                                            <%=gradeDeItens.get(chave).getMateria().getId()%></option>
+                                            <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                                <%=gradeDeItens.get(chave).getMateria().getNome()%></option>
                                         <%}%>
                                         <!-- Opções Padrao -->    
                                         <option value="-1">-</option>
@@ -119,7 +122,7 @@
                                     </select>
                                     <select class="form-select" name="professores[]" >
                                         <%if(gradeDeItens.get(chave)!=null){%>
-                                            <option value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                            <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
                                                 <%=gradeDeItens.get(chave).getProfessor().getNome()%></option>
                                         <%}%>
                                         <!-- Opções Padrao -->   
@@ -141,8 +144,10 @@
                 </div>
 
                 <div class="col-sm-12">
+                    <input type="hidden" name="id" value="<%=grade.getId()%>" >
+                    <input type="hidden" name="operacao" value="ALTERAR" >
                     <button class="btn btn-primary p-2 m-2">Enviar</button>
-                    <a class="btn btn-secondary p-2 m-2" href="./curso.jsp">Voltar</a>
+                    <a class="btn btn-secondary p-2 m-2" href="./ListarGradeCurso?operacao=CONSULTAR">Voltar</a>
                 </div>
                             
                 <!-- Valores para referencia do item no Banco de dados -->
@@ -150,6 +155,7 @@
                 
         </form>
         <!-- FormulÃ¡rio -->
+        
         <%@include file="./componentes/gradeFormHandler.jsp"%>
         </div>
     </body>

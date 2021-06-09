@@ -1,3 +1,6 @@
+<%@page import="Dominio.EntidadeDominio"%>
+<%@page import="Dominio.Curso"%>
+<%@page import="Dao.DAOCurso"%>
 <%@page import="Dominio.GradeCurso"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE jsp>
@@ -45,35 +48,41 @@
                         <%
                             List<GradeCurso> grades = (List<GradeCurso>) request.getAttribute("grades");
                             if (grades != null) {
+                                DAOCurso DAOcur = new DAOCurso();
                                 for (GradeCurso grade : grades) {
+                                    List<EntidadeDominio> entidadeCursos = DAOcur.consultar(grade);
+                                    if(entidadeCursos!=null&&entidadeCursos.size()>0){
+                                    Curso curso = (Curso)entidadeCursos.get(0);
                         %>
-                        <tr>
-                            <td class="text-center" id="<%=grade.getId()%>" ><%=grade.getId()%></td>
-                            <td class="text-center" ><%=grade.getCurso().getNome()%></td>
-                            <td class="text-center" ><%=grade.getSemestre()%></td>
-                            <td><a class="btn btn-primary" href="./FormEditarGradeCurso?operacao=CONSULTARID&id=<%=grade.getId()%>">Editar</a></td>
-                            <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir </button></td>
-                    </tr>
-                    <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!}Se você continuar todos os itens da grade serão removidos!
-                                    <br>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <a class="btn btn-d" href="./ExcluirGradeCurso?operacao=EXCLUIR&id=<%=grade.getId()%>">Continuar</a>
+                            <tr>
+                                <td class="text-center" id="<%=grade.getId()%>" ><%=grade.getId()%></td>
+                                <td class="text-center" ><%=curso.getNome()%></td>
+                                <td class="text-center" ><%=grade.getSemestre()%></td>
+
+                                <td><a class="btn btn-primary" href="./FormEditarGradeCurso?operacao=CONSULTARID&id=<%=grade.getId()%>">Editar</a></td>
+                                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal<%=grade.getId()%>">Excluir </button></td>
+                            </tr>
+                            <div class="modal fade" id="ExcluirModal<%=grade.getId()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {!}Se você continuar todos os itens da grade serão removidos!
+                                            <br>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <a class="btn btn-d" href="./ExcluirGradeCurso?operacao=EXCLUIR&id=<%=grade.getId()%>">Continuar</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <%}
-                        }%>
+                            <%}%>
+                        <%}
+                    }%>
                     </tbody>
                 </table>
             </div>

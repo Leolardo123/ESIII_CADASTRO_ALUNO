@@ -72,4 +72,13 @@ public class ItemGrade extends EntidadeDominio{
     public String getChave() {
         return turno+"-"+periodo+"-"+dia_semana;
     }
+    
+    @Override
+    public boolean equals(Object item) {
+        if (!(item instanceof ItemGrade)) {
+            return false;
+        }
+        ItemGrade outroItem = (ItemGrade)item;
+        return outroItem.getChave().equals(getChave());
+    }
 }

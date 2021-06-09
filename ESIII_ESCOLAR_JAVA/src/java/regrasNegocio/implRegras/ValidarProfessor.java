@@ -5,6 +5,7 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOProfessor;
 import Dominio.EntidadeDominio;
 import Dominio.Pessoa;
 import Dominio.Professor;
@@ -17,16 +18,23 @@ import regrasNegocio.IStrategy;
 public class ValidarProfessor implements IStrategy{
      @Override
      public String processar(EntidadeDominio entidade){
-         Pessoa pessoa;
          Professor professor;
          if(entidade instanceof Professor){
             professor = (Professor)entidade;
-            pessoa = (Pessoa)professor;
+            
+            if(professor.getId()!=0){
+                DAOProfessor DAOpro     = new DAOProfessor();
+                Professor tempProfessor = (Professor)DAOpro.consultar(professor).get(0);
+                
+                if(tempProfessor != null){
+                    professor = tempProfessor;
+                }
+            }
             
             StringBuilder sb = new StringBuilder();
              
             ValidarPessoa valPes = new ValidarPessoa();
-            String msgPes = valPes.processar(pessoa);
+            String msgPes = valPes.processar(professor);
             if(msgPes!=null){
                 sb.append(msgPes);
             }

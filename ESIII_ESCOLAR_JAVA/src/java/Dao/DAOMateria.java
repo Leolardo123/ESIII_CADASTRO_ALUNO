@@ -190,10 +190,10 @@ public class DAOMateria extends AbstractDAO {
 
             while (rs.next()) {
                 DAODependentes DAOdep = new DAODependentes();
-                Materia dependencia = new Materia();
-                dependencia.setId(rs.getInt("mat_id"));
+                Materia tempMateria = new Materia();
+                tempMateria.setId(rs.getInt("mat_id"));
 
-                List<EntidadeDominio> EntidadeDependencias = DAOdep.consultar(dependencia);
+                List<EntidadeDominio> EntidadeDependencias = DAOdep.consultar(tempMateria);
 
                 List<Materia> dependencias = new ArrayList();
                 for (EntidadeDominio entidadeMateria : EntidadeDependencias) {//recupera as dependencias da materia
@@ -288,43 +288,5 @@ public class DAOMateria extends AbstractDAO {
             }
         }
         return null;
-    }
-
-    @Override
-    public void excluir(EntidadeDominio entidade) {
-        try {
-            DAODependentes DAOdep = new DAODependentes();
-            DAOdep.excluir(entidade);
-
-            openConnection();
-
-            conexao.setAutoCommit(false);
-
-            StringBuilder sql = new StringBuilder();
-
-            sql.append("DELETE FROM " + table + " WHERE ");
-            sql.append(id_table);
-            sql.append(" = ");
-            sql.append(entidade.getId());
-            pst = conexao.prepareStatement(sql.toString());
-            pst.executeUpdate();
-
-            conexao.commit();
-        } catch (SQLException e) {
-            try {
-                System.out.println("Erro ao recuperar: " + e);
-                conexao.rollback();
-            } catch (SQLException e1) {
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                if (this.ctrlTransaction) {
-                    closeConnection();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

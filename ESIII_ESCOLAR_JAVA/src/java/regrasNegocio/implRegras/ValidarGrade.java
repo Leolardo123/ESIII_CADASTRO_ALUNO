@@ -5,13 +5,12 @@
  */
 package regrasNegocio.implRegras;
 
+import Dao.DAOCurso;
 import Dao.DAOGrade;
-import Dao.DAOItemGrade;
+import Dominio.Curso;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import Dominio.ItemGrade;
-import Dominio.Pessoa;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import regrasNegocio.IStrategy;
@@ -25,10 +24,39 @@ public class ValidarGrade implements IStrategy {
     @Override
     public String processar(EntidadeDominio entidade) {
         if (entidade instanceof GradeCurso) {
-            HashMap<String, ItemGrade> PrimaryKey = new HashMap<String, ItemGrade>();//representa a PK item grade: PK_GRI(mat_id,cur_id)
-
+            GradeCurso grade =(GradeCurso)entidade;
             StringBuilder sb = new StringBuilder();
-            GradeCurso grade = (GradeCurso) entidade;
+
+            Curso curso = new Curso();
+            curso.setId(grade.getCurso_id());
+            
+            if (grade.getCurso_id() <= 0) {
+                return "Curso ainda precisa ser selecionado!";
+            }
+            
+            ValidarCurso valCur = new ValidarCurso();
+            String MsgCur = valCur.processar(curso);
+            
+            if(MsgCur!=null){
+                sb.append(MsgCur);
+            }
+            
+            DAOCurso DAOcur = new DAOCurso();
+            Curso tempcurso = (Curso)DAOcur.consultar(curso).get(0);
+            
+            if(tempcurso!=null&&tempcurso.getId()!=0){
+                curso = tempcurso;
+            }else{
+                return "Curso não encontrado";
+            }
+
+            if (grade.getSemestre() > curso.getDuracao()&&curso.getId()!=0) {
+                sb.append("Semestre da grade ultrapassa limite do Curso!");
+            }
+
+            if (grade.getSemestre() > 99 || grade.getSemestre() < 1) {
+                sb.append("Semestre da grade  é inválido!");
+            }
 
             DAOGrade DAOgra = new DAOGrade();
             List<EntidadeDominio> entidadeGrade = DAOgra.consultar(grade);
@@ -37,42 +65,21 @@ public class ValidarGrade implements IStrategy {
                 grade = (GradeCurso) entidadeGrade.get(0);
             }
 
-            if (grade.getCurso() == null) {
-                sb.append("Falta Curso na Grade!");
-            }
-
             int count = 0;
 
             ValidarItemGrade valItem = new ValidarItemGrade();
 
-            for (ItemGrade itemGrade : grade.getItens()) {
-                String MsgItem = valItem.processar(itemGrade);
-                if (MsgItem != null) {
-                    sb.append("ItemGrade");
-                    sb.append(count);
-                    sb.append("-");
-                    sb.append(MsgItem);
-                    sb.append("!");
+            if(grade.getItens()!=null){
+                for (ItemGrade itemGrade : grade.getItens()) {
+                    String MsgItem = valItem.processar(itemGrade);
+                    if (MsgItem != null) {
+                        sb.append("ItemGrade");
+                        sb.append(count);
+                        sb.append("-");
+                        sb.append(MsgItem);
+                        sb.append("!");
+                    }
                 }
-
-                String pk = itemGrade.getMateria().getId() + "-" + grade.getCurso().getId();//ex: 109-2 (materia-curso)
-                if (PrimaryKey.get(pk) == null) {//verifica se item ja esta no hashmap, assim sabendo se está repetido
-                    PrimaryKey.put(pk, itemGrade);//coloca item no hashmap
-                } else {
-                    sb.append("ItemGrade ");
-                    sb.append(count);
-                    sb.append(" Materia está repetida e não pode,item:(id_materia-id_curso)->(");
-                    sb.append(pk);
-                    sb.append(")!");
-                    //Erro de item repetido,ex: ItemGrade 2 Materia está repetida e não pode,item:(id_materia-id_curso)->(109-2)!
-                }
-            }
-
-            if (grade.getSemestre() > grade.getCurso().getDuracao()) {
-                sb.append("-Semestre da grade ultrapassa limite do Curso!");
-            }
-            if (grade.getSemestre() > 99 || grade.getSemestre() < 1) {
-                sb.append("-Semestre da grade é inválido!");
             }
 
             if (sb.length() > 0) {

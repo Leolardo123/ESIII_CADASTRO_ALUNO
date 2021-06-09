@@ -149,10 +149,14 @@ public class DAOProfessor extends AbstractDAO {
         }
         return null;
     }
-     @Override
+    @Override
     public void excluir(EntidadeDominio entidade) {
         try {
             openConnection();
+            
+            DAOItemGrade DAOitg = new DAOItemGrade();
+            DAOitg.ctrlTransaction = false;
+            DAOitg.excluir(entidade);
 
             conexao.setAutoCommit(false);
 

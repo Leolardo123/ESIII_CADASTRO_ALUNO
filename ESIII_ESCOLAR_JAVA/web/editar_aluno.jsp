@@ -29,15 +29,15 @@
             
             <%
                 DAOCurso daoCurso = new DAOCurso();
-                Curso curso = new Curso();
                 List<Aluno> alunos = (List<Aluno>)request.getAttribute("aluno");  
                 
-                List<EntidadeDominio> cursos = daoCurso.consultar(curso);  
+                List<EntidadeDominio> cursos = daoCurso.consultar(null);  
                 
                 Aluno aluno = (Aluno)alunos.get(0);
-                curso.setId(aluno.getCurso().getId());
-                Curso curso_consultado = (Curso)daoCurso.consultar(curso).get(0);
-                String paises[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
+                
+                Curso curso = aluno.getCurso();
+                
+                String estados[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
                     "AC","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ",
                     "RN","RS","RO","RR","SC","SP","SE","TO"};
             %>
@@ -52,14 +52,17 @@
                 <div class="col-sm-5 my-2"><input type="email" class="form-control" name="email" placeholder="E-mail" value="<%=aluno.getEmail()%>" required></div>
                 <div class="col-sm-7 my-2">
                     <select class="form-select" name="curso" required>
-                        <option value="<%=curso_consultado.getId()%>"><%=curso_consultado.getNome()%></option>
-                        <%
+                        <option class="opcao-cadastrada" value="<%=curso.getId()%>"><%=curso.getNome()%></option>
+                        <option value="-1">-</option>
+                        <% 
                             for(EntidadeDominio consulta : cursos){
-                               curso = (Curso) consulta; 
-                               if(curso.getId() == curso_consultado.getId())
+                               Curso tempcurso = (Curso) consulta; 
+                               
+                               if(tempcurso.getId() != curso.getId()){
+                                   
                         %>
-                        <option value="<%=curso.getId()%>"><%=curso.getNome()%></option>
-                        <%}%>
+                        <option value="<%=tempcurso.getId()%>"><%=tempcurso.getNome()%></option>
+                        <%}}%>
                     </select>
                 </div>
             </div>
@@ -74,10 +77,10 @@
                 <div class="col-sm-4">
                     <select class="form-select" name="estado" required>
                         <option value="<%=aluno.getEndereco().getEstado()%>"><%=aluno.getEndereco().getEstado()%></option>
-                        <% for(String pais : paises){
-                            if(pais != aluno.getEndereco().getEstado()){
+                        <% for(String estado : estados){
+                            if(estado != aluno.getEndereco().getEstado()){
                         %>
-                        <option value="<%=pais%>"><%=pais%></option>
+                        <option value="<%=estado%>"><%=estado%></option>
                         <%}
                         }
                         %>

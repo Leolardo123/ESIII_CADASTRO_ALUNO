@@ -44,6 +44,7 @@
                                 <div class="input-group mb-3">
                                     <select class="form-control dep-item-select" name="dependencia[]">
                                         <option value="<%=dependencia.getId()%>"><%=dependencia.getNome()%></option>
+                                        <option value="-1">-</option>
                                     </select>
                                     <div class="input-group-prepend">
                                         <span type="button" class="rmDep btn btn-danger">Delete</span></div>

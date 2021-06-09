@@ -235,7 +235,6 @@ public class DAODependentes extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             for(Materia dependencia:materia.getDependencias()){
-                System.out.println(materia.getId()+"-"+dependencia.getId());
                 sql.append(" DELETE FROM " + table + " WHERE ");
                 sql.append(" dep_materia_id ");
                 sql.append(" = ");

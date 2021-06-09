@@ -46,16 +46,31 @@ public class ValidarAluno implements IStrategy {
             }
 
             DAOCurso DAOcur = new DAOCurso();
-            Curso curso = (Curso)DAOcur.consultar(aluno.getCurso()).get(0);
+            System.out.println(aluno.getCurso().getId());
+            List<EntidadeDominio> entidadadeCursos = DAOcur.consultar(aluno.getCurso());
+            Curso curso;
             
-            ValidarCurso valCur = new ValidarCurso();
-            String msgCur = valCur.processar(aluno.getCurso());
+            if(entidadadeCursos!=null &&entidadadeCursos.size()>0){
+                curso = (Curso)entidadadeCursos.get(0);
+                
+                ValidarCurso valCur = new ValidarCurso();
+                String msgCur = valCur.processar(aluno.getCurso());
+                if(msgCur!=null){
+                    sb.append(msgCur);
+                }else{
+                    aluno.setCurso(curso);
+                }
+            }else{
+                sb.append("Aluno não pode ser cadastrado sem curso!");
+            }
+            
+            
             
             if (aluno.getCurso() == null||aluno.getCurso().getId()==0) {
                 return "Curso não encontrado!";
             }
             
-            aluno.setCurso(curso);
+            
             
             if(aluno.getSemestre()<0||aluno.getSemestre()>aluno.getCurso().getDuracao()){
                 System.out.println(aluno.getSemestre()+":"+aluno.getCurso().getDuracao());

@@ -44,6 +44,7 @@
                 <div class="col-sm-5 my-2"><input type="email" class="form-control" name="email" placeholder="E-mail" required></div>
                 <div class="col-sm-7 my-2">
                     <select class="form-select" name="curso" required>
+                        <option value="-1">-</option>
                         <%for(EntidadeDominio entidade : entidadeCursos){
                             curso = (Curso)entidade;
                         %>

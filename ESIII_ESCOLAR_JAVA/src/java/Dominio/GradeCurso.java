@@ -14,14 +14,13 @@ import java.util.List;
  */
 public class GradeCurso  extends EntidadeDominio{
     private List<ItemGrade> itensGrade;
-    private Curso curso;
     private int semestre;
+    private int curso_id;
     
     public GradeCurso(){}
     
-    public GradeCurso(List<ItemGrade> itensGrade,Curso curso,int semestre){
+    public GradeCurso(List<ItemGrade> itensGrade,int semestre){
         this.itensGrade = itensGrade;
-        this.curso = curso;
         this.semestre = semestre;
     }
 
@@ -33,20 +32,33 @@ public class GradeCurso  extends EntidadeDominio{
         this.itensGrade = itensGrade;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
     public int getSemestre() {
         return semestre;
     }
 
     public void setSemestre(int semestre) {
         this.semestre = semestre;
+    }
+
+    public int getCurso_id() {
+        return curso_id;
+    }
+
+    public void setCurso_id(int curso_id) {
+        this.curso_id = curso_id;
+    }
+    
+    public String getChave() {
+        return semestre+"-"+curso_id;
+    }
+    
+    @Override
+    public boolean equals(Object grade) {
+        if (!(grade instanceof GradeCurso)) {
+            return false;
+        }
+        GradeCurso outraGrade = (GradeCurso)grade;
+        return outraGrade.getChave().equals(getChave());
     }
     
 }

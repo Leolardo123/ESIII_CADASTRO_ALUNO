@@ -9,6 +9,7 @@ import Dao.DAOItemGrade;
 import Dominio.EntidadeDominio;
 import Dominio.GradeCurso;
 import Dominio.ItemGrade;
+import java.util.List;
 import regrasNegocio.IStrategy;
 
 /**
@@ -40,13 +41,23 @@ public class ValidarItemGrade  implements IStrategy{
                     }
                 }
                 
-                if(item.getProfessor()==null){
+                if(item.getProfessor()==null||item.getProfessor().getId()==0){
                     sb.append("Falta Professor no Item Grade!");
                 }else{
                     err = valPro.processar(item.getProfessor());
                     
                     if(err!=null){
                         sb.append(err);
+                    }
+                }
+                
+                DAOItemGrade DAOigd = new DAOItemGrade();
+                List<EntidadeDominio> listTempItem  = DAOigd.consultar(item);
+                
+                if(listTempItem!=null&&listTempItem.size()>0){
+                    ItemGrade tempItem = (ItemGrade)listTempItem.get(0);
+                    if(tempItem.getId()>0){
+                        item = tempItem;
                     }
                 }
                 
