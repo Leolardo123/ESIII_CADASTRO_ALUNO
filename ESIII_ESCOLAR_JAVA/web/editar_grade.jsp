@@ -24,22 +24,22 @@
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     </head>
-    <% 
-        List<GradeCurso> grades = (List<GradeCurso>)request.getAttribute("grade");
+    <%
+        List<GradeCurso> grades = (List<GradeCurso>) request.getAttribute("grade");
         GradeCurso grade = grades.get(0);
-        
+
         List<ItemGrade> itensGrade = grade.getItens();
-        
+
         ValidarItemGrade vG = new ValidarItemGrade();
-        
-        HashMap<String,ItemGrade> gradeDeItens = new HashMap<String,ItemGrade>();
+
+        HashMap<String, ItemGrade> gradeDeItens = new HashMap<String, ItemGrade>();
         //formato da chave: turno-periodo-diaSemana
 
-        for(ItemGrade item:itensGrade){
+        for (ItemGrade item : itensGrade) {
             String chave = item.getChave();
-            gradeDeItens.put(chave,item);
+            gradeDeItens.put(chave, item);
         }
-                
+
         DAOProfessor daoPro = new DAOProfessor();
         List<EntidadeDominio> professores = daoPro.consultar(null);
 
@@ -48,10 +48,10 @@
 
         DAOCurso daoCur = new DAOCurso();
         List<EntidadeDominio> cursos = daoCur.consultar(grade);
-        
+
         Curso cursoGrade = new Curso();
-        if(cursos!=null&&cursos.size()>0){
-            cursoGrade = (Curso)cursos.get(0);
+        if (cursos != null && cursos.size() > 0) {
+            cursoGrade = (Curso) cursos.get(0);
         }
     %>
     <body>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-sm-3">
                     <select class="form-select" name="semestre">
-                            
+
                     </select>
                 </div>
             </div>
@@ -104,14 +104,14 @@
                                 <td class="grade-form-td-title"><%=vG.dias_validos[i]%></td>
                                 <% for (int j = 1; j < vG.periodos_validos.length; j++) {%>
                                 <% for (int k = 1; k < vG.turnos_validos.length; k++) {
-                                    String chave = k+"-"+j+"-"+i;
+                                        String chave = k + "-" + j + "-" + i;
                                 %>
-                                <td class="grade-form-td-values">
+                                <td class="grade-form-td-values" id="<%=chave%>">
                                     <select class="form-select" name="materias[]" >
-                                        <%if(gradeDeItens.get(chave)!=null){%>
-                                            <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
-                                                <%=gradeDeItens.get(chave).getMateria().getNome()%></option>
-                                        <%}%>
+                                        <%if (gradeDeItens.get(chave) != null) {%>
+                                        <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                            <%=gradeDeItens.get(chave).getMateria().getNome()%></option>
+                                            <%}%>
                                         <!-- Opções Padrao -->    
                                         <option value="-1">-</option>
                                         <%for (EntidadeDominio entidade : materias) {
@@ -121,10 +121,10 @@
                                         <%}%>
                                     </select>
                                     <select class="form-select" name="professores[]" >
-                                        <%if(gradeDeItens.get(chave)!=null){%>
-                                            <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
-                                                <%=gradeDeItens.get(chave).getProfessor().getNome()%></option>
-                                        <%}%>
+                                        <%if (gradeDeItens.get(chave) != null) {%>
+                                        <option class="opcao-cadastrada" value="<%=gradeDeItens.get(chave).getMateria().getId()%>">
+                                            <%=gradeDeItens.get(chave).getProfessor().getNome()%></option>
+                                            <%}%>
                                         <!-- Opções Padrao -->   
                                         <option value="-1">-</option>
                                         <%for (EntidadeDominio entidade : professores) {
@@ -134,7 +134,8 @@
                                         <%}%>
                                     </select>
                                 </td>
-                                <%count++;}%>
+                                <%count++;
+                                    }%>
                                 <%}%>
                             </tr>
                             <%}%>
@@ -145,17 +146,34 @@
 
                 <div class="col-sm-12">
                     <input type="hidden" name="id" value="<%=grade.getId()%>" >
+                    <input type="hidden" name="old_semestre" value="<%=grade.getSemestre()%>" >
                     <input type="hidden" name="operacao" value="ALTERAR" >
-                    <button class="btn btn-primary p-2 m-2">Enviar</button>
-                    <a class="btn btn-secondary p-2 m-2" href="./ListarGradeCurso?operacao=CONSULTAR">Voltar</a>
+                    <button id="trigger-WarningEditar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#WarningEditarGrade">Confirmar</button>
+                    <a class="btn btn-secondary p-2 m-2" >Voltar</a>
                 </div>
-                            
+
                 <!-- Valores para referencia do item no Banco de dados -->
                 <input type="hidden" min="1" max="999" pattern="\d*" class="form-control" name="id" value="<%=grade.getId()%>">
-                
+                <div class="modal fade" id="WarningEditarGrade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Editar Grade</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-p p-2 m-2">Continuar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </form>
         <!-- FormulÃ¡rio -->
-        
+
         <%@include file="./componentes/gradeFormHandler.jsp"%>
         </div>
     </body>

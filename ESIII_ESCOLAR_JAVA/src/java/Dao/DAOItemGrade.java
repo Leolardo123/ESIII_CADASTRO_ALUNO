@@ -86,6 +86,7 @@ public class DAOItemGrade extends AbstractDAO {
         GradeCurso grade = (GradeCurso) entidade;
 
         this.ctrlTransaction = false;
+        openConnection();
         if (grade != null && grade.getItens() != null) {
             for (ItemGrade itemGrade : grade.getItens()) {
                 try {
@@ -94,27 +95,23 @@ public class DAOItemGrade extends AbstractDAO {
                     StringBuilder sql = new StringBuilder();
                     sql.append(" UPDATE ");
                     sql.append(table);
-                    sql.append(" SET gri_turno = ?, gri_dia_semana = ?,");
-                    sql.append(" gri_periodo = ? , gri_mat_id = ?, gri_pro_id = ? ");
+                    sql.append(" SET ");
+                    sql.append(" gri_mat_id = ?, gri_pro_id = ? ");
                     sql.append(" WHERE ");
                     sql.append(" gri_gra_id = ?");
 
-                    System.out.println(sql.toString());
                     pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
-                    pst.setInt(1, itemGrade.getTurno());
-                    pst.setInt(2, itemGrade.getDia_semana());
-                    pst.setInt(3, itemGrade.getPeriodo());
-                    pst.setInt(4, itemGrade.getMateria().getId());
-                    pst.setInt(5, itemGrade.getProfessor().getId());
-                    pst.setInt(6, grade.getId());
+                    pst.setInt(1, itemGrade.getMateria().getId());
+                    pst.setInt(2, itemGrade.getProfessor().getId());
+                    pst.setInt(3, grade.getId());
                     pst.executeUpdate();
 
                     ResultSet rs = pst.getGeneratedKeys();
 
-                    System.out.println("cadastrado com sucesso");
+                    System.out.println("alterado com sucesso");
                 } catch (SQLException e) {
                     try {
-                        System.out.println("Erro na inserção: " + e);
+                        System.out.println("Erro na alteração: " + e);
                         conexao.rollback();
                     } catch (SQLException e1) {
                     }

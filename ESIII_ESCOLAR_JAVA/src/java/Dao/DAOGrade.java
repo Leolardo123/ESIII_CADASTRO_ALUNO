@@ -62,9 +62,8 @@ public class DAOGrade extends AbstractDAO {
             }
 
             daoItem.ctrlTransaction = true;
-            conexao.commit();
             daoItem.salvar(grade);
-
+            conexao.commit();
             
             System.out.println("cadastrado com sucesso");
         } catch (SQLException e) {
@@ -92,6 +91,36 @@ public class DAOGrade extends AbstractDAO {
         try {
             this.ctrlTransaction = false;
             
+            List<EntidadeDominio> entidadeGrade = this.consultar(grade);
+            GradeCurso tempGrade = new GradeCurso();
+            
+            if(entidadeGrade!=null){
+                tempGrade = (GradeCurso)entidadeGrade.get(0);
+                if(tempGrade.equals(grade)){
+                    if(tempGrade.getId()!=grade.getCurso_id()){
+                        //se já existe a grade com semestre e curso igual mas com id diferente,deleta a grade anterior
+                        //e todos seus itens (cascade no banco de dados),substituindo-a pela nova
+                        System.out.println("Excluindo...");
+                        return;
+//                        this.excluir(tempGrade);
+//                        
+//                        StringBuilder sql = new StringBuilder();
+//                        sql.append("UPDATE grade_curso ");//substituicao
+//                        sql.append(table);
+//                        sql.append(" SET gra_semestre = ?, gra_cur_id = ? ");
+//                        sql.append(" WHERE ");
+//                        sql.append(" gra_id = ?");
+//
+//                        pst = conexao.prepareStatement(sql.toString());
+//                        pst.setInt(1, tempGrade.getSemestre());
+//                        pst.setInt(2, tempGrade.getCurso_id());
+//                        pst.setInt(3, grade.getId());
+//                        pst.executeUpdate();
+                    }
+                }
+            }
+            
+            
             openConnection();
             conexao.setAutoCommit(false);
             
@@ -101,53 +130,32 @@ public class DAOGrade extends AbstractDAO {
             List<EntidadeDominio> listItens = DAOigd.consultar(grade);
             List<ItemGrade> tempListItem    = grade.getItens();
             List<ItemGrade> existsItens     = new ArrayList<ItemGrade>();
+            List<ItemGrade> alteredItens    = new ArrayList<ItemGrade>();
             
             for(EntidadeDominio entidadeItem:listItens){
                 existsItens.add((ItemGrade)entidadeItem);
             }
             
-            existsItens.removeAll(tempListItem);//Conj B - Conj A
-            grade.setItens(existsItens);
+            for(ItemGrade item:tempListItem){// A = Itens do banco de dados, B = Intens do Formulario
+                if(existsItens.contains(item)){// Conj A = Conj B
+                    alteredItens.add(item);//recebe os itens que existem no banco e na lista recebida
+                }
+            }
+            
+            grade.setItens( alteredItens);//coloca os itens em comum na grade para efetuar a alteração
+            DAOigd.alterar(grade);
+            
+            existsItens.removeAll(tempListItem);//Conj B - Conj A = itens removidos
+            grade.setItens(existsItens);//os itens que ja estao no banco mas não estão na lista que veio do formulario são removidos
             DAOigd.excluir(grade);
             
             for(EntidadeDominio entidadeItem:listItens){
                 existsItens.add((ItemGrade)entidadeItem);
             }
             
-            tempListItem.removeAll(existsItens);//Conj A - Conj B
-            grade.setItens(tempListItem);
+            tempListItem.removeAll(existsItens);//Conj A - Conj B = itens novos
+            grade.setItens(tempListItem);//os itens que não estão no BD mas estão na lista do formulário
             DAOigd.salvar(grade);
-            
-            conexao.commit();
-            
-            List<EntidadeDominio> entidadeGrade = this.consultar(grade);
-            GradeCurso tempGrade = new GradeCurso();
-            
-            openConnection();
-            conexao.setAutoCommit(false);
-            
-            boolean alter = true;
-            if(entidadeGrade!=null){
-                tempGrade = (GradeCurso)entidadeGrade.get(0);
-                if(tempGrade.equals(grade)){
-                    alter =false;
-                }
-            }
-
-            if(alter == true){
-                StringBuilder sql = new StringBuilder();
-                sql.append("UPDATE grade_curso ");
-                sql.append(table);
-                sql.append(" SET gra_semestre = ?, gra_cur_id = ? ");
-                sql.append(" WHERE ");
-                sql.append(" gra_id = ?");
-                
-                pst = conexao.prepareStatement(sql.toString());
-                pst.setInt(1, grade.getSemestre());
-                pst.setInt(2, grade.getCurso_id());
-                pst.setInt(3, grade.getId());
-                pst.executeUpdate();
-            }
             
             conexao.commit();
             

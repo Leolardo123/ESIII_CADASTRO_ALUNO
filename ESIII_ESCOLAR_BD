@@ -5,7 +5,7 @@
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-06-06 20:11:36
+-- Started on 2021-06-09 17:16:43
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 216 (class 1255 OID 66110)
+-- TOC entry 217 (class 1255 OID 66110)
 -- Name: tg_constraint_cpf_rg(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -35,40 +35,7 @@ $$;
 ALTER FUNCTION public.tg_constraint_cpf_rg() OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1255 OID 66053)
--- Name: tg_logic_dependencia(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.tg_logic_dependencia() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$ BEGIN
-IF
-	(SELECT COUNT(*)
-	 FROM materias INNER JOIN (
-		SELECT
-		  dependentes.dep_materia_id materia_selecionada,sup_dep.dep_materia_id dependente_direto,sup_dep.dep_dependencia_id todas_dependencias_id
-		FROM
-		  dependentes
-		LEFT JOIN
-		  dependentes sup_dep 
-		ON dependentes.dep_dependencia_id = sup_dep.dep_materia_id
-		WHERE dependentes.dep_materia_id = new.dep_materia_id
-		UNION ALL
-		SELECT dep_materia_id,dep_materia_id,dep_dependencia_id FROM dependentes WHERE dependentes.dep_materia_id = new.dep_materia_id
-	) AS DEPS ON DEPS.todas_dependencias_id = mat_id OR DEPS.dependente_direto = mat_id 
-	  WHERE mat_id = new.dep_materia_id) > 0
-	THEN 
-    RAISE EXCEPTION  'depedencia em loop, valor não pode ser inserido!';
-END IF;
-RETURN NEW;
-END
-$$;
-
-
-ALTER FUNCTION public.tg_logic_dependencia() OWNER TO postgres;
-
---
--- TOC entry 217 (class 1255 OID 57940)
+-- TOC entry 218 (class 1255 OID 57940)
 -- Name: tg_xor_alu_pes(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -93,7 +60,7 @@ $$;
 ALTER FUNCTION public.tg_xor_alu_pes() OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1255 OID 57942)
+-- TOC entry 219 (class 1255 OID 57942)
 -- Name: tg_xor_pro_pes(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -152,7 +119,7 @@ CREATE SEQUENCE public.alunos_alu_cur_id_seq
 ALTER TABLE public.alunos_alu_cur_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3109 (class 0 OID 0)
+-- TOC entry 3114 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: alunos_alu_cur_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -177,7 +144,7 @@ CREATE SEQUENCE public.alunos_alu_pes_id_seq
 ALTER TABLE public.alunos_alu_pes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3110 (class 0 OID 0)
+-- TOC entry 3115 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: alunos_alu_pes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -220,7 +187,7 @@ CREATE SEQUENCE public.cursos_cur_id_seq
 ALTER TABLE public.cursos_cur_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3111 (class 0 OID 0)
+-- TOC entry 3116 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: cursos_cur_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -277,7 +244,7 @@ CREATE SEQUENCE public.enderecos_end_id_seq
 ALTER TABLE public.enderecos_end_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3112 (class 0 OID 0)
+-- TOC entry 3117 (class 0 OID 0)
 -- Dependencies: 206
 -- Name: enderecos_end_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -286,7 +253,7 @@ ALTER SEQUENCE public.enderecos_end_id_seq OWNED BY public.enderecos.end_id;
 
 
 --
--- TOC entry 214 (class 1259 OID 57867)
+-- TOC entry 213 (class 1259 OID 57867)
 -- Name: grade_curso; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -300,7 +267,7 @@ CREATE TABLE public.grade_curso (
 ALTER TABLE public.grade_curso OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 57918)
+-- TOC entry 214 (class 1259 OID 57918)
 -- Name: grade_curso_gra_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -316,8 +283,8 @@ CREATE SEQUENCE public.grade_curso_gra_id_seq
 ALTER TABLE public.grade_curso_gra_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3113 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3118 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: grade_curso_gra_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -325,12 +292,27 @@ ALTER SEQUENCE public.grade_curso_gra_id_seq OWNED BY public.grade_curso.gra_id;
 
 
 --
--- TOC entry 208 (class 1259 OID 41369)
+-- TOC entry 215 (class 1259 OID 66154)
+-- Name: seq_gri; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.seq_gri
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
+ALTER TABLE public.seq_gri OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 66156)
 -- Name: grade_itens; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.grade_itens (
-    gri_obrigatorio boolean NOT NULL,
+    gri_id integer DEFAULT nextval('public.seq_gri'::regclass) NOT NULL,
     gri_turno numeric(1,0) NOT NULL,
     gri_dia_semana numeric(1,0) NOT NULL,
     gri_periodo numeric(1,0) NOT NULL,
@@ -344,7 +326,7 @@ CREATE TABLE public.grade_itens (
 ALTER TABLE public.grade_itens OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 41476)
+-- TOC entry 212 (class 1259 OID 41476)
 -- Name: materias; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -360,7 +342,7 @@ CREATE TABLE public.materias (
 ALTER TABLE public.materias OWNER TO postgres;
 
 --
--- TOC entry 212 (class 1259 OID 41474)
+-- TOC entry 211 (class 1259 OID 41474)
 -- Name: materias_mat_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -376,8 +358,8 @@ CREATE SEQUENCE public.materias_mat_id_seq
 ALTER TABLE public.materias_mat_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3114 (class 0 OID 0)
--- Dependencies: 212
+-- TOC entry 3119 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: materias_mat_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -385,7 +367,7 @@ ALTER SEQUENCE public.materias_mat_id_seq OWNED BY public.materias.mat_id;
 
 
 --
--- TOC entry 210 (class 1259 OID 41394)
+-- TOC entry 209 (class 1259 OID 41394)
 -- Name: pessoas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -405,7 +387,7 @@ CREATE TABLE public.pessoas (
 ALTER TABLE public.pessoas OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 41392)
+-- TOC entry 208 (class 1259 OID 41392)
 -- Name: pessoas_pes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -421,8 +403,8 @@ CREATE SEQUENCE public.pessoas_pes_id_seq
 ALTER TABLE public.pessoas_pes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3115 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3120 (class 0 OID 0)
+-- Dependencies: 208
 -- Name: pessoas_pes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -430,7 +412,7 @@ ALTER SEQUENCE public.pessoas_pes_id_seq OWNED BY public.pessoas.pes_id;
 
 
 --
--- TOC entry 211 (class 1259 OID 41401)
+-- TOC entry 210 (class 1259 OID 41401)
 -- Name: professores; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -443,7 +425,7 @@ CREATE TABLE public.professores (
 ALTER TABLE public.professores OWNER TO postgres;
 
 --
--- TOC entry 2902 (class 2604 OID 41342)
+-- TOC entry 2903 (class 2604 OID 41342)
 -- Name: alunos alu_pes_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -451,7 +433,7 @@ ALTER TABLE ONLY public.alunos ALTER COLUMN alu_pes_id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2903 (class 2604 OID 41343)
+-- TOC entry 2904 (class 2604 OID 41343)
 -- Name: alunos alu_cur_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -459,7 +441,7 @@ ALTER TABLE ONLY public.alunos ALTER COLUMN alu_cur_id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2904 (class 2604 OID 41349)
+-- TOC entry 2905 (class 2604 OID 41349)
 -- Name: cursos cur_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -467,7 +449,7 @@ ALTER TABLE ONLY public.cursos ALTER COLUMN cur_id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 2906 (class 2604 OID 41360)
+-- TOC entry 2907 (class 2604 OID 41360)
 -- Name: enderecos end_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -499,29 +481,33 @@ ALTER TABLE ONLY public.pessoas ALTER COLUMN pes_id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3090 (class 0 OID 41339)
+-- TOC entry 3094 (class 0 OID 41339)
 -- Dependencies: 202
 -- Data for Name: alunos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.alunos (alu_semestre, alu_pes_id, alu_cur_id) FROM stdin;
+1	87	47
+1	88	45
 1	86	45
 \.
 
 
 --
--- TOC entry 3092 (class 0 OID 41346)
+-- TOC entry 3096 (class 0 OID 41346)
 -- Dependencies: 204
 -- Data for Name: cursos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.cursos (cur_id, cur_nome, cur_descricao, cur_nivel, cur_duracao, cur_dtcadastro, cur_mensalidade) FROM stdin;
-45	Analise e Desenvolvimento de Sistemas	ads	Tecnologo	6	2021-05-31 12:18:51.39668-03	1000.00
+47	Logistica	LOG	GraduaÃ§Ã£o	6	2021-06-07 16:10:32.114872-03	250.00
+45	Analise e Desenvolvimento de Sistemas	ads	Tecnologo	8	2021-05-31 12:18:51.39668-03	1000.00
+49	Engenharia Mecanica	ENG-MEC	GraduaÃ§Ã£o	10	2021-06-08 15:36:17.337719-03	780.00
 \.
 
 
 --
--- TOC entry 3093 (class 0 OID 41352)
+-- TOC entry 3097 (class 0 OID 41352)
 -- Dependencies: 205
 -- Data for Name: dependentes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -534,12 +520,12 @@ COPY public.dependentes (dep_materia_id, dep_dependencia_id) FROM stdin;
 114	111
 114	112
 114	113
-170	114
+202	114
 \.
 
 
 --
--- TOC entry 3095 (class 0 OID 41357)
+-- TOC entry 3099 (class 0 OID 41357)
 -- Dependencies: 207
 -- Data for Name: enderecos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -656,75 +642,88 @@ COPY public.enderecos (end_id, end_cep, end_estado, end_cidade, end_numero, end_
 110	08793010	AC	qwfqwf	123	Rua SebastiÃ£o Michel Miguel	cqwcwqc	2021-06-05 22:16:47.953072-03
 111	08793010	AC	qwfqwf	123	Rua SebastiÃ£o Michel Miguel	cqwcwqc	2021-06-05 22:22:52.661287-03
 112	3123232	AC	323123	123	Rua SebastiÃ£o Michel Miguel	12321313	2021-06-05 22:23:34.653363-03
-113	3123232	AC	323123	123	Rua SebastiÃ£o Michel Miguel	12321313	2021-06-05 22:28:27.454849-03
+116	08321332	AC	dqdqw	13	Rua SebastiÃ£o Michel Miguel	dqwdwqdqwd	2021-06-07 22:37:46.492648-03
+114	75685774	AC	Mogi das Cruzes	1	Rua ABC	null	2021-06-07 16:16:16.034642-03
+115	08321332	AC	dqdqw	13	Rua SebastiÃ£o Michel Miguel	-	2021-06-07 22:24:22.805592-03
+117	08793010	AC	Testelandia	1	Rua teste teste, teste 01	-	2021-06-08 14:49:58.745622-03
+113	3123232	AC	323123	123	Rua Sebastiao Michel Miguel	P 3	2021-06-05 22:28:27.454849-03
 \.
 
 
 --
--- TOC entry 3102 (class 0 OID 57867)
--- Dependencies: 214
+-- TOC entry 3105 (class 0 OID 57867)
+-- Dependencies: 213
 -- Data for Name: grade_curso; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.grade_curso (gra_cur_id, gra_semestre, gra_id) FROM stdin;
-45	1	2
-45	2	3
-45	3	4
+47	1	38
+47	2	40
+47	3	43
 \.
 
 
 --
--- TOC entry 3096 (class 0 OID 41369)
--- Dependencies: 208
+-- TOC entry 3108 (class 0 OID 66156)
+-- Dependencies: 216
 -- Data for Name: grade_itens; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.grade_itens (gri_obrigatorio, gri_turno, gri_dia_semana, gri_periodo, gri_dtcadastro, gri_gra_id, gri_mat_id, gri_pro_id) FROM stdin;
+COPY public.grade_itens (gri_id, gri_turno, gri_dia_semana, gri_periodo, gri_dtcadastro, gri_gra_id, gri_mat_id, gri_pro_id) FROM stdin;
+173	1	1	1	2021-06-09 16:44:19.433108-03	38	109	84
+174	1	5	3	2021-06-09 16:44:19.433108-03	38	109	84
+175	1	1	1	2021-06-09 16:47:58.861665-03	40	110	84
+176	1	5	2	2021-06-09 16:50:03.724396-03	43	109	84
 \.
 
 
 --
--- TOC entry 3101 (class 0 OID 41476)
--- Dependencies: 213
+-- TOC entry 3104 (class 0 OID 41476)
+-- Dependencies: 212
 -- Data for Name: materias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.materias (mat_id, mat_carga_horaria, mat_dtcadastro, mat_nome, mat_descricao) FROM stdin;
-170	1200	2021-06-04 16:29:32.959377-03	Introducao a Fisíca	IFI
+202	1800	2021-06-07 18:13:15.276957-03	Fisica III	FIS3
 109	80	2021-05-25 21:24:41.02547-03	Matemática básica	MAB
 110	1200	2021-05-25 21:24:41.155783-03	Calculo I	CAL1
 111	1200	2021-05-25 21:24:41.695177-03	Fisica I	FIS1
 112	1200	2021-05-25 21:24:41.920982-03	Estatistica I	EST1
 113	800	2021-05-25 21:24:42.078521-03	Calculo II	CAL2
 114	3600	2021-05-25 21:24:42.29098-03	Resistência dos Materiais I	RESMAT1
+199	1200	2021-06-07 16:24:22.635325-03	Fisica II	FISII
 \.
 
 
 --
--- TOC entry 3098 (class 0 OID 41394)
--- Dependencies: 210
+-- TOC entry 3101 (class 0 OID 41394)
+-- Dependencies: 209
 -- Data for Name: pessoas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.pessoas (pes_id, pes_cpf, pes_rg, pes_pnome, pes_unome, pes_email, pes_dtnascimento, pes_dtcadastro, pes_end_id) FROM stdin;
 84	31232324335	456444225	Raphael	Tompero	leoferstos5@gmail.com	0084-10-07	2021-06-05 22:22:52.672785-03	111
-86	31232321312	231231322	Leonardo	Ferreira	leoferstos5@gmail.com	0032-10-06	2021-06-05 22:28:27.460501-03	113
+87	35578888656	235435345	Jose	Almeida da Silva	JoseSilva@outlook.com	0024-05-29	2021-06-07 16:16:16.038721-03	114
+88	53522234233	123578787	Wellington	Campos	WellCampos@gmail.com	0007-12-31	2021-06-07 22:24:23.25313-03	115
+90	44444444444	555555555	Teste	teste	teste@sql.t	0045-11-25	2021-06-08 14:49:58.869373-03	117
+86	31232321312	231231322	Leonardo	Ferreira	leoferstos5@gmail.com	0018-07-10	2021-06-05 22:28:27.460501-03	113
 \.
 
 
 --
--- TOC entry 3099 (class 0 OID 41401)
--- Dependencies: 211
+-- TOC entry 3102 (class 0 OID 41401)
+-- Dependencies: 210
 -- Data for Name: professores; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.professores (pro_salario, pro_pes_id) FROM stdin;
 2.00	84
+1000.00	90
 \.
 
 
 --
--- TOC entry 3116 (class 0 OID 0)
+-- TOC entry 3121 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: alunos_alu_cur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -733,7 +732,7 @@ SELECT pg_catalog.setval('public.alunos_alu_cur_id_seq', 1, false);
 
 
 --
--- TOC entry 3117 (class 0 OID 0)
+-- TOC entry 3122 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: alunos_alu_pes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -742,52 +741,61 @@ SELECT pg_catalog.setval('public.alunos_alu_pes_id_seq', 1, false);
 
 
 --
--- TOC entry 3118 (class 0 OID 0)
+-- TOC entry 3123 (class 0 OID 0)
 -- Dependencies: 203
 -- Name: cursos_cur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cursos_cur_id_seq', 46, true);
+SELECT pg_catalog.setval('public.cursos_cur_id_seq', 51, true);
 
 
 --
--- TOC entry 3119 (class 0 OID 0)
+-- TOC entry 3124 (class 0 OID 0)
 -- Dependencies: 206
 -- Name: enderecos_end_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.enderecos_end_id_seq', 113, true);
+SELECT pg_catalog.setval('public.enderecos_end_id_seq', 117, true);
 
 
 --
--- TOC entry 3120 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3125 (class 0 OID 0)
+-- Dependencies: 214
 -- Name: grade_curso_gra_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.grade_curso_gra_id_seq', 4, true);
+SELECT pg_catalog.setval('public.grade_curso_gra_id_seq', 45, true);
 
 
 --
--- TOC entry 3121 (class 0 OID 0)
--- Dependencies: 212
+-- TOC entry 3126 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: materias_mat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.materias_mat_id_seq', 196, true);
+SELECT pg_catalog.setval('public.materias_mat_id_seq', 202, true);
 
 
 --
--- TOC entry 3122 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3127 (class 0 OID 0)
+-- Dependencies: 208
 -- Name: pessoas_pes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pessoas_pes_id_seq', 86, true);
+SELECT pg_catalog.setval('public.pessoas_pes_id_seq', 90, true);
 
 
 --
--- TOC entry 2915 (class 2606 OID 41405)
+-- TOC entry 3128 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: seq_gri; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.seq_gri', 176, true);
+
+
+--
+-- TOC entry 2917 (class 2606 OID 41405)
 -- Name: alunos PK_ALU; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -805,12 +813,12 @@ ALTER TABLE ONLY public.grade_curso
 
 
 --
--- TOC entry 2925 (class 2606 OID 57885)
+-- TOC entry 2946 (class 2606 OID 66162)
 -- Name: grade_itens PK_GRI; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.grade_itens
-    ADD CONSTRAINT "PK_GRI" PRIMARY KEY (gri_gra_id, gri_mat_id);
+    ADD CONSTRAINT "PK_GRI" PRIMARY KEY (gri_id);
 
 
 --
@@ -841,7 +849,7 @@ ALTER TABLE ONLY public.professores
 
 
 --
--- TOC entry 2917 (class 2606 OID 57933)
+-- TOC entry 2919 (class 2606 OID 57933)
 -- Name: cursos UK_CUR_NOME; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -886,7 +894,7 @@ ALTER TABLE ONLY public.pessoas
 
 
 --
--- TOC entry 2927 (class 2606 OID 57915)
+-- TOC entry 2948 (class 2606 OID 66164)
 -- Name: grade_itens UK_TIMING_GRI; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -895,7 +903,7 @@ ALTER TABLE ONLY public.grade_itens
 
 
 --
--- TOC entry 2919 (class 2606 OID 41351)
+-- TOC entry 2921 (class 2606 OID 41351)
 -- Name: cursos cursos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -904,7 +912,7 @@ ALTER TABLE ONLY public.cursos
 
 
 --
--- TOC entry 2921 (class 2606 OID 41500)
+-- TOC entry 2924 (class 2606 OID 41500)
 -- Name: dependentes dependentes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -913,7 +921,7 @@ ALTER TABLE ONLY public.dependentes
 
 
 --
--- TOC entry 2923 (class 2606 OID 41366)
+-- TOC entry 2927 (class 2606 OID 41366)
 -- Name: enderecos enderecos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -922,7 +930,31 @@ ALTER TABLE ONLY public.enderecos
 
 
 --
--- TOC entry 2956 (class 2620 OID 66111)
+-- TOC entry 2922 (class 1259 OID 66195)
+-- Name: FK_DEP_MAT_ID; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "FK_DEP_MAT_ID" ON public.dependentes USING btree (dep_dependencia_id);
+
+
+--
+-- TOC entry 2925 (class 1259 OID 66201)
+-- Name: fki_FK_DEP_MAT_ID; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "fki_FK_DEP_MAT_ID" ON public.dependentes USING btree (dep_materia_id);
+
+
+--
+-- TOC entry 2944 (class 1259 OID 66207)
+-- Name: fki_FK_GRA_CUR_ID; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "fki_FK_GRA_CUR_ID" ON public.grade_curso USING btree (gra_cur_id);
+
+
+--
+-- TOC entry 2960 (class 2620 OID 66111)
 -- Name: pessoas tg_constraint_cpf_rg; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -930,15 +962,7 @@ CREATE TRIGGER tg_constraint_cpf_rg BEFORE UPDATE OF pes_cpf, pes_rg ON public.p
 
 
 --
--- TOC entry 2955 (class 2620 OID 66054)
--- Name: dependentes tg_logic_dependencia; Type: TRIGGER; Schema: public; Owner: postgres
---
-
-CREATE TRIGGER tg_logic_dependencia BEFORE INSERT OR UPDATE ON public.dependentes FOR EACH ROW EXECUTE FUNCTION public.tg_logic_dependencia();
-
-
---
--- TOC entry 2954 (class 2620 OID 57941)
+-- TOC entry 2959 (class 2620 OID 57941)
 -- Name: alunos tg_xor_alu_pes; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -946,7 +970,7 @@ CREATE TRIGGER tg_xor_alu_pes BEFORE INSERT OR UPDATE ON public.alunos FOR EACH 
 
 
 --
--- TOC entry 2957 (class 2620 OID 57943)
+-- TOC entry 2961 (class 2620 OID 57943)
 -- Name: professores tg_xor_pro_pes; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -954,7 +978,7 @@ CREATE TRIGGER tg_xor_pro_pes BEFORE INSERT OR UPDATE ON public.professores FOR 
 
 
 --
--- TOC entry 2944 (class 2606 OID 41414)
+-- TOC entry 2949 (class 2606 OID 66180)
 -- Name: alunos FK_ALU_CUR_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -963,7 +987,7 @@ ALTER TABLE ONLY public.alunos
 
 
 --
--- TOC entry 2945 (class 2606 OID 41419)
+-- TOC entry 2950 (class 2606 OID 66185)
 -- Name: alunos FK_ALU_PES_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -972,61 +996,61 @@ ALTER TABLE ONLY public.alunos
 
 
 --
--- TOC entry 2947 (class 2606 OID 41506)
+-- TOC entry 2951 (class 2606 OID 66190)
 -- Name: dependentes FK_DEP_DEP_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.dependentes
-    ADD CONSTRAINT "FK_DEP_DEP_ID" FOREIGN KEY (dep_dependencia_id) REFERENCES public.materias(mat_id) NOT VALID;
+    ADD CONSTRAINT "FK_DEP_DEP_ID" FOREIGN KEY (dep_dependencia_id) REFERENCES public.materias(mat_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2946 (class 2606 OID 41501)
+-- TOC entry 2952 (class 2606 OID 66196)
 -- Name: dependentes FK_DEP_MAT_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.dependentes
-    ADD CONSTRAINT "FK_DEP_MAT_ID" FOREIGN KEY (dep_materia_id) REFERENCES public.materias(mat_id) NOT VALID;
+    ADD CONSTRAINT "FK_DEP_MAT_ID" FOREIGN KEY (dep_materia_id) REFERENCES public.materias(mat_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2953 (class 2606 OID 57872)
+-- TOC entry 2955 (class 2606 OID 66202)
 -- Name: grade_curso FK_GRA_CUR_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.grade_curso
-    ADD CONSTRAINT "FK_GRA_CUR_ID" FOREIGN KEY (gra_cur_id) REFERENCES public.cursos(cur_id);
+    ADD CONSTRAINT "FK_GRA_CUR_ID" FOREIGN KEY (gra_cur_id) REFERENCES public.cursos(cur_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2950 (class 2606 OID 57927)
+-- TOC entry 2956 (class 2606 OID 66208)
 -- Name: grade_itens FK_GRI_GRA_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.grade_itens
-    ADD CONSTRAINT "FK_GRI_GRA_ID" FOREIGN KEY (gri_gra_id) REFERENCES public.grade_curso(gra_id) NOT VALID;
+    ADD CONSTRAINT "FK_GRI_GRA_ID" FOREIGN KEY (gri_gra_id) REFERENCES public.grade_curso(gra_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2948 (class 2606 OID 41484)
+-- TOC entry 2958 (class 2606 OID 66218)
 -- Name: grade_itens FK_GRI_MAT_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.grade_itens
-    ADD CONSTRAINT "FK_GRI_MAT_ID" FOREIGN KEY (gri_mat_id) REFERENCES public.materias(mat_id) NOT VALID;
+    ADD CONSTRAINT "FK_GRI_MAT_ID" FOREIGN KEY (gri_mat_id) REFERENCES public.materias(mat_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2949 (class 2606 OID 41444)
+-- TOC entry 2957 (class 2606 OID 66213)
 -- Name: grade_itens FK_GRI_PRO_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.grade_itens
-    ADD CONSTRAINT "FK_GRI_PRO_ID" FOREIGN KEY (gri_pro_id) REFERENCES public.professores(pro_pes_id);
+    ADD CONSTRAINT "FK_GRI_PRO_ID" FOREIGN KEY (gri_pro_id) REFERENCES public.professores(pro_pes_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
 --
--- TOC entry 2951 (class 2606 OID 41464)
+-- TOC entry 2953 (class 2606 OID 41464)
 -- Name: pessoas FK_PES_END; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1035,15 +1059,15 @@ ALTER TABLE ONLY public.pessoas
 
 
 --
--- TOC entry 2952 (class 2606 OID 41459)
--- Name: professores FK_PRO_PES; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 2954 (class 2606 OID 66223)
+-- Name: professores FK_PRO_PES_ID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.professores
-    ADD CONSTRAINT "FK_PRO_PES" FOREIGN KEY (pro_pes_id) REFERENCES public.pessoas(pes_id) NOT VALID;
+    ADD CONSTRAINT "FK_PRO_PES_ID" FOREIGN KEY (pro_pes_id) REFERENCES public.pessoas(pes_id) ON UPDATE CASCADE ON DELETE CASCADE NOT VALID;
 
 
--- Completed on 2021-06-06 20:11:38
+-- Completed on 2021-06-09 17:16:46
 
 --
 -- PostgreSQL database dump complete
