@@ -13,10 +13,12 @@ import java.util.List;
 import java.util.Map;
 import regrasNegocio.IStrategy;
 import regrasNegocio.implRegras.ValidarAluno;
+import regrasNegocio.implRegras.ValidarCPF;
 import regrasNegocio.implRegras.ValidarCurso;
-import regrasNegocio.implRegras.ValidarGrade;
 import regrasNegocio.implRegras.ValidarMateria;
+import regrasNegocio.implRegras.ValidarPessoa;
 import regrasNegocio.implRegras.ValidarProfessor;
+import regrasNegocio.implRegras.ValidarRG;
 
 /**
  *
@@ -31,49 +33,48 @@ public class Fachada implements IFachada {
     public Fachada() {
         definirDAOS();
         definirRNS();
-
     }
 
     // Strategy a ser implementado
     private void definirRNS() {
         rns = new HashMap<String, List<IStrategy>>();
         
-        ValidarGrade valGrade = new ValidarGrade();
         ValidarAluno valAluno = new ValidarAluno();
         ValidarProfessor valProfessor = new ValidarProfessor();
         ValidarCurso valCurso = new ValidarCurso();
         ValidarMateria valMateria = new ValidarMateria();
-        
-        List<IStrategy> rnsGrade = new ArrayList<IStrategy>(); 
-        rnsGrade.add(valGrade);
+        ValidarCPF valCPF = new ValidarCPF();
+        ValidarRG valRG = new ValidarRG();
         
         List<IStrategy> rnsAluno = new ArrayList<IStrategy>(); 
+        //+val
         rnsAluno.add(valAluno);
         
         List<IStrategy> rnsProfessor = new ArrayList<IStrategy>(); 
+        //+val
         rnsProfessor.add(valProfessor);
         
         List<IStrategy> rnsCurso = new ArrayList<IStrategy>(); 
+        //+val
         rnsCurso.add(valCurso);
         
         List<IStrategy> rnsMateria = new ArrayList<IStrategy>(); 
+        //+val
         rnsMateria.add(valMateria);
         
-        rns.put(GradeCurso.class.getName(),rnsGrade);
-        rns.put(Aluno.class.getName(), rnsAluno);
+        rns.put(Aluno.class.getName(),     rnsAluno);
         rns.put(Professor.class.getName(), rnsProfessor);
-        rns.put(Curso.class.getName(), rnsCurso);
-        rns.put(Materia.class.getName(), rnsMateria);
+        rns.put(Curso.class.getName(),     rnsCurso);
+        rns.put(Materia.class.getName(),   rnsMateria);
     }
 
     private void definirDAOS() {
         daos = new HashMap<String, IDAO>();
-        daos.put(Aluno.class.getName(), new DAOAluno());
-        daos.put(Professor.class.getName(), new DAOProfessor());
+        daos.put(Aluno.class.getName(),    new DAOAluno());
+        daos.put(Professor.class.getName(),new DAOProfessor());
         daos.put(Endereco.class.getName(), new DAOEndereco());
-        daos.put(Curso.class.getName(), new DAOCurso());
-        daos.put(Materia.class.getName(), new DAOMateria());
-        daos.put(GradeCurso.class.getName(), new DAOGrade());
+        daos.put(Curso.class.getName(),    new DAOCurso());
+        daos.put(Materia.class.getName(),  new DAOMateria());
     }
 
     // Strategy a ser implementado
@@ -81,6 +82,10 @@ public class Fachada implements IFachada {
     public String cadastrar(EntidadeDominio entidade) {
         String nmClasse = entidade.getClass().getName();
         String msg = executarRegras(entidade);
+        if (entidade.getId()!=0){//verifica se as validações encontraram um item já existente
+            nmClasse.replace("Dominio.","");
+            return msg+nmClasse+" já existe!";
+        }
         if (msg == null) {
             IDAO dao = daos.get(nmClasse);
             dao.salvar(entidade);
@@ -127,7 +132,7 @@ public class Fachada implements IFachada {
     public String alterar(EntidadeDominio entidade) {
         String nmClasse = entidade.getClass().getName();
         String msg = executarRegras(entidade);
-        if (msg.equals(nmClasse+" já existe!")) {
+        if (msg == null) {
             IDAO dao = daos.get(nmClasse);
             dao.alterar(entidade);
         } else {
@@ -145,5 +150,27 @@ public class Fachada implements IFachada {
         lista_entidade = dao.consultar(entidade);
         return lista_entidade;
     }
-
+    
+    @Override
+    public List<EntidadeDominio> consultarTodasDep() {
+        //método que chama consulta recursiva que acha todas as dependencias e suas subdependencias de todas as materias
+        DAOMateria DAOmat = new DAOMateria();
+        DAODependentes DAOdep = new DAODependentes();
+        
+        List<EntidadeDominio> listaMaterias = DAOmat.consultar(null);
+        if(listaMaterias!=null){
+            for(EntidadeDominio entidadeMateria:listaMaterias){
+                List<Materia> dependencias = new ArrayList<Materia>();
+                List<EntidadeDominio> listaDependencias = new ArrayList<EntidadeDominio>();
+                listaDependencias = DAOdep.consultarTodos((Materia)entidadeMateria);
+                if(listaDependencias!=null){
+                    for(EntidadeDominio entidade:listaDependencias){
+                        dependencias.add((Materia)entidade);
+                    }
+                }
+                ((Materia)entidadeMateria).setDependencias(dependencias);
+        }
+        }
+        return listaMaterias;
+    }
 }

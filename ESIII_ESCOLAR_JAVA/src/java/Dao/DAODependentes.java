@@ -23,7 +23,7 @@ public class DAODependentes extends AbstractDAO {
     public DAODependentes() {
         table = "dependentes";
         prefixo = "dep_";
-        id_table = prefixo + "materia_id";
+        id_table = prefixo + "dependencia_id";
     }
 
     //concluido - falta testar
@@ -59,14 +59,14 @@ public class DAODependentes extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void alterar(EntidadeDominio entidade) {
+    public void alterar(EntidadeDominio entidade) {//Nunca usado
 
         try {
             openConnection();
@@ -77,14 +77,13 @@ public class DAODependentes extends AbstractDAO {
             if (materia.getDependencias() != null) {
                 for (Materia dependencia : materia.getDependencias()) {
                     StringBuilder sql = new StringBuilder();
-                    sql.append("UPDATE " + table + " SET dep_dependencia_id = ?");
+                    sql.append("UPDATE " + table + " SET dep_dependencia_id = ? WHERE dep_materia_id = ? ");
                     pst = conexao.prepareStatement(sql.toString());
                     pst.setInt(1, dependencia.getId());
+                    pst.setInt(2, materia.getId());
                     pst.executeUpdate();
                 }
             }
-
-            conexao.commit();
 
             System.out.println("alterado com sucesso");
         } catch (SQLException e) {
@@ -97,7 +96,7 @@ public class DAODependentes extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -106,21 +105,17 @@ public class DAODependentes extends AbstractDAO {
 
     public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
         Materia materia = (Materia)entidade;
+        
         try {
             openConnection();
 
-            conexao.setAutoCommit(false);
-
             StringBuilder sql = new StringBuilder();
-            if(materia.getDependencias()!=null && entidade != null && entidade.getId() != 0){
-                return this.consultarTodos(materia);
-            }else
             if (entidade == null || entidade.getId() == 0) {
                 sql.append("SELECT * FROM " + table + " LEFT JOIN materias ");
-                sql.append("ON " + id_table + " = mat_id");
+                sql.append("ON dep_dependencia_id = mat_id");
             } else {
                 sql.append("SELECT * FROM " + table + " LEFT JOIN materias ");
-                sql.append("ON " + id_table + " = mat_id  WHERE " + id_table + " = " + entidade.getId());
+                sql.append("ON dep_dependencia_id = mat_id  WHERE dep_materia_id = " + entidade.getId());
             }
 
             pst = conexao.prepareStatement(sql.toString());
@@ -148,7 +143,9 @@ public class DAODependentes extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction){
+                    closeConnection();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -162,7 +159,6 @@ public class DAODependentes extends AbstractDAO {
         if (materia.getId() == 0) {
             return null;
         }
-        for(Materia dependencia:materia.getDependencias()){
         try {
             openConnection();
 
@@ -171,21 +167,20 @@ public class DAODependentes extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade != null || entidade.getId() != 0) {
-                sql.append("SELECT DISTINCT(mat_id),mat_nome,mat_descricao,mat_carga_horaria,mat_dtcadastro FROM(");
+                sql.append("SELECT DISTINCT(mat_id),mat_nome,mat_descricao,mat_carga_horaria,mat_dtcadastro,nivel FROM(");
                 sql.append("WITH RECURSIVE sub_dep AS(");
-                sql.append(" SELECT mat_nome nome_materia,mat_id id_materia,dep_dependencia_id id_dependencia FROM dependentes");
+                sql.append(" SELECT mat_nome nome_materia,mat_id id_materia,dep_dependencia_id id_dependencia, 1 AS nivel FROM dependentes");
                 sql.append(" LEFT JOIN materias ON dep_materia_id = mat_id WHERE mat_id = ");
-                sql.append(entidade.getId());
+                sql.append(materia.getId());
                 sql.append(" UNION ALL");
-                sql.append(" SELECT m.mat_nome,m.mat_id,d.dep_dependencia_id FROM dependentes d LEFT JOIN materias m ON dep_materia_id = mat_id");
+                sql.append(" SELECT m.mat_nome,m.mat_id,d.dep_dependencia_id, sub_dep.nivel+1 FROM dependentes d LEFT JOIN materias m ON dep_materia_id = mat_id");
                 sql.append(" INNER JOIN sub_dep ON sub_dep.id_dependencia = d.dep_materia_id");
                 sql.append(")");
-                sql.append(" SELECT id_materia,id_dependencia FROM sub_dep  ");
-                sql.append(" GROUP BY id_materia,id_dependencia) all_deps");
+                sql.append(" SELECT id_materia,id_dependencia,nivel FROM sub_dep  ");
+                sql.append(" GROUP BY id_materia,id_dependencia,nivel) all_deps");
                 sql.append(" LEFT JOIN materias ON mat_id = all_deps.id_dependencia");
             } else {
-                sql.append("SELECT * FROM " + table + " LEFT JOIN materias ");
-                sql.append("ON " + id_table + " = mat_id  WHERE " + id_table + " = " + entidade.getId());
+                return null;
             }
 
             pst = conexao.prepareStatement(sql.toString());
@@ -194,9 +189,9 @@ public class DAODependentes extends AbstractDAO {
             List<EntidadeDominio> dependencias = new ArrayList<EntidadeDominio>();
 
             while (rs.next()) {
-                dependencia = new Materia(rs.getString("mat_nome"), rs.getString("mat_descricao"),
+                Materia dependencia = new Materia(rs.getString("mat_nome"), rs.getString("mat_descricao"),
                         rs.getInt("mat_carga_horaria"));
-
+                
                 dependencia.setId(rs.getInt("mat_id"));
                 dependencia.setDtcadastro(rs.getDate("mat_dtcadastro"));
 
@@ -204,9 +199,10 @@ public class DAODependentes extends AbstractDAO {
                     dependencias = new ArrayList<EntidadeDominio>();
                     dependencias.add(dependencia);
                     return dependencias;
+                }else
+                if (!(dependencias.contains(dependencia))) {
+                    dependencias.add(dependencia);
                 }
-
-                dependencias.add(dependencia);
             }
 
             return dependencias;
@@ -219,15 +215,52 @@ public class DAODependentes extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        }
         return null;
     }
     
+    @Override
+    public void excluir(EntidadeDominio entidade) {
+        Materia materia = (Materia)entidade;
+        try {
+            openConnection();
+
+            conexao.setAutoCommit(false);
+
+            StringBuilder sql = new StringBuilder();
+
+            for(Materia dependencia:materia.getDependencias()){
+                sql.append(" DELETE FROM " + table + " WHERE ");
+                sql.append(" dep_materia_id ");
+                sql.append(" = ");
+                sql.append(materia.getId());
+                sql.append(" AND ");
+                sql.append(" dep_dependencia_id ");
+                sql.append(" = ");
+                sql.append(dependencia.getId());
+                pst = conexao.prepareStatement(sql.toString());
+                pst.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao recuperar: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if(this.ctrlTransaction)closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 

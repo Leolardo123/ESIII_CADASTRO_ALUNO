@@ -6,8 +6,10 @@
 package ControleWeb;
 
 import Controle.*;
+import Dominio.Curso;
 import Dominio.EntidadeDominio;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ public class Controle extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static String operacao = null;
     private static Map<String, ICommand> commands;
+    private static Map<String, ICommand> subcommands;
     private static Map<String, IViewHelper> vhs;
 
     /**
@@ -50,9 +53,6 @@ public class Controle extends HttpServlet {
          */
         //Operacoes Genericas
         for(String operacao:operacoesBase){
-            vhs.put("/ESIII_ESCOLAR_JAVA/"+operacao+"GradeCurso", new VhGradeCurso());
-        }
-        for(String operacao:operacoesBase){
             vhs.put("/ESIII_ESCOLAR_JAVA/"+operacao+"Aluno", new VhAluno());
         }
         for(String operacao:operacoesBase){
@@ -64,11 +64,12 @@ public class Controle extends HttpServlet {
         for(String operacao:operacoesBase){
             vhs.put("/ESIII_ESCOLAR_JAVA/"+operacao+"Materia", new VhMateria());
         }
+        //Operacoes especificas
+        vhs.put("/ESIII_ESCOLAR_JAVA/ListarMateria", new VhMateria());
+        commands.put("CONSULTARTODASDEP", new ConsultarTodasDepCommand());
         
-        //Operaçoes Especificas
+        vhs.put("ESIII_ESCOLAR_JAVA/ListarMateria", new VhMateria());
         commands.put("CONSULTARDEP", new ConsultarCommand());
-        vhs.put("/ESIII_ESCOLAR_JAVA/CONSULTARDEPMateria", new VhMateria());
-        
     }
 
     /**
@@ -77,15 +78,15 @@ public class Controle extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         operacao = request.getParameter("operacao");
-
         String uri = request.getRequestURI();
-
         IViewHelper vh = vhs.get(uri);
+        
         EntidadeDominio entidade = vh.getEntidade(request);
-
+        
         ICommand cmd = commands.get(operacao);
+        
+        response.setCharacterEncoding("UTF-8");
 
         if (entidade != null) {
             Object msg = cmd.execute(entidade);
@@ -112,5 +113,4 @@ public class Controle extends HttpServlet {
             throw ex;
         }
     }
-
 }

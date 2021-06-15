@@ -74,7 +74,6 @@ public abstract class AbstractDAO implements IDAO {
             conexao.setAutoCommit(false);
             pst = conexao.prepareStatement(sql.toString());
             pst.setInt(1, entidade.getId());
-
             pst.executeUpdate();
             conexao.commit();
             System.out.println("Excluido com sucesso");

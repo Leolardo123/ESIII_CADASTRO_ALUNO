@@ -35,14 +35,16 @@ public class DAOAluno extends AbstractDAO {
         Aluno aluno = (Aluno) entidade;
         Pessoa pessoa = (Pessoa) entidade;
         openConnection();
+        
+        System.out.println(aluno.getEndereco().getLogradouro());
 
         try {
             conexao.setAutoCommit(false);
-            if (pessoa.getId() == 0) {
-                DAOPessoa DAOpes = new DAOPessoa();
-                DAOpes.ctrlTransaction = false;
-                DAOpes.salvar(pessoa);
-            }
+
+            DAOPessoa DAOpes = new DAOPessoa();
+            DAOpes.ctrlTransaction = false;
+            DAOpes.salvar(pessoa);
+
 
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO alunos(alu_semestre, alu_pes_id, alu_cur_id)");
@@ -64,7 +66,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -102,7 +104,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -118,7 +120,7 @@ public class DAOAluno extends AbstractDAO {
             StringBuilder sql = new StringBuilder();
 
             if (entidade == null || entidade.getId() == 0) {
-                sql.append("SELECT * FROM " + table);
+                sql.append("SELECT * FROM " + table+" ORDER BY alu_pes_id");
             } else {
                 sql.append("SELECT * FROM " + table + " WHERE " + id_table + " = " + entidade.getId() + "");
             }
@@ -131,17 +133,19 @@ public class DAOAluno extends AbstractDAO {
             while (rs.next()) {
                 DAOCurso DAOcur = new DAOCurso();
                 DAOPessoa DAOpes = new DAOPessoa();
-
-                Curso curso = new Curso();
-                curso.setId(rs.getInt("alu_cur_id"));
-                curso = (Curso) DAOcur.consultar(entidade).get(0);
-
+                
                 Pessoa pessoa = new Pessoa();
                 pessoa.setId(rs.getInt("alu_pes_id"));
                 pessoa = (Pessoa) DAOpes.consultar(pessoa).get(0);
+                
+                Aluno aluno = new Aluno(pessoa, rs.getInt("alu_semestre"), null);
 
-                Aluno aluno = new Aluno(pessoa, rs.getInt("alu_semestre"), curso);
+                Curso curso = new Curso();
+                curso.setId(rs.getInt("alu_cur_id"));
+                curso = (Curso) DAOcur.consultar(aluno).get(0);
+                
                 aluno.setId(pessoa.getId());
+                aluno.setCurso(curso);
                 aluno.setDtcadastro(pessoa.getDtcadastro());
                 alunos.add(aluno);
             }
@@ -156,7 +160,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -166,6 +170,8 @@ public class DAOAluno extends AbstractDAO {
 
     @Override
     public void excluir(EntidadeDominio entidade) {
+        Aluno aluno = (Aluno)entidade;
+        Pessoa pessoa = (Pessoa)entidade;
         try {
             openConnection();
 
@@ -173,15 +179,15 @@ public class DAOAluno extends AbstractDAO {
 
             StringBuilder sql = new StringBuilder();
 
-            sql.append("DELETE FROM " + table + " WHERE ");
-            sql.append(id_table);
+            sql.append("DELETE FROM alunos WHERE ");
+            sql.append(" alu_pes_id ");
             sql.append(" = ");
-            sql.append(entidade.getId());
+            sql.append(aluno.getId());
             pst = conexao.prepareStatement(sql.toString());
             pst.executeUpdate();
             
             DAOPessoa DAOpes = new DAOPessoa();
-            DAOpes.excluir((Pessoa)entidade);
+            DAOpes.excluir(pessoa);
         } catch (SQLException e) {
             try {
                 System.out.println("Erro ao recuperar: " + e);
@@ -191,7 +197,7 @@ public class DAOAluno extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

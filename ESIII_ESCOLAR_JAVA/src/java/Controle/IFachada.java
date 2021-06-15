@@ -18,5 +18,5 @@ public interface IFachada {
     public String alterar(EntidadeDominio entidade);
     public String excluir(EntidadeDominio entidade);
     public List<EntidadeDominio> consultar(EntidadeDominio entidade);
-    
+    public List<EntidadeDominio> consultarTodasDep();
 }

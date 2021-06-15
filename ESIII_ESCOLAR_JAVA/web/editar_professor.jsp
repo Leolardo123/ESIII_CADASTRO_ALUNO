@@ -21,12 +21,12 @@
     <div class="container my-5">
         
         <!-- FormulÃ¡rio -->
-        <form class="row justify-content-center align-items-center" action="Editarprofessor" method="post">
+        <form class="row justify-content-center align-items-center" action="EditarProfessor" method="post">
             
             <%
                 List<Professor> professores = (List<Professor>)request.getAttribute("professor");   
                 Professor professor = (Professor)professores.get(0);
-                String paises[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
+                String estados[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
                     "AC","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ",
                     "RN","RS","RO","RR","SC","SP","SE","TO"};
             %>
@@ -52,10 +52,10 @@
                 <div class="col-sm-4">
                     <select class="form-select" name="estado" required>
                         <option value="<%=professor.getEndereco().getEstado()%>"><%=professor.getEndereco().getEstado()%></option>
-                        <% for(String pais : paises){
-                            if(pais != professor.getEndereco().getEstado()){
+                        <% for(String estado : estados){
+                            if(estado != professor.getEndereco().getEstado()){
                         %>
-                        <option value="<%=pais%>"><%=pais%></option>
+                        <option value="<%=estado%>"><%=estado%></option>
                         <%}
                         }
                         %>
@@ -71,10 +71,11 @@
                 <input type="hidden" name="endereco_id" value="<%=professor.getEndereco().getId()%>" >
                 <input type="hidden" name="operacao" value="ALTERAR" >
                 <button class="col-sm-2 btn btn-p" type="submit">Enviar</button>
-                <a class="col-sm-2 btn btn-s" href="./ListarAluno?operacao=CONSULTAR">Voltar</a>
+                <a class="col-sm-2 btn btn-s" href="./professor.jsp">Voltar</a>
             </div>
              <!-- BotÃ£o de Envio -->
-
+            <div class="col-sm-5 my-2"><input type="hidden" pattern="[0-9]+" maxlength="10" class="form-control" name="rg" placeholder="RG" value="<%=professor.getRg()%>" required></div>
+            <div class="col-sm-7 my-2"><input type="hidden" pattern="[0-9]+" maxlength="11" class="form-control" name="cpf" placeholder="CPF" value="<%=professor.getCpf()%>" required></div>
         </form>
         <!-- FormulÃ¡rio -->
         

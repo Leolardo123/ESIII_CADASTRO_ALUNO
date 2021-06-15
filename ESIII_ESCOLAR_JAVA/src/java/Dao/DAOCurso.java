@@ -6,11 +6,11 @@
 package Dao;
 
 import static Dao.AbstractDAO.conexao;
+import Dominio.Aluno;
 import Dominio.Curso;
 import Dominio.EntidadeDominio;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -25,7 +25,6 @@ public class DAOCurso extends AbstractDAO {
         id_table = prefixo+"id";
     }
 
-    //Concluido - falta testar
     @Override
     public void salvar(EntidadeDominio entidade) {
         Curso curso = (Curso) entidade;
@@ -44,7 +43,7 @@ public class DAOCurso extends AbstractDAO {
             pst.setInt(4, curso.getDuracao());
             pst.setDouble(5, curso.getMensalidade());
             pst.executeUpdate();
-
+            
             conexao.commit();
             
             System.out.println("cadastrado com sucesso");
@@ -56,7 +55,7 @@ public class DAOCurso extends AbstractDAO {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }
@@ -70,15 +69,14 @@ public class DAOCurso extends AbstractDAO {
             
             conexao.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("UPDATE cursos SET  cur_nome = ?, cur_descricao = ?, cur_nivel = ?, ");
+            sql.append("UPDATE cursos SET  cur_descricao = ?, cur_nivel = ?, ");
             sql.append("cur_duracao = ?, cur_mensalidade = ? WHERE cur_id = ?");
             pst = conexao.prepareStatement(sql.toString());
-            pst.setString(1, curso.getNome());
-            pst.setString(2, curso.getDescricao());
-            pst.setString(3, curso.getNivel());
-            pst.setInt(4,   curso.getDuracao());
-            pst.setDouble(5, curso.getMensalidade());
-            pst.setInt(6, curso.getId());
+            pst.setString(1, curso.getDescricao());
+            pst.setString(2, curso.getNivel());
+            pst.setInt(3,   curso.getDuracao());
+            pst.setDouble(4, curso.getMensalidade());
+            pst.setInt(5, curso.getId());
             pst.executeUpdate();
 
             conexao.commit();
@@ -92,7 +90,7 @@ public class DAOCurso extends AbstractDAO {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }
@@ -106,11 +104,29 @@ public class DAOCurso extends AbstractDAO {
             
             StringBuilder sql = new StringBuilder();
             
-            if (entidade == null || entidade.getId() == 0) {
-                sql.append("SELECT * FROM "+table);
+            if (entidade != null && entidade.getId() != 0) {
+                if(entidade instanceof Curso){
+                    Curso curso = (Curso)entidade;
+                    if(curso.getNome()!=null){
+                        sql.append("SELECT * FROM "+table+" WHERE cur_nome = '");
+                        sql.append(curso.getNome());
+                        sql.append("' ORDER BY cur_id ");
+                    }else{
+                        sql.append("SELECT * FROM "+table+" WHERE cur_id = ");
+                        sql.append(curso.getId());
+                        sql.append(" ORDER BY cur_id ");
+                    }
+                }else
+                if(entidade instanceof Aluno){
+                    sql.append("SELECT * FROM "+table+" LEFT JOIN alunos ");
+                    sql.append(" ON alu_cur_id = cur_id ");
+                    sql.append(" WHERE alu_pes_id = ");
+                    sql.append(entidade.getId());
+                }
             } else {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+                sql.append("SELECT * FROM "+table);
             }
+
             
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
@@ -131,19 +147,16 @@ public class DAOCurso extends AbstractDAO {
         } catch (SQLException e) {
             try {
                 System.out.println("Erro na pesquisa: " + e);
+                
                 conexao.rollback();
             } catch (SQLException e1) {
             }
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
             }
         }
         return null;
-    }
-    
-    @Override
-    public void excluir(EntidadeDominio entidade){
     }
 }

@@ -10,11 +10,10 @@ import java.util.List;
 
 /**
  *
- * @author Eu
+ * @author 55119
  */
-public class ConsultarCommand extends AbstractCommand {
-    @Override
-    public List<EntidadeDominio> execute(EntidadeDominio entidade) {
-        return fachada.consultar(entidade);
+public class ConsultarTodasDepCommand extends AbstractCommand{
+    public List<EntidadeDominio> execute(EntidadeDominio entidade){
+        return fachada.consultarTodasDep();
     }
 }

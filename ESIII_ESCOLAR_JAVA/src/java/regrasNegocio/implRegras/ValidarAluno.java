@@ -23,18 +23,21 @@ public class ValidarAluno implements IStrategy {
 
     @Override
     public String processar(EntidadeDominio entidade) {
+        if(entidade==null){
+                 return "Falha ao receber Aluno!";
+        }
         if (entidade instanceof Aluno) {
             StringBuilder sb = new StringBuilder();
 
             Aluno aluno = (Aluno) entidade;
             Pessoa pessoa = (Pessoa) aluno;
 
-            if (aluno.getId() != 0) {
+            if(aluno.getId()!=0){
                 DAOAluno DAOalu = new DAOAluno();
                 List<EntidadeDominio> tempaluno = DAOalu.consultar(aluno);
 
-                if (tempaluno != null) {
-                    aluno = (Aluno) tempaluno.get(0);
+                if(tempaluno==null){
+                    sb.append("Erro, aluno não encontrado!");
                 }
             }
 
@@ -44,22 +47,26 @@ public class ValidarAluno implements IStrategy {
             if (msgPes != null) {
                 sb.append(msgPes);
             }
-
-            DAOCurso DAOcur = new DAOCurso();
-            Curso curso = (Curso)DAOcur.consultar(aluno.getCurso()).get(0);
             
             ValidarCurso valCur = new ValidarCurso();
             String msgCur = valCur.processar(aluno.getCurso());
             
-            if (aluno.getCurso() == null||aluno.getCurso().getId()==0) {
-                return "Curso não encontrado!";
+            if(msgCur!=null){
+                sb.append(msgCur);
+            }else{
+                DAOCurso DAOcur = new DAOCurso();
+                Curso tempcurso = (Curso)DAOcur.consultar(aluno.getCurso()).get(0);
+                
+                aluno.setCurso(tempcurso);
             }
             
-            aluno.setCurso(curso);
-            
-            if(aluno.getSemestre()<0||aluno.getSemestre()>aluno.getCurso().getDuracao()){
-                System.out.println(aluno.getSemestre()+":"+aluno.getCurso().getDuracao());
-                sb.append("Semestre do aluno não é válido de acordo com o curso!");
+            if(aluno.getCurso()!=null&&aluno.getCurso().getId()>0){
+                System.out.println(aluno.getCurso().getId());
+                if(aluno.getSemestre()<0||aluno.getSemestre()>aluno.getCurso().getDuracao()){
+                    sb.append("Semestre do aluno não é válido de acordo com o curso!");
+                }
+            }else{
+                sb.append("Curso é obrigatório!");
             }
 
             if (sb.length() > 0) {

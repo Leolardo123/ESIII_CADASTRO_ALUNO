@@ -18,16 +18,22 @@
     </head>
     <body>
         <%@include file = "./componentes/header.jsp"%>
-        <%List<Materia> materias = (List<Materia>) request.getAttribute("materia");
-            Materia materia = (Materia)materias.get(0);
-        %>
+        <script>
+            <%List<Materia> materias = (List<Materia>) request.getAttribute("materia");
+                Materia materia = materias.get(0);
+            %>
+        </script>
         <div class="container my-5">
-
+            <div class="col-sm-12" id="loading_msg">
+                <div class="alert alert-warning" role="alert">
+                    Carregando dependencias...
+                </div>
+            </div>
             <!-- FormulÃ¡rio -->
-            <form class="row" action="SalvarMateria" method="post">
-
-                <div class="col-sm-6 my-2"><input class="form-control" type="text" name="nome_materia" placeholder="Nome da Matéria" required><%=materia.getNome()%></div>
-                <div class="col-sm-6 my-2"><input class="form-control" type="number" min="1" max="999999" pattern="\d*" name="carga_horaria" placeholder="Carga Horária" required><%=materia.getCarga_horaria()%></div>
+            <form class="row" action="EditarMateria" method="post">
+                <div class="col-sm-12 my-2"><input class="form-control" type="text" name="nome_materia" placeholder="Nome da Matéria" value="<%=materia.getId()%>"disabled></div>
+                <div class="col-sm-6 my-2"><input class="form-control" type="text" name="nome_materia" placeholder="Nome da Matéria" value="<%=materia.getNome()%>"required></div>
+                <div class="col-sm-6 my-2"><input class="form-control" type="number" min="1" max="999999" pattern="\d*" name="carga_horaria" placeholder="Carga Horária" value="<%=materia.getCarga_horaria()%>" required></div>
                 <div class="dinamic_field">
                     <tr>
                     <div class="col-sm-6 my-2">Dependencias:</div>
@@ -36,20 +42,38 @@
                     </tr>
                     <div class="dinamic_item" id="deps">
                         <hr>
+                        <%if(materia.getDependencias()!=null){%>
+                            <%for(Materia dependencia:materia.getDependencias()){%>
+                            <div class="item_dependencia">
+                                <div class="input-group mb-3">
+                                    <select class="form-control dep-item-select" name="dependencia[]">
+                                        <option value="<%=dependencia.getId()%>"><%=dependencia.getNome()%></option>
+                                        <option value="-1">-</option>
+                                    </select>
+                                    <div class="input-group-prepend">
+                                        <span type="button" class="rmDep btn btn-danger">Delete</span></div>
+                                </div>
+                                <div class="subdeps col-sm-12"></div>
+                            </div>
+                            <%}%>
+                        <%}%>
                     </div>
                     <hr>
                 </div>
                 <div class="col-sm-12">Descricão<hr><br><textarea class="form-control" name="descricao" cols="30" rows="10" placeholder="Descrição" required><%=materia.getDescricao()%></textarea></div>
                 <div class="col-sm-12">
-                    <input type="hidden" name="operacao" value="SALVAR" >
+                    <!-- Valores para referencia do item no Banco de dados -->
+                    <input type="hidden" name="operacao" value="ALTERAR" >
+                    <input type="hidden" min="1" max="999" pattern="\d*" class="form-control" name="id" value="<%=materia.getId()%>">
                     <button type="submit" class="btn btn-p p-2 m-2">Enviar</button>
-                    <a class="btn btn-s p-2 m-2" href="./ListarMateria?operacao=CONSULTAR">Voltar</a>
+                    <a class="btn btn-s p-2 m-2" href="./materia.jsp">Voltar</a>
                 </div>
             </form>
             <!-- Formulário -->
         </div>
+        <script src="js/controler_async_request.js"></script>
         <!-- extensões Javascript + jsp -->
-        <%@include file="./componentes/materiaFormHandler.jsp" %>
+        <%@include file="./componentes/materiaFormHandler.jsp"%>
     </body>
 </jsp>
 

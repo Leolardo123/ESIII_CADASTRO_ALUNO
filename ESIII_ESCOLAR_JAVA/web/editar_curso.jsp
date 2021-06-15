@@ -36,7 +36,7 @@
                 <select class="form-select" name="nivel">
                     <option value="<%=cursos.get(0).getNivel()%>"><%=cursos.get(0).getNivel()%></option>
                     <%
-                        String[] niveis = {"Tecnologo","Bacharelado","Doutorado"};
+                        String niveis[] = {"Tecnologo","Bacharelado","Doutorado","Licenciatura","Graduação","Pós-Graduação","Mestrado"} ;
                         for(String nivel : niveis){
                             if(!(cursos.get(0).getNivel().equals(nivel))){
                     %>
@@ -53,11 +53,10 @@
                 <input type="hidden" name="id" value="<%=cursos.get(0).getId()%>" >
                 <input type="hidden" name="operacao" value="ALTERAR" >
                 <button type="submit" class="btn btn-p p-2 m-2">Enviar</button>
-                <a class="btn btn-s p-2 m-2" href="./ListarCurso?operacao=CONSULTAR">Voltar</a>
+                <a class="btn btn-s p-2 m-2" href="./curso.jsp">Voltar</a>
             </div>
         </form>
         <!-- FormulÃ¡rio -->
-
     </div>
 </body>
 </jsp>

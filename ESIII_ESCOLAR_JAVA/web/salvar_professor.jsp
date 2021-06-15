@@ -35,7 +35,7 @@
                 <div class="col-sm-5 my-2"><input type="text" pattern="[0-9]+" maxlength="9" class="form-control" name="rg" placeholder="RG" required></div>
                 <div class="col-sm-7 my-2"><input type="text" pattern="[0-9]+" maxlength="11" class="form-control" name="cpf" placeholder="CPF" required></div>
                 <div class="col-sm-5 my-2"><input type="email" class="form-control" name="email" placeholder="E-mail" required></div>
-                <div class="col-sm-7 my-2"><input type="number" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0.00" class="form-control" name="salario" placeholder="Salário" required></div>
+                <div class="col-sm-7 my-2"><input type="number" pattern="/^\d+\.\d{2,2}$/" step="0.01" min="0.00" class="form-control" name="salario" placeholder="Salário" required></div>
             </div>
             <!-- Dados Cadastrais Pessoa -->
 

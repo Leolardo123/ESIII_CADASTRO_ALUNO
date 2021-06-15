@@ -71,7 +71,7 @@ public class DAOPessoa extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -92,7 +92,7 @@ public class DAOPessoa extends AbstractDAO {
 
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE pessoas SET pes_pnome = ?, pes_unome = ?, ");
-            sql.append("pes_email = ?, pes_dtnascimento = ?, pes_end_id = ?, pes_id = ?  WHERE pes_id = ? ");
+            sql.append("pes_email = ?, pes_dtnascimento = ?, pes_end_id = ?  WHERE pes_id = ? ");
 
             pst = conexao.prepareStatement(sql.toString());
             pst.setString(1, pessoa.getPnome());
@@ -101,14 +101,12 @@ public class DAOPessoa extends AbstractDAO {
             pst.setDate(4, new java.sql.Date(pessoa.getDtNascimento().getTime()));
             pst.setInt(5, endereco.getId());
             pst.setInt(6, pessoa.getId());
-            pst.setInt(7, pessoa.getId());
             pst.executeUpdate();
-            
-            conexao.commit();
-            System.out.println("cadastrado com sucesso");
+
+            System.out.println("alterado com sucesso");
         } catch (SQLException e) {
             try {
-                System.out.println("Erro na inserção: " + e);
+                System.out.println("Erro na alteração: " + e);
                 conexao.rollback();
             } catch (SQLException e1) {
             }
@@ -116,7 +114,7 @@ public class DAOPessoa extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -130,13 +128,12 @@ public class DAOPessoa extends AbstractDAO {
         try {
             openConnection();
             conexao.setAutoCommit(false);
-            
             StringBuilder sql = new StringBuilder();
             if ((entidade == null || entidade.getId() == 0) && (pessoa.getCpf() == null && pessoa.getRg() == null)) {
                 sql.append("SELECT * FROM "+table);
-            } else if(pessoa.getCpf() == null && pessoa.getRg() == null) {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
-            } else if(pessoa.getCpf() != null && pessoa.getRg() != null){
+            } else if( pessoa.getId() > 0) {
+                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + pessoa.getId() + "");
+            } else if(pessoa.getCpf() != null && pessoa.getRg() != null ){
                 sql.append("SELECT * FROM " + table + " WHERE pes_rg = '");
                 sql.append(pessoa.getRg());
                 sql.append("' OR pes_cpf = '");
@@ -176,12 +173,52 @@ public class DAOPessoa extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         return null;
     }
+    
+    @Override
+    public void excluir(EntidadeDominio entidade) {
+        Pessoa pessoa = (Pessoa)entidade;
+        try {
+            openConnection();
+            
+            DAOEndereco DAOend = new DAOEndereco();
+            DAOend.ctrlTransaction = false;
+            conexao.setAutoCommit(false);
+            
+            StringBuilder sql = new StringBuilder();
 
+            sql.append("DELETE FROM " + table + " WHERE ");
+            sql.append(id_table);
+            sql.append(" = ");
+            sql.append(entidade.getId());
+            pst = conexao.prepareStatement(sql.toString());
+            
+            pst.executeUpdate();
+            
+            conexao.commit();
+            
+            DAOend.excluir(pessoa.getEndereco());
+            
+            System.out.println("Excluido com sucesso: ");
+        } catch (SQLException e) {
+            try {
+                System.out.println("Erro ao excluir: " + e);
+                conexao.rollback();
+            } catch (SQLException e1) {
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if(this.ctrlTransaction)closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

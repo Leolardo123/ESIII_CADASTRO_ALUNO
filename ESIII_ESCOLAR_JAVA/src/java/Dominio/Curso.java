@@ -18,7 +18,6 @@ public class Curso extends EntidadeDominio{
     private String nivel;
     private int duracao;
     private double mensalidade;
-    private List<GradeCurso> gradeCurso;
     
     public Curso(){}
     

@@ -18,9 +18,12 @@
     </head>
     <body>
         <%@include file = "./componentes/header.jsp"%>
-        <%List<Materia> materias = (List<Materia>) request.getAttribute("materias");%>
         <div class="container my-5">
-
+            <div class="col-sm-12" id="loading_msg">
+                <div class="alert alert-warning" role="alert">
+                    Carregando dependencias...
+                </div>
+            </div>
             <!-- FormulÃ¡rio -->
             <form class="row" action="SalvarMateria" method="post">
 
@@ -46,8 +49,9 @@
             </form>
             <!-- Formulário -->
         </div>
+        <script src="js/controler_async_request.js"></script>
         <!-- extensões Javascript + jsp -->
-        <%@include file="./componentes/materiaFormHandler.jsp" %>
+        <%@include file="./componentes/materiaFormHandler.jsp"%>
     </body>
 </jsp>
 

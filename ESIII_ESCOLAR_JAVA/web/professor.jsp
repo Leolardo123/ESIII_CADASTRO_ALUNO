@@ -27,13 +27,18 @@
         <%@include file="./componentes/header.jsp" %>
         <%@include file="./componentes/modalErrorMsg.jsp" %>
         <div class="container my-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Professores</h1>
+                </div>
+            </div>
             <div class="row table-responsive">
                 <div class="col-sm-12">
                     <div class="d-flex justify-content-end align-items-center my-2">
                         <a class="btn btn-p mx-2" href="./salvar_professor.jsp">Novo Registro</a>
                     </div>
                 </div>
-                <table class="col-sm-12 table">
+                <table class="col-sm-12 table" id="professores-table">
                     <thead>
                         <tr class="text-start">
                             <th>Matricula</th>
@@ -47,46 +52,53 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%
-                            List<Professor> professores = (List<Professor>) request.getAttribute("professores");
-                            if (professores != null) {
-                                for (Professor professor : professores) {
-                        %>
-                        <tr>
-                            <td class="text-start" ><%=professor.getId()%></td>
-                            <td class="text-start" ><%=professor.getPnome()%></td>
-                            <td class="text-start" ><%=professor.getUnome()%></td>
-                            <td class="text-start" ><%=professor.getRg()%></td>
-                            <td class="text-start" ><%=professor.getCpf()%></td>
-                            <td class="text-start" ><%=professor.getEmail()%></td>
-                            <td class="text-end" colspan="2">
-                                <a class="btn btn-p" href="./FormEditarProfessor?operacao=CONSULTARID&id=<%=professor.getId()%>" >Editar</a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir </button>
-                            </td>
-                        </tr>
-                    <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!}Excluir o professor permite que um aluno com mesmo cpf e rg possa ser cadastrado!
-                                    <br>{?}Tem certeza que deseja excluir o aluno?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <a class="btn btn-d" href="./ExcluirAluno?operacao=EXCLUIR&id=<%=professor.getId()%>">Sim</a> 
-                               </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%}
-                                }%>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
+                    </div>
+                    <div class="modal-body">
+                        {!}Excluir um professor permite que um aluno com mesmo cpf e rg possa ser cadastrado!
+                        <br>{?}Tem certeza que deseja excluir o professor?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-d" id="modal-exluir-class-id">Sim</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./js/modal_handler.js"></script>
+        <script src="js/controler_async_request.js"></script>
+        <script>
+            window.addEventListener('load', function () {
+                var table_item = "";
+                var cbfun = function (professores) {
+                    professores = JSON.parse(professores);
+                    var table_item = "";
+                    for (const [chave, professor] of Object.entries(professores)) {
+                        table_item += '<tr>' +
+                                '<td class="text-start" >' + professor['id'] + '</td>' +
+                                '<td class="text-start" >' + professor['pnome'] + '</td>' +
+                                '<td class="text-start" >' + professor['unome'] + '</td>' +
+                                '<td class="text-start" >' + professor['rg'] + '</td>' +
+                                '<td class="text-start" >' + professor['cpf'] + '</td>' +
+                                '<td class="text-start" >' + professor['email'] + '</td>' +
+                                '<td class="text-end" colspan="2">' +
+                                '<a class="btn btn-p" href="./FormEditarProfessor?operacao=CONSULTARID&id=' + professor['id'] + '">Editar</a>' +
+                                '<button type="button" onClick="ExcluirModal(2,['+professor['id']+","+professor['endereco']['id']+'])" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir</button>' +
+                                '</td>' +
+                                '</tr>'
+                    }
+                    document.querySelector('#professores-table > tbody').innerHTML = table_item;
+                }
+                getClasses('professor', cbfun);
+            });
+        </script>
     </body>
 </jsp>

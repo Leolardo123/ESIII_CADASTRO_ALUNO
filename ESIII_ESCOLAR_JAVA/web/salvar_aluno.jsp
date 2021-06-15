@@ -25,11 +25,9 @@
         
         <!-- FormulÃ¡rio -->
         <form class="row justify-content-center align-items-center" action="SalvarAluno" method="post">
-            
             <%
                 Curso curso = new Curso();
-                DAOCurso daoCurso = new DAOCurso();
-                List<EntidadeDominio> entidadeCursos = daoCurso.consultar(curso);  
+                 
                 String paises[] = {"AC","AL","AP","AM","AM","BA","CE","DF","ES",
                     "AC","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
             %>
@@ -43,12 +41,8 @@
                 <div class="col-sm-7 my-2"><input type="text" pattern="[0-9]+" maxlength="11" class="form-control" name="cpf" placeholder="CPF" required></div>
                 <div class="col-sm-5 my-2"><input type="email" class="form-control" name="email" placeholder="E-mail" required></div>
                 <div class="col-sm-7 my-2">
-                    <select class="form-select" name="curso" required>
-                        <%for(EntidadeDominio entidade : entidadeCursos){
-                            curso = (Curso)entidade;
-                        %>
-                        <option value="<%=curso.getId()%>"><%=curso.getNome()%></option>
-                        <%}%>
+                    <select class="form-select" id="select-curso" name="curso" required>
+
                     </select>
                 </div>
             </div>
@@ -81,7 +75,20 @@
 
         </form>
         <!-- FormulÃ¡rio -->
-        
     </div>
+    <script src="js/controler_async_request.js"></script>
+    <script>
+            window.addEventListener('load', function () {
+                var cbfun = function(cursos){
+                    cursos = JSON.parse(cursos);
+                    var select_itens = "";
+                    for (const [chave, curso] of Object.entries(cursos)) {
+                        select_itens   +=  '<option value='+curso["id"]+'>'+curso["nome"]+'</option>'
+                    }
+                    document.querySelector('#select-curso').innerHTML = select_itens;
+                }
+                getClasses('curso',cbfun);
+            });
+    </script>
 </body>
 </jsp>

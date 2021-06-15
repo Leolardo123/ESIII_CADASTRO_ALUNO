@@ -5,13 +5,21 @@
  */
 package ControleWeb;
 
+import Dominio.Aluno;
 import Dominio.Curso;
 import Dominio.EntidadeDominio;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import regrasNegocio.implRegras.ValidarCurso;
 
 /**
  *
@@ -72,38 +80,50 @@ public class VhCurso implements IViewHelper {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO NO CADASTRO: "+(String)resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarCurso?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("./curso.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO AO ALTERAR: "+(String)resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarCurso?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("./curso.jsp").forward(request, response);
                 }
                 if("CONSULTAR".equals(request.getParameter("operacao"))){
-                    if(request.getRequestURI().equals("/ESIII_ESCOLAR_JAVA/ListarCurso")){
-                        request.setAttribute("cursos", resultado);
-                        request.getRequestDispatcher("/curso.jsp").forward(request, response);
-                    }
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<List<Curso>>(){}.getType();
+                    String json = gson.toJson(resultado, type);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
                 }
                 if("CONSULTARID".equals(request.getParameter("operacao"))){
                     request.setAttribute("curso", resultado);
                     request.getRequestDispatcher("/editar_curso.jsp").forward(request, response);
                 }
+                if("GETNIVEIS".equals(request.getParameter("operacao"))){
+                    ValidarCurso valCur = new ValidarCurso();
+                    String niveis[] = valCur.niveis;
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<List<Curso>>(){}.getType();
+                    String json = gson.toJson(niveis, type);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                }
             } else {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "CADASTRADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarCurso?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("./curso.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ALTERADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarCurso?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("./curso.jsp").forward(request, response);
                 }
                 if ("EXCLUIR".equals(request.getParameter("operacao"))) {
                     msg = "EXCLUIDO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarCurso?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("./curso.jsp").forward(request, response);
                 }
             }
         } catch (IOException e) {

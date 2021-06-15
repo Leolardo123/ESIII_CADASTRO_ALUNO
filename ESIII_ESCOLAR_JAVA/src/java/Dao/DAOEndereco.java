@@ -8,6 +8,7 @@ package Dao;
 import static Dao.AbstractDAO.conexao;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import Dominio.Pessoa;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,7 +69,7 @@ public class DAOEndereco extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -113,7 +114,7 @@ public class DAOEndereco extends AbstractDAO {
         } finally {
             if (ctrlTransaction) {
                 try {
-                    closeConnection();
+                    if(this.ctrlTransaction)closeConnection();
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -133,7 +134,12 @@ public class DAOEndereco extends AbstractDAO {
             if (entidade == null || entidade.getId() == 0) {
                 sql.append("SELECT * FROM "+table);
             } else {
-                sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+                if(entidade instanceof Endereco){
+                    sql.append("SELECT * FROM "+table+" WHERE "+id_table+" = " + entidade.getId() + "");
+                }else
+                if(entidade instanceof Pessoa){
+                    sql.append("SELECT * FROM "+table+" INNER JOIN pessoas ON pes_end_id = end_id WHERE pes_id = "+entidade.getId());
+                }
             }
             pst = conexao.prepareStatement(sql.toString());
             ResultSet rs = pst.executeQuery();
@@ -146,6 +152,10 @@ public class DAOEndereco extends AbstractDAO {
                
                endereco.setId(rs.getInt("end_id"));
                endereco.setDtcadastro(rs.getDate("end_dtcadastro"));
+               
+               if(rs.getString("end_complemento")!=null){
+                endereco.setComplemento(rs.getString("end_complemento"));
+               }
                
                enderecos.add(endereco);
             }
@@ -160,7 +170,7 @@ public class DAOEndereco extends AbstractDAO {
             e.printStackTrace();
         } finally {
             try {
-                closeConnection();
+                if(this.ctrlTransaction)closeConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

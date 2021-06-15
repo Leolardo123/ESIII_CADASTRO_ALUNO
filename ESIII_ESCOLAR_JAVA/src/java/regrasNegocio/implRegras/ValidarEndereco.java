@@ -17,6 +17,9 @@ import regrasNegocio.IStrategy;
 public class ValidarEndereco implements IStrategy{
     @Override
     public String processar(EntidadeDominio entidade) {
+            if(entidade==null){
+                 return "Falha ao receber endereco!";
+            }
             if(entidade instanceof Endereco){
                 StringBuilder sb = new StringBuilder();
                 Endereco endereco = (Endereco)entidade;

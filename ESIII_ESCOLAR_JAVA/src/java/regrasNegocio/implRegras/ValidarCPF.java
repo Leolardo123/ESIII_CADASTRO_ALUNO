@@ -17,6 +17,9 @@ public class ValidarCPF implements IStrategy{
     
     	@Override
 	public String processar(EntidadeDominio entidade) {
+            if(entidade==null){
+                 return "Falha ao receber CPF!";
+            }
             if(entidade instanceof Pessoa){
                 Pessoa pessoa = (Pessoa)entidade;
                 if(pessoa.getCpf().length()==11){

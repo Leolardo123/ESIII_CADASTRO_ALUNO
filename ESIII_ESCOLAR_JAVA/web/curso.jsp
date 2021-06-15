@@ -29,13 +29,18 @@
         <%@include file="./componentes/header.jsp" %>
         <%@include file="./componentes/modalErrorMsg.jsp" %>
         <div class="container my-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Cursos</h1>
+                </div>
+            </div>
             <div class="row table-responsive">
                 <div class="col-sm-12">
                     <div class="d-flex justify-content-end align-items-center my-2">
                         <a class="btn btn-p mx-2" href="./salvar_curso.jsp">Novo Registro</a>
                     </div>
                 </div>
-                <table class="col-sm-12 table">
+                <table class="col-sm-12 table" id="cursos-table">
                     <thead>
                         <tr class="text-start">
                             <th>Id</th>
@@ -46,46 +51,53 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <%
-                            List<Curso> cursos = (List<Curso>) request.getAttribute("cursos");
-                            if(cursos!=null){
-                            for (Curso curso : cursos) {
-                        %>
-                        <tr>
-                            <td class="text-start" ><%=curso.getId()%></td>
-                            <td class="text-start" ><%=curso.getNome()%></td>
-                            <td class="text-start" ><%=curso.getNivel()%></td>
-                            <td class="text-start" ><%=curso.getDuracao()%></td>
-                            <td class="text-start" ><%=curso.getMensalidade()%></td>
-                            <td class="text-end" colspan="2">
-                                <a class="btn btn-p" href="./FormEditarCurso?operacao=CONSULTARID&id=<%=curso.getId()%>">Editar</a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir </button>
-                            </td>
-                        </tr>
-                         <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {!}Se você continuar todas as grades do curso serão apagadas!
-                                        <br>{!}e todos os itens das grades serão removidos!
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <a class="btn btn-d" href="./ExcluirCurso?operacao=EXCLUIR&id=<%=curso.getId()%>">continuar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <%}}%>
+                    <tbody>    
                     </tbody>
                 </table>
+                <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
+                            </div>
+                            <div class="modal-body">
+                                {!}Se você continuar todas as grades do curso serão apagadas!
+                                <br>{!}Alunos deste curso também serão deletados!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <a class="btn btn-d" id="modal-exluir-class-id">continuar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <script src="./js/modal_handler.js"></script>
+        <script src="js/controler_async_request.js"></script>
+        <script>
+            window.addEventListener('load', function () {
+                var cbfun = function(cursos){
+                    cursos = JSON.parse(cursos);
+                    var table_item = "";
+                    for (const [chave, curso] of Object.entries(cursos)) {
+                        table_item   +=  '<tr>'+
+                                            '<td class="text-start" >'+curso['id']+'</td>'+
+                                            '<td class="text-start" >'+curso['nome']+'</td>'+
+                                            '<td class="text-start" >'+curso['nivel']+'</td>'+
+                                            '<td class="text-start" >'+curso['duracao']+'</td>'+
+                                            '<td class="text-start" >'+curso['mensalidade']+'</td>'+
+                                            '<td class="text-end" colspan="2">'+
+                                                '<a class="btn btn-p" href="./FormEditarCurso?operacao=CONSULTARID&id='+curso['id']+'">Editar</a>'+
+                                                '<button type="button" onClick="ExcluirModal(3,['+curso['id']+'])" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir</button>'+
+                                            '</td>'+
+                                          '</tr>'
+                    }
+                    document.querySelector('#cursos-table > tbody').innerHTML = table_item;
+                }
+                getClasses('curso',cbfun);
+            });
+        </script>
     </body>
 </jsp>
+    

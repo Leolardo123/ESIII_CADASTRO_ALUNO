@@ -16,7 +16,7 @@ public class Materia extends EntidadeDominio{
     private String nome;
     private String descricao;
     private int carga_horaria;
-    private List<Materia> dependencia;
+    private List<Materia> dependencias;
     
     public Materia(){}
     
@@ -30,14 +30,14 @@ public class Materia extends EntidadeDominio{
         this.nome = nome;
         this.descricao = descricao;
         this.carga_horaria = carga_horaria;
-        this.dependencia = dependencia;
+        this.dependencias = dependencia;
     }
 
     public Materia(Materia materia) {
         this.nome = materia.nome;
         this.descricao = materia.descricao;
         this.carga_horaria = materia.carga_horaria;
-        this.dependencia = materia.dependencia;
+        this.dependencias = materia.dependencias;
         this.setId(materia.getId());
         this.setDtcadastro(materia.getDtcadastro());
     }
@@ -67,17 +67,19 @@ public class Materia extends EntidadeDominio{
     }
 
     public List<Materia> getDependencias() {
-        return dependencia;
+        return dependencias;
     }
 
     public void setDependencias(List<Materia> dependencias) {
-        this.dependencia = dependencias;
+        this.dependencias = dependencias;
     }
     
-    public void setDependenciasFromEntidade(List<EntidadeDominio> dependencias) {
-        List<Materia> deps =  new ArrayList<Materia>();
-        for(EntidadeDominio dep:dependencias){
-            deps.add((Materia)dep);
-        }
+     @Override 
+     public boolean equals(Object entidade) {
+        if (!(entidade instanceof Materia))
+            return false;
+        Materia mat = (Materia)entidade;
+        return mat.getId()==this.getId() || 
+                mat.getNome().equals(this.getNome());
     }
 }

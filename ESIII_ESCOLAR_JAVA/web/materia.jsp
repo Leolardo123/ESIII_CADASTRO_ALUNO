@@ -17,25 +17,29 @@
         <script>
             <%
                 String msg;
-                
+
                 if (request.getAttribute("msg_success") != null) {
                     msg = (String) request.getAttribute("msg_success");%>
-            alert("<%=msg%>");
+                    alert("<%=msg%>");
             <%}%>
         </script>
     </head>
     <body>
         <%@include file="./componentes/header.jsp" %>
         <%@include file="./componentes/modalErrorMsg.jsp" %>
-        <%@include file="./componentes/materiaFormHandler.jsp" %>
         <div class="container my-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Materias</h1>
+                </div>
+            </div>
             <div class="row table-responsive">
                 <div class="col-sm-12">
                     <div class="d-flex justify-content-end align-items-center my-2">
-                        <a class="btn btn-p mx-2" href="./ListarMateria?operacao=CONSULTARDEP">Novo Registro</a>
+                        <a class="btn btn-p mx-2" href="./salvar_materia.jsp">Novo Registro</a>
                     </div>
                 </div>
-                <table class="col-sm-12 table">
+                <table class="col-sm-12 table" id="materias-table">
                     <thead>
                         <tr class="text-start">
                             <th>Id</th>
@@ -46,44 +50,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%
-                            List<Materia> materias = (List<Materia>) request.getAttribute("materias");
-                            for (Materia materia : materias) {
-                        %>
-                        <tr>
-                            <td class="text-start" ><%=materia.getId()%></td>
-                            <td class="text-start" ><%=materia.getNome()%></td>
-                            <td class="text-start" ><%=materia.getCarga_horaria()%></td>
-                            <td class="text-end" colspan="2">
-                                <a class="btn btn-p" href="./FormEditarMateria?operacao=CONSULTARID&id=<%=materia.getId()%>">Editar</a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">
-                                    Excluir
-                                </button>
-                            </td>
-                        </tr>
-                    <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {!}Se você continuar todas as relaçoes de dependencia daquelas que dependem desta serão removidas!
-                                    <br>{!}Itens de grades que necessitam da materia também serão removidos!
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <a class="btn btn-d" href="./ExcluirMateria?operacao=EXCLUIR&id=<%=materia.getId()%>">Continuar</a>
-                                </div>
+                    </tbody>
+                </table>
+                <div class="modal fade" id="ExcluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Remover Materia</h5>
+                            </div>
+                            <div class="modal-body">
+                                {!}Se você continuar todas as relaçoes de dependencia daquelas que dependem desta materia serão removidas!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <a class="btn btn-d" id="modal-exluir-class-id">Continuar</a>
                             </div>
                         </div>
                     </div>
-                    <%}%>
-
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
+        <script src="./js/modal_handler.js"></script>
+        <script src="js/controler_async_request.js"></script>
+        <script>
+            window.addEventListener('load', function () {
+                var cbfun = function (materias) {
+                    materias = JSON.parse(materias);
+                    var table_item = {};
+                    for (const [chave, materia] of Object.entries(materias)) {
+                        table_item = document.createElement('tr');
+                        table_item.innerHTML = 
+                                '<td class="text-start" >' + materia['id'] + '</td>' +
+                                '<td class="text-start" >' + materia['nome'] + '</td>' +
+                                '<td class="text-start" >' + materia['carga_horaria'] + '</td>' +
+                                '<td class="text-end" colspan="2">' +
+                                '<a class="btn btn-p" href="./FormEditarMateria?operacao=CONSULTARID&id=' + materia['id'] + '">Editar</a>' +
+                                '<button type="button" onClick="ExcluirModal(4,['+materia['id']+'])" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ExcluirModal">Excluir</button>' +
+                                '</td>';
+                        document.querySelector('#materias-table > tbody').appendChild(table_item);
+                    }
+                }
+                getClasses('materia', cbfun);
+            });
+        </script>
     </body>
 </jsp>

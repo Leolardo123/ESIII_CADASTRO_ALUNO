@@ -6,10 +6,15 @@
 package ControleWeb;
 
 import Dao.DAODependentes;
+import Dominio.Aluno;
 import Dominio.Materia;
 import Dominio.EntidadeDominio;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +27,6 @@ import java.util.List;
  * @author Eu
  */
 public class VhMateria implements IViewHelper {
-
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
         try {
@@ -70,13 +74,7 @@ public class VhMateria implements IViewHelper {
             if ("CONSULTARDEP".equals(request.getParameter("operacao"))) {
                 return materia;
             }
-            if ("CONSULTARTODOSDEP".equals(request.getParameter("operacao"))) {
-                return materia;
-            }
-            if ("CONSULTARDEPENDENTES".equals(request.getParameter("operacao"))) {
-                return materia;
-            }
-            if ("CONSULTARDEPENDENCIAS".equals(request.getParameter("operacao"))) {
+            if ("CONSULTARTODASDEP".equals(request.getParameter("operacao"))) {
                 return materia;
             }
             if ("EXCLUIR".equals(request.getParameter("operacao"))) {
@@ -102,46 +100,48 @@ public class VhMateria implements IViewHelper {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO NO CADASTRO: " + (String) resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarMateria?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/materia.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO AO ALTERAR: " + (String) resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarMateria?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/materia.jsp").forward(request, response);
                 }
                 if ("CONSULTAR".equals(request.getParameter("operacao"))) {
-                    if (request.getRequestURI().equals("/ESIII_ESCOLAR_JAVA/ListarMateria")) {
-                        request.setAttribute("materias", resultado);
-                        request.getRequestDispatcher("/materia.jsp").forward(request, response);
-                    }
-                }
-                if ("CONSULTARDEP".equals(request.getParameter("operacao"))) {
-                    if (request.getRequestURI().equals("/ESIII_ESCOLAR_JAVA/ListarMateria")) {
-                        request.setAttribute("materias", resultado);
-                        request.getRequestDispatcher("/salvar_materia.jsp").forward(request, response);
-                    }
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<List<Materia>>(){}.getType();
+                    String json = gson.toJson(resultado, type);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
                 }
                 if ("CONSULTARID".equals(request.getParameter("operacao"))) {
-                    if (request.getRequestURI().equals("/ESIII_ESCOLAR_JAVA/FormEditarMateria")) {
-                        request.setAttribute("materia", resultado);
-                        request.getRequestDispatcher("/editar_materia.jsp").forward(request, response);
-                    }
+                    request.setAttribute("materia", resultado);
+                    request.getRequestDispatcher("/editar_materia.jsp").forward(request, response);
+                }
+                if ("CONSULTARTODASDEP".equals(request.getParameter("operacao"))) {
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<List<Materia>>(){}.getType();
+                    String json = gson.toJson(resultado, type);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
                 }
             } else {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "CADASTRADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarMateria?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/materia.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ALTERADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarMateria?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/materia.jsp").forward(request, response);
                 }
                 if ("EXCLUIR".equals(request.getParameter("operacao"))) {
                     msg = "EXCLUIDO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarMateria?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/materia.jsp").forward(request, response);
                 }
             }
         } catch (IOException e) {

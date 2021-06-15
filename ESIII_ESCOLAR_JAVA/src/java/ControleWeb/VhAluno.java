@@ -9,8 +9,12 @@ import Dominio.Aluno;
 import Dominio.Curso;
 import Dominio.Endereco;
 import Dominio.EntidadeDominio;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +37,7 @@ public class VhAluno implements IViewHelper {
             Aluno aluno = new Aluno();
             Endereco endereco = new Endereco();
             if ("SALVAR".equals(request.getParameter("operacao"))||"ALTERAR".equals(request.getParameter("operacao"))) {
-                SimpleDateFormat date_format = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
 
                 String primeiro_nome = request.getParameter("primeiro_nome");
                 String ultimo_nome = request.getParameter("ultimo_nome");
@@ -61,22 +65,25 @@ public class VhAluno implements IViewHelper {
                 }
                 
                 Curso curso = new Curso();
+    
                 curso.setId(curso_id);
-
                 aluno.setRg(rg);
                 aluno.setCpf(cpf);
                 aluno.setPnome(primeiro_nome);
                 aluno.setUnome(ultimo_nome);
                 aluno.setEmail(email);
                 aluno.setDtNascimento(data_nascimento);
-                aluno.setEndereco(endereco);
                 aluno.setSemestre(1);
                 aluno.setCurso(curso);
                 
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     int id = Integer.parseInt(request.getParameter("id"));
+                    int end_id = Integer.parseInt(request.getParameter("endereco_id"));
+                    endereco.setId(end_id);
                     aluno.setId(id);
                 }
+                
+                aluno.setEndereco(endereco);
                 
                 return aluno;
             }else
@@ -90,7 +97,10 @@ public class VhAluno implements IViewHelper {
             }else
             if ("EXCLUIR".equals(request.getParameter("operacao"))) {
                 int id = Integer.parseInt(request.getParameter("id"));
+                int endid = Integer.parseInt(request.getParameter("endid"));
                 aluno.setId(id);
+                endereco.setId(endid);
+                aluno.setEndereco(endereco);
                 return aluno;
             }
             return null;
@@ -110,16 +120,20 @@ public class VhAluno implements IViewHelper {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO NO CADASTRO: "+(String)resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarAluno?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ERRO AO ALTERAR: "+(String)resultado;
                     request.setAttribute("msg_error", msg);
-                    request.getRequestDispatcher("./ListarAluno?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
                 }
                 if ("CONSULTAR".equals(request.getParameter("operacao"))) {
-                    request.setAttribute("alunos", resultado);
-                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
+                    Gson gson = new GsonBuilder().create();
+                    Type type = new TypeToken<List<Curso>>(){}.getType();
+                    String json = gson.toJson(resultado, type);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
                 }
                 if ("CONSULTARID".equals(request.getParameter("operacao"))) {
                     request.setAttribute("aluno", resultado);
@@ -129,17 +143,17 @@ public class VhAluno implements IViewHelper {
                 if ("SALVAR".equals(request.getParameter("operacao"))) {
                     msg = "CADASTRADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarAluno?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
                 }
                 if ("ALTERAR".equals(request.getParameter("operacao"))) {
                     msg = "ALTERADO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarAluno?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
                 }
                 if ("EXCLUIR".equals(request.getParameter("operacao"))) {
                     msg = "EXCLUIDO COM SUCESSO";
                     request.setAttribute("msg_success", msg);
-                    request.getRequestDispatcher("./ListarAluno?operacao=CONSULTAR").forward(request, response);
+                    request.getRequestDispatcher("/aluno.jsp").forward(request, response);
                 }
             }
         } catch (IOException e) {
